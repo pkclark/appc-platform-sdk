@@ -1,0 +1,26 @@
+{
+  "name": "appc-platform-sdk",
+  "version": "1.0.0",
+  "description": "Appcelerator Platform SDK for node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/appcelerator/appc-platform-sdk"
+  },
+  "keywords": [
+    "appcelerator"
+  ],
+  "author": "Jeff Haynie",
+  "license": "Apache",
+  "bugs": {
+    "url": "https://github.com/appcelerator/appc-platform-sdk/issues"
+  },
+  "homepage": "https://github.com/appcelerator/appc-platform-sdk",
+  "dependencies": {
+    "request": "^2.40.0",
+    "tough-cookie": "^0.12.1"
+  }
+}
