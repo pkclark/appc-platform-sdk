@@ -17,7 +17,7 @@ This is a Node module that will allow you to make API requests to the Appcelerat
 
 		// print out some information about our logged in user
 		console.log(session.user.username);
-		
+
 		// when you're done, logout
 		AppC.logout(session);
 	});
@@ -137,7 +137,7 @@ Find a specific app by app_guid
 ### update
 
 Update an app details.
- 
+
 	// update an app
 	app.app_name = 'my new app name';
 	AppC.App.update(session, app, function(err,result){
@@ -190,6 +190,39 @@ The following are options that can be passed to the second parameter of findAll:
 - since: A unix timestamp to get new messages from
 - before: A unix timestamp to get old messages from before
 
+## Cloud
+
+API for accessing Appcelerator Cloud Services (ACS).
+
+### createApp
+
+Create a new pre-built ACS application (mBaaS).
+
+	// create a new app
+	AppC.Cloud.createApp(session, "foo", function(err,app){
+
+	});
+
+Required parameters:
+
+- session: logged in session object
+- name: specify the name of the application to create
+- callback: function to invoke when completed
+
+Returns a JSON object with the application details such as:
+
+```json
+{ id: '987w498908098asdfasdfasdf',
+  name: 'foo',
+  status: 0,
+  created_at: '2014-09-29T19:11:40+0000',
+  updated_at: '2014-09-29T19:11:40+0000',
+  key: 'sdfasdfasdf0989890889asdf89asdf',
+  oauth_key: 'asdfasdf08s09d8f09as8df098asdf098',
+  oauth_secret: 'sfhjasdhfausdhf8878as87fdasd78f',
+  group_id: '9890s8df908as09d8f08asdf88188',
+  type: 1 }
+```
 
 
 # License
