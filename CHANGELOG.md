@@ -1,3 +1,7 @@
+# 1.0.5 (11-16-2014)
+
+- Make sure we always set the right current org for a session
+
 # 1.0.4 (11-16-2014)
 
 - Added support for creating new application from tiapp.xml
