@@ -1,3 +1,7 @@
+# 1.0.8 (11-27-2014)
+
+- Better handling of Cloud responses
+
 # 1.0.7 (11-27-2014)
 
 - Added API for create cloud app and cloud user
