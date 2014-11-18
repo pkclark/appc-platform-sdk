@@ -1,3 +1,13 @@
+# 1.0.7 (11-27-2014)
+
+- Added API for create cloud app and cloud user
+- Only parse JSON response if the Content-Type header is JSON
+- Better handling for non-JSON responses in Error callback
+
+# 1.0.6 (11-16-2014)
+
+- Resolved issue with cookie jar
+
 # 1.0.5 (11-16-2014)
 
 - Make sure we always set the right current org for a session
