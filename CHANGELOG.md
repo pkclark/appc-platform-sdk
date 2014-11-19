@@ -1,3 +1,7 @@
+# 1.0.11 (11-19-2014)
+
+- Allow the org_id to be passed in to createApp
+
 # 1.0.10 (11-19-2014)
 
 - Provide mac address default
