@@ -1,8 +1,17 @@
-# 1.0.8 (11-27-2014)
+# 1.0.9 (11-19-2014)
+
+- Keep logged into 360 session
+- Fixed problem with user object not having an active org
+- Better error handling
+- Support local dev environment
+- Support self-signed certificates by default in dev/test
+- Pass deviceid on login so we can do device authorization
+
+# 1.0.8 (11-17-2014)
 
 - Better handling of Cloud responses
 
-# 1.0.7 (11-27-2014)
+# 1.0.7 (11-17-2014)
 
 - Added API for create cloud app and cloud user
 - Only parse JSON response if the Content-Type header is JSON
