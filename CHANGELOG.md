@@ -1,3 +1,7 @@
+# 1.0.10 (11-19-2014)
+
+- Provide mac address default
+
 # 1.0.9 (11-19-2014)
 
 - Keep logged into 360 session
