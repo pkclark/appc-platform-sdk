@@ -1,3 +1,7 @@
+# 1.0.12 (12-02-2014)
+
+- Support Org.findById to get an organization details by id
+
 # 1.0.11 (11-19-2014)
 
 - Allow the org_id to be passed in to createApp
