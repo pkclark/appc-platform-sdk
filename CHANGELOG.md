@@ -1,3 +1,7 @@
+# 1.0.13 (12-02-2014)
+
+- added debug module to make it easier to debug problems with this library. add DEBUG=appc:sdk to environment to get more verbose debug logging
+
 # 1.0.12 (12-02-2014)
 
 - Support Org.findById to get an organization details by id
