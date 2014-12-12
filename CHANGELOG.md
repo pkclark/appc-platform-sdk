@@ -1,3 +1,8 @@
+# 1.0.14 (12-12-2014)
+
+- added app package api
+- cleanup small code changes
+
 # 1.0.13 (12-02-2014)
 
 - added debug module to make it easier to debug problems with this library. add DEBUG=appc:sdk to environment to get more verbose debug logging
