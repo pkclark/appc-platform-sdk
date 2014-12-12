@@ -1,3 +1,7 @@
+# 1.0.15 (12-12-2014)
+
+- added app team members apis
+
 # 1.0.14 (12-12-2014)
 
 - added app package api
