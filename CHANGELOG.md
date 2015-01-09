@@ -1,3 +1,8 @@
+# 1.0.16 (01-08-2015)
+
+- exposed API for creating a named ACS app and registering with the dashboard
+- better error handling when an environment is down
+
 # 1.0.15 (12-12-2014)
 
 - added app team members apis
