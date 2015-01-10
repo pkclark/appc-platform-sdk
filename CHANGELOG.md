@@ -1,3 +1,8 @@
+# 1.0.17 (01-10-2015)
+
+- added device authorization API
+- clarified/changed LICENSE to be consistent with Platform
+
 # 1.0.16 (01-08-2015)
 
 - exposed API for creating a named ACS app and registering with the dashboard

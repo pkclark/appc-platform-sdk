@@ -4,7 +4,7 @@ This is a Node module that will allow you to make API requests to the Appcelerat
 
 ## Installation
 
-	$ [sudo] npm install appc-platform-sdk
+	$ npm install appc-platform-sdk
 
 ## Usage
 
@@ -227,5 +227,13 @@ Returns a JSON object with the application details such as:
 
 # License
 
-This software is Licensed under the Apache Public License (v2).  Access and usage of the Appcelerator Platform is governed separately under the Appcelerator Subscription Agreement. Copyright (c) 2014 by Appcelerator, Inc. All Rights Reserved.
+This source code is the intellectual property of Appcelerator, Inc.
+Copyright (c) 2014-2015 Appcelerator, Inc. All Rights Reserved.
+This code MUST not be modified, copy or otherwise redistributed
+without expression written permission of Appcelerator. This
+software is licensed as part of the Appcelerator Platform and
+governed under the terms of the Appcelerator license agreement.
 
+Distribution through the NPM package system located at http://npmjs.org
+is expressly granted if the package you are downloading is from the
+official Appcelerator account at http://npmjs.org/package/appc-platform-sdk.
