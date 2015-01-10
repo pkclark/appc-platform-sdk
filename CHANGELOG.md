@@ -1,3 +1,7 @@
+# 1.0.18 (01-10-2015)
+
+- added caching to often used methods to improve performance
+
 # 1.0.17 (01-10-2015)
 
 - added device authorization API
