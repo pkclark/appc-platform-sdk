@@ -1,3 +1,7 @@
+# 1.0.19 (01-10-2015)
+
+- removed errrant debug statement
+
 # 1.0.18 (01-10-2015)
 
 - added caching to often used methods to improve performance
