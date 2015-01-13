@@ -1,3 +1,7 @@
+# 1.0.21 (01-13-2015)
+
+- support for using request library to form platform request
+
 # 1.0.20 (01-13-2015)
 
 - moved to use [request-ssl](https://github.com/jhaynie/request-ssl) library and setup SSL certificates for known domains
