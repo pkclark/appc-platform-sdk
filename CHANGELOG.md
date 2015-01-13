@@ -1,3 +1,7 @@
+# 1.0.22 (01-13-2015)
+
+- move to use [appc-request-ssl](https://github.com/appcelerator/appc-request-ssl) library with packaged fingerprints
+
 # 1.0.21 (01-13-2015)
 
 - support for using request library to form platform request

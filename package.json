@@ -20,10 +20,10 @@
   },
   "homepage": "https://github.com/appcelerator/appc-platform-sdk",
   "dependencies": {
+    "appc-request-ssl": "^1.0.1",
     "async": "^0.9.0",
     "debug": "^2.1.0",
     "getmac": "^1.0.6",
-    "request-ssl": "^0.0.3",
     "tough-cookie": "^0.12.1"
   },
   "devDependencies": {
