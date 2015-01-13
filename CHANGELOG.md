@@ -1,3 +1,7 @@
+# 1.0.20 (01-13-2015)
+
+- moved to use [request-ssl](https://github.com/jhaynie/request-ssl) library and setup SSL certificates for known domains
+
 # 1.0.19 (01-10-2015)
 
 - removed errrant debug statement
