@@ -1,3 +1,7 @@
+# 1.0.23 (01-14-2015)
+
+- updated Cloud.createApp and Cloud.createUser to use new APIs by dashboard
+
 # 1.0.22 (01-13-2015)
 
 - move to use [appc-request-ssl](https://github.com/appcelerator/appc-request-ssl) library with packaged fingerprints
