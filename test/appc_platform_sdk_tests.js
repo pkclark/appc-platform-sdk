@@ -226,11 +226,6 @@ describe('appc-platform-AppC', function() {
 
 			});
 
-			after(function(done) {
-				//TODO: Delete all apis created
-				done();
-			});
-
 			it('should get ACS_BASE environment', function() {
 				var env = global.$config.env === 'production' ? 'production' : 'development';
 				helper.getCloudEnvironment(AppC, currentSession, AppC.Cloud.ACS_BASE, env, function(err, res) {
@@ -314,6 +309,7 @@ describe('appc-platform-AppC', function() {
 					should.not.exist(err);
 					done();
 				});
+				//TODO: Delete all apis created
 			});
 
 
