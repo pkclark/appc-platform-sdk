@@ -134,12 +134,10 @@ describe('appc-platform-AppC', function() {
 			});
 
 			it('should verify the login code that was requested earlier', function(done){
-
 				helper.getAuthCode(function(err, res) {
 					helper.stopBrowser();
 					should.not.exist(err);
 					should.exist(res);
-					console.log(res);
 					AppC.Auth.verifyLoginCode(currentSession, res, function(err, res) {
 						should.not.exist(err);
 						should.exist(res);
@@ -923,7 +921,6 @@ describe('appc-platform-AppC', function() {
 					should.exist(res);
 					(res.length >= 2).should.equal(true);
 					regularTime = new Date().getTime() - time;
-					console.log(regularTime);
 					done();
 				});
 			});
@@ -935,7 +932,6 @@ describe('appc-platform-AppC', function() {
 					should.exist(res);
 					(res.length >= 2).should.equal(true);
 					cachedTime = new Date().getTime() - time;
-					console.log(cachedTime);
 					done();
 				});
 			});
