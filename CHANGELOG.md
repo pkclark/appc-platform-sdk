@@ -1,6 +1,11 @@
-# 1.0.25 (02-17-2015)
+# 1.0.35 (02-24-2015)
 
 - added unit tests
+- added app.delete api
+
+# 1.0.31 (02-23-2015)
+
+- updated appc-request-ssl library
 
 # 1.0.24 (01-16-2015)
 

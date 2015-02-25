@@ -134,7 +134,6 @@ describe('appc-platform-AppC', function() {
 			});
 
 			it('should verify the login code that was requested earlier', function(done){
-
 				helper.getAuthCode(function(err, res) {
 					helper.stopBrowser();
 					should.not.exist(err);
