@@ -637,12 +637,11 @@ describe('appc-platform-AppC', function() {
 				});
 			});
 
-			// TODO: unskip when error is cleaned up
-			it.skip('should fail to create a tiapp.xml app with invalid org id', function (done) {
+			it('should fail to create a tiapp.xml app with invalid org id', function (done) {
 				AppC.App.create(currentSession, path.join(__dirname, "tiapptest1", "tiapp.xml"), 123, function (err, res) {
 					should.exist(err);
 					should.not.exist(res);
-					err.code.should.equal(503);
+					err.code.should.equal(404);
 					done();
 				});
 			});
@@ -666,12 +665,11 @@ describe('appc-platform-AppC', function() {
 				});
 			});
 
-			// TODO: unskip when error is cleaned up
-			it.skip('should fail to find an application package by invalid application guid and session', function(done) {
+			it('should fail to find an application package by invalid application guid and session', function(done) {
 				AppC.App.findPackage(currentSession, "123", function(err, res) {
 					should.exist(err);
 					should.exist(err.code);
-					err.code.should.equal(403); // ?
+					err.code.should.be.greaterThan(400);
 					should.not.exist(res);
 					done();
 				});
