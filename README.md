@@ -211,7 +211,7 @@ Required parameters:
 
 Returns a JSON object with the application details such as:
 
-```json
+```javascript
 { id: '987w498908098asdfasdfasdf',
   name: 'foo',
   status: 0,
