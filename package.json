@@ -1,11 +1,11 @@
 {
   "name": "appc-platform-sdk",
-  "version": "1.0.41",
+  "version": "1.0.42",
   "description": "Appcelerator Platform SDK for node.js",
   "main": "index.js",
   "scripts": {
     "test": "grunt",
-    "preinstall": "[ -e ./node_modules/ensure-latest/index.js ] && node ./node_modules/ensure-latest || echo"
+    "preinstall": "node ./bin/update"
   },
   "repository": {
     "type": "git",
