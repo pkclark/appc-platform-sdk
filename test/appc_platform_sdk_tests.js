@@ -23,8 +23,8 @@ describe('appc-platform-AppC', function() {
 		it('check for default', function() {
 			if (process.env.NODE_ENV==='production' ||
 				process.env.APPC_ENV==='production' ||
-				process.env.NODE_ENV==='production' ||
-				process.env.APPC_ENV==='production') {
+				!process.env.NODE_ENV  &&
+				!process.env.APPC_ENV) {
 				should(AppC.isProduction).be.equal(true);
 			} else {
 				should(AppC.isProduction).be.equal(false);

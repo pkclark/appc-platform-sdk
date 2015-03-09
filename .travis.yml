@@ -3,6 +3,7 @@ sudo: true
 node_js:
 - '0.12'
 before_script:
+- set APPC_ENV=development
 - npm cache clean
 - npm install -g grunt-cli
 - export DISPLAY=:99.0
