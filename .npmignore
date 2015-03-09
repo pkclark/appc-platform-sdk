@@ -1,0 +1,9 @@
+.jshintrc
+example*.js
+foo*.js
+Gruntfile.js
+out
+test
+user.json
+.travis.yml
+*.tgz

@@ -20,8 +20,15 @@ describe('appc-platform-AppC', function() {
 			AppC = require('../');
 		});
 
-		it('should be production by default', function() {
-			should(AppC.isProduction).be.equal(true);
+		it('check for default', function() {
+			if (process.env.NODE_ENV==='production' ||
+				process.env.APPC_ENV==='production' ||
+				process.env.NODE_ENV==='production' ||
+				process.env.APPC_ENV==='production') {
+				should(AppC.isProduction).be.equal(true);
+			} else {
+				should(AppC.isProduction).be.equal(false);
+			}
 		});
 
 		it('should be production', function() {

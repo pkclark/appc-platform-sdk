@@ -169,7 +169,10 @@ function registryLogin(username, password, callback) {
 	api.baseurl = REGISTRY_URL;
 	api.body({
 		username: username,
-		password: password
+		password: password,
+		ipaddress: '',
+		fingerprint: '',
+		fingerprint_description: ''
 	});
 	api.send(function(err, res) {
 		if (err) { return callback(err); }
