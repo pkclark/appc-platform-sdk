@@ -1,4 +1,4 @@
-# Appcelerator Platform SDK
+# Appcelerator Platform SDK [![Build Status](https://travis-ci.org/appcelerator/appc-platform-sdk.svg)](https://travis-ci.org/appcelerator/appc-platform-sdk) [![npm version](https://badge.fury.io/js/appc-platform-sdk.svg)](http://badge.fury.io/js/appc-platform-sdk)
 
 This is a Node module that will allow you to make API requests to the Appcelerator Platform.
 
