@@ -37,7 +37,7 @@
     "should": "^4.0.4",
     "mocha": "2.1.0",
     "underscore": "1.7.0",
-	"webdriverio": "2.2.2",
+    "webdriverio": "2.2.2",
     "prompt": "^0.2.14"
   },
   "ensureLatest": [
