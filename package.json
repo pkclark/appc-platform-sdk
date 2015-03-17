@@ -12,7 +12,9 @@
     "url": "https://github.com/appcelerator/appc-platform-sdk"
   },
   "keywords": [
-    "appcelerator"
+    "appcelerator",
+    "appc-client",
+    "appc-jira-cli"
   ],
   "author": "Jeff Haynie",
   "license": "Appcelerator Commercial",
