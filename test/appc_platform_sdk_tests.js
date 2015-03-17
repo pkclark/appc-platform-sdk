@@ -60,7 +60,9 @@ describe('appc-platform-AppC', function() {
 			var customEnv = {
 				baseurl: 'http://test.appcelerator.com:8080/AppC',
 				isProduction: false,
-				supportUntrusted: true
+				supportUntrusted: true,
+				security: 'http://security.com',
+				registry: 'http://registry.com'
 			};
 
 			AppC.setEnvironment(customEnv);
@@ -68,6 +70,8 @@ describe('appc-platform-AppC', function() {
 			should(AppC.isProduction).be.equal(false);
 			should(AppC.supportUntrusted).be.equal(true);
 			should(AppC.baseurl).be.equal('http://test.appcelerator.com:8080/AppC');
+			should(AppC.securityurl).be.equal('http://security.com');
+			should(AppC.registryurl).be.equal('http://registry.com');
 
 		});
 
@@ -117,7 +121,7 @@ describe('appc-platform-AppC', function() {
 				currentSession.isValid().should.equal(true);
 			});
 
-			it('should be able to request an auth code with a vaild session', function(done) {
+			it('should be able to request an auth code with a valid session', function(done) {
 				should.exist(currentSession);
 				AppC.Auth.requestLoginCode(currentSession, false, function(err, res) {
 					should.not.exist(err);
@@ -185,7 +189,7 @@ describe('appc-platform-AppC', function() {
 					should.exist(err);
 					should.not.exist(session);
 					should.exist(err.message);
-					err.message.should.equal("You do not have access privileges to view this content.");
+					err.message.should.equal("invalid session");
 					done();
 				});
 			});

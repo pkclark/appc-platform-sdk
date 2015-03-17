@@ -170,9 +170,9 @@ function registryLogin(username, password, callback) {
 	api.body({
 		username: username,
 		password: password,
-		ipaddress: '',
-		fingerprint: '',
-		fingerprint_description: ''
+		ipaddress: '0.0.0.0',
+		fingerprint: 'unittest',
+		fingerprint_description: 'unittest'
 	});
 	api.send(function(err, res) {
 		if (err) { return callback(err); }
@@ -235,7 +235,7 @@ function getEnvironment(env, envs, ignoreConf) {
 		// get the default
 		return 'default';
 	}
-};
+}
 
 /*
  * Sets the environment to the one which the string specified represents.
@@ -270,7 +270,7 @@ function setEnvironment(sdk, env, envs, ignoreConf) {
 		sdk.setEnvironment(gotEnv);
 	}
 	return true;
-};
+}
 
 function getFakeUser() {
 	return {
@@ -288,9 +288,9 @@ function cloneSession(session) {
 	return clone;
 }
 
-expectNoErr = function() {
+function expectNoErr() {
 	return function(err, res) {
 		should.not.exist(err);
-	}
-};
+	};
+}
 
