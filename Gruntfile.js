@@ -12,9 +12,9 @@ module.exports = function(grunt) {
 
 	// Project configuration.
 	grunt.initConfig({
-		jshint: {
+		appcJs: {
 			options: {
-				jshintrc: true
+				force: true
 			},
 			src: ['index.js', 'lib/**/*.js']
 		},
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
 	});
 
 	// Load grunt plugins for modules
-	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-appc-js');
 	grunt.loadNpmTasks('grunt-mocha-test');
 
 	// run test coverage
@@ -56,5 +56,5 @@ module.exports = function(grunt) {
 	});
 
 	grunt.registerTask('cover', ['coverage']);
-	grunt.registerTask('default', ['jshint', 'mochaTest']);
+	grunt.registerTask('default', ['appcJs', 'mochaTest']);
 };
