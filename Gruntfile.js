@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		appcJs: {
 			options: {
-				force: true
+				force: false
 			},
 			src: ['index.js', 'lib/**/*.js']
 		},
