@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 				reporter: 'spec',
 				bail: true,
 				ignoreLeaks: false,
-				globals: ['_key']
+				globals: ['_key', 'requestSSLInitializing', 'requestSSLInsideHook', 'requestSSLInitialized']
 			},
 			src: ['test/appc_platform_sdk_tests.js']
 		},

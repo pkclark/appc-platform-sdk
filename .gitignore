@@ -5,3 +5,4 @@ test.js
 /test/conf/development.js
 /test/conf/production.js
 /coverage
+*.DS_Store
