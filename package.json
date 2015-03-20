@@ -1,6 +1,6 @@
 {
   "name": "appc-platform-sdk",
-  "version": "1.0.49",
+  "version": "1.0.50",
   "description": "Appcelerator Platform SDK for node.js",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/appcelerator/appc-platform-sdk",
   "dependencies": {
-    "appc-request-ssl": "1.0.18",
+    "appc-request-ssl": "1.0.19",
     "async": "^0.9.0",
     "debug": "^2.1.0",
     "getmac": "^1.0.6",
