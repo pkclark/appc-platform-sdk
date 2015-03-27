@@ -13,3 +13,8 @@ should be run to set up the framework.
 
 A config will need to be added too. This is the link to the preprod one.
 https://wiki.appcelerator.org/display/cls/appc-platform-sdk+Config
+
+Copy this to test/conf/development.js
+
+To run the tests in preprod:
+$ APPC_ENV=preproduction npm test
