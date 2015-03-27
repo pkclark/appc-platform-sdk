@@ -90,7 +90,7 @@ describe('appc-platform-AppC', function () {
 		describe('auth & session', function () {
 			this.timeout(250000);
 
-			before(function (done) {
+			before.skip(function (done) {
 				helper.startBrowser();
 				helper.loginGmail(function () {
 					helper.deleteEmails(done);
@@ -121,7 +121,7 @@ describe('appc-platform-AppC', function () {
 				currentSession.isValid().should.equal(true);
 			});
 
-			it('should be able to request an auth code with a valid session', function (done) {
+			it.skip('should be able to request an auth code with a valid session', function (done) {
 				should.exist(currentSession);
 				AppC.Auth.requestLoginCode(currentSession, false, function (err, res) {
 					should.not.exist(err);
@@ -144,7 +144,7 @@ describe('appc-platform-AppC', function () {
 				});
 			});
 
-			it('should verify the login code that was requested earlier', function (done){
+			it.skip('should verify the login code that was requested earlier', function (done){
 				helper.getAuthCode(function (err, res) {
 					helper.stopBrowser();
 					should.not.exist(err);
