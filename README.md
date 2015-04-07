@@ -255,15 +255,8 @@ Returns a JSON object with the application details such as:
 ```
 
 
-# License
+# Licensing
 
-This source code is the intellectual property of Appcelerator, Inc.
-Copyright (c) 2014-2015 Appcelerator, Inc. All Rights Reserved.
-This code MUST not be modified, copy or otherwise redistributed
-without expression written permission of Appcelerator. This
-software is licensed as part of the Appcelerator Platform and
-governed under the terms of the Appcelerator license agreement.
+This code is Confidential and Proprietary to Appcelerator, Inc. All Rights Reserved. This code MUST not be modified, copied or otherwise redistributed without express written permission of Appcelerator. This file is licensed as part of the Appcelerator Platform and governed under the terms of the Appcelerator license agreement.  Your right to use this software terminates when you terminate your Appcelerator subscription.
 
-Distribution through the NPM package system located at http://npmjs.org
-is expressly granted if the package you are downloading is from the
-official Appcelerator account at http://npmjs.org/package/appc-platform-sdk.
+Distribution through the NPM package system located at http://npmjs.org is expressly granted if the package you are downloading is from the official Appcelerator account at http://npmjs.org/package/appc-platform-sdk.
