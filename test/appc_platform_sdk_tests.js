@@ -89,13 +89,14 @@ describe('appc-platform-AppC', function () {
 
 		describe('auth & session', function () {
 			this.timeout(250000);
-
-			before.skip(function (done) {
+			/*
+			before(function (done) {
 				helper.startBrowser();
 				helper.loginGmail(function () {
 					helper.deleteEmails(done);
 				});
 			});
+			*/
 
 			it('fake user should not be able to log in', function (done){
 				var fakeuser = helper.fakeUser;
