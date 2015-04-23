@@ -83,6 +83,7 @@ describe('appc-platform-AppC', function () {
 		before(function (){
 			currentSession = undefined;
 			AppC = require('../');
+			console.log(global.$config.environment);
 			AppC.setEnvironment(global.$config.environment);
 		});
 
@@ -198,7 +199,7 @@ describe('appc-platform-AppC', function () {
 			it('should create a session from ID', function (done) {
 				var username = global.$config.user.username,
 					password = global.$config.user.password;
-				helper.registryLogin(username, password, function (err, res){
+				helper.registryLogin(username, password, AppC.registryurl, function (err, res){
 					should.not.exist(err);
 					should.exist(res);
 					should.exist(res.sid);
@@ -1008,7 +1009,7 @@ describe('appc-platform-AppC', function () {
 				AppC.User.switchLoggedInOrg(currentSession, global.$config.user.org_id, function (err, res) {
 					should.not.exist(err);
 					should.exist(res);
-					res.toString().should.equal(global.$config.user.org_id);
+					res.org_id.toString().should.equal(global.$config.user.org_id);
 					done();
 				});
 

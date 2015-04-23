@@ -163,10 +163,9 @@ function getCloudEnvironment(sdk, session, type, name, callback) {
 	}
 }
 
-function registryLogin(username, password, callback) {
-	var REGISTRY_URL = global.$config.registry || 'https://software.appcelerator.com',
-		api = new registry('login');
-	api.baseurl = REGISTRY_URL;
+function registryLogin(username, password, registryURL, callback) {
+	var api = new registry('login');
+	api.baseurl = registryURL || 'https://software.appcelerator.com';
 	api.body({
 		username: username,
 		password: password,
