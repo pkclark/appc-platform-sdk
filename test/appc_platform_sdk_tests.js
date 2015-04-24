@@ -83,6 +83,7 @@ describe('appc-platform-AppC', function () {
 		before(function (){
 			currentSession = undefined;
 			AppC = require('../');
+			console.log(global.$config.environment);
 			AppC.setEnvironment(global.$config.environment);
 		});
 
@@ -198,7 +199,7 @@ describe('appc-platform-AppC', function () {
 			it('should create a session from ID', function (done) {
 				var username = global.$config.user.username,
 					password = global.$config.user.password;
-				helper.registryLogin(username, password, function (err, res){
+				helper.registryLogin(username, password, AppC.registryurl, function (err, res){
 					should.not.exist(err);
 					should.exist(res);
 					should.exist(res.sid);
@@ -302,7 +303,8 @@ describe('appc-platform-AppC', function () {
 			var tiApp;
 
 			before(function (done) {
-				AppC.User.switchLoggedInOrg(currentSession, global.$config.user.free_org_id, function (err, res) {
+				AppC.User.switchLoggedInOrg(currentSession, global.$config.user.free_org_id, function (err, res, newSession) {
+					currentSession = newSession;
 					should.exist(res);
 					should.not.exist(err);
 					AppC.App.create(currentSession, path.join(__dirname, 'tiapptest4', 'tiapp.xml'), global.$config.user.free_org_id, function (err, res) {
@@ -1005,10 +1007,11 @@ describe('appc-platform-AppC', function () {
 
 			it('should switch back to the original org', function (done){
 
-				AppC.User.switchLoggedInOrg(currentSession, global.$config.user.org_id, function (err, res) {
+				AppC.User.switchLoggedInOrg(currentSession, global.$config.user.org_id, function (err, res, newSession) {
+					currentSession = newSession;
 					should.not.exist(err);
 					should.exist(res);
-					res.toString().should.equal(global.$config.user.org_id);
+					res.org_id.toString().should.equal(global.$config.user.org_id);
 					done();
 				});
 
@@ -1016,7 +1019,8 @@ describe('appc-platform-AppC', function () {
 
 			it('should fail to switch to an invalid org', function (done){
 
-				AppC.User.switchLoggedInOrg(currentSession, '123', function (err, res) {
+				AppC.User.switchLoggedInOrg(currentSession, '123', function (err, res, newSession) {
+					currentSession = newSession;
 					should.not.exist(res);
 					should.exist(err);
 					should.exist(err.message);
@@ -1028,7 +1032,8 @@ describe('appc-platform-AppC', function () {
 
 			it('should fail to switch to an org without a valid session', function (done){
 
-				AppC.User.switchLoggedInOrg({}, global.$config.user.org_id, function (err, res) {
+				AppC.User.switchLoggedInOrg({}, global.$config.user.org_id, function (err, res, newSession) {
+					currentSession = newSession;
 					should.not.exist(res);
 					should.exist(err);
 					should.exist(err.message);

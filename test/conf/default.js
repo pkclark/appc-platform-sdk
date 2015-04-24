@@ -33,7 +33,6 @@ module.exports = {
 			app_guid: ""
 		}
 	},
-	registry: "https://8d2938f67044d8367d468453b5a6c2536185bcea.cloudapp-enterprise-preprod.appctest.com",
 	browserConfig: {
 		desiredCapabilities: {
 			browserName: 'chrome'
