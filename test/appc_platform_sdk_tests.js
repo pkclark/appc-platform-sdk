@@ -810,7 +810,7 @@ describe('appc-platform-AppC', function () {
 					should.exist(org);
 					_.isEqual(org, currentSession.user.org).should.equal(true);
 					should.exist(org.org_id);
-					org.org_id.toString().should.equal(global.$config.user.free_org_id);
+					org.org_id.toString().should.equal(global.$config.user.developer_org_id);
 					should.exist(org.name);
 					orgName = org.name;
 					done();
@@ -833,7 +833,7 @@ describe('appc-platform-AppC', function () {
 					should.exist(res);
 					should.exist(res.name);
 					res.name.should.equal(orgName);
-					res.org_id.toString().should.equal(global.$config.user.free_org_id);
+					res.org_id.toString().should.equal(global.$config.user.developer_org_id);
 					done();
 				});
 			});
@@ -849,17 +849,17 @@ describe('appc-platform-AppC', function () {
 			});
 
 			it('should find an org by id', function (done) {
-				AppC.Org.findById(currentSession, global.$config.user.free_org_id, function (err, res) {
+				AppC.Org.findById(currentSession, global.$config.user.developer_org_id, function (err, res) {
 					should.exist(res);
 					should.not.exist(err);
 					should.exist(res.org_id);
-					res.org_id.toString().should.equal(global.$config.user.free_org_id);
+					res.org_id.toString().should.equal(global.$config.user.developer_org_id);
 					done();
 				});
 			});
 
 			it('should fail to find an org by id with invalid session', function (done) {
-				AppC.Org.findById({}, global.$config.user.free_org_id, function (err, res) {
+				AppC.Org.findById({}, global.$config.user.developer_org_id, function (err, res) {
 					should.not.exist(res);
 					should.exist(err);
 					should.exist(err.message);
@@ -879,17 +879,17 @@ describe('appc-platform-AppC', function () {
 			});
 
 			it('should get an org by id', function (done) {
-				AppC.Org.getById(currentSession, global.$config.user.free_org_id, function (err, res) {
+				AppC.Org.getById(currentSession, global.$config.user.developer_org_id, function (err, res) {
 					should.exist(res);
 					should.not.exist(err);
 					should.exist(res.org_id);
-					res.org_id.toString().should.equal(global.$config.user.free_org_id);
+					res.org_id.toString().should.equal(global.$config.user.developer_org_id);
 					done();
 				});
 			});
 
 			it('should fail to get an org by id with invalid session', function (done) {
-				AppC.Org.getById({}, global.$config.user.free_org_id, function (err, res) {
+				AppC.Org.getById({}, global.$config.user.developer_org_id, function (err, res) {
 					should.not.exist(res);
 					should.exist(err);
 					should.exist(err.message);
