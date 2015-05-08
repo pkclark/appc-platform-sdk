@@ -1,3 +1,4 @@
+// globals $config
 var should = require('should'),
 	helper = require('./helper'),
 	path = require('path'),
@@ -83,21 +84,12 @@ describe('appc-platform-AppC', function () {
 		before(function (){
 			currentSession = undefined;
 			AppC = require('../');
-			console.log(global.$config.environment);
 			AppC.setEnvironment(global.$config.environment);
 		});
 
 
 		describe('auth & session', function () {
 			this.timeout(250000);
-			/*
-			before(function (done) {
-				helper.startBrowser();
-				helper.loginGmail(function () {
-					helper.deleteEmails(done);
-				});
-			});
-			*/
 
 			it('fake user should not be able to log in', function (done){
 				var fakeuser = helper.fakeUser;
@@ -123,7 +115,7 @@ describe('appc-platform-AppC', function () {
 				currentSession.isValid().should.equal(true);
 			});
 
-			it.skip('should be able to request an auth code with a valid session', function (done) {
+			it('should be able to request an email auth code with a valid session', function (done) {
 				should.exist(currentSession);
 				AppC.Auth.requestLoginCode(currentSession, false, function (err, res) {
 					should.not.exist(err);
@@ -132,7 +124,7 @@ describe('appc-platform-AppC', function () {
 				});
 			});
 
-			it('should not be able to request an auth code with an invalid session', function (done) {
+			it('should not be able to request an email auth code with an invalid session', function (done) {
 
 				var invalidSession = helper.cloneSession(currentSession);
 				invalidSession.invalidate();
@@ -146,9 +138,44 @@ describe('appc-platform-AppC', function () {
 				});
 			});
 
-			it.skip('should verify the login code that was requested earlier', function (done){
-				helper.getAuthCode(function (err, res) {
-					helper.stopBrowser();
+			it('should verify the email auth code that was requested earlier', function (done){
+				helper.getAuthCode('email', function (err, res) {
+					should.not.exist(err);
+					should.exist(res);
+					AppC.Auth.verifyLoginCode(currentSession, res, function (err, res) {
+						should.not.exist(err);
+						should.exist(res);
+						res.should.equal(true);
+						done();
+					});
+				});
+			});
+
+			it('should be able to request an sms auth code with a valid session', function (done) {
+				should.exist(currentSession);
+				AppC.Auth.requestLoginCode(currentSession, true, function (err, res) {
+					should.not.exist(err);
+					should.exist(res);
+					done();
+				});
+			});
+
+			it('should not be able to request an sms auth code with an invalid session', function (done) {
+
+				var invalidSession = helper.cloneSession(currentSession);
+				invalidSession.invalidate();
+				invalidSession.isValid().should.equal(false);
+
+				AppC.Auth.requestLoginCode(invalidSession, true, function (err) {
+					should.exist(err);
+					err.should.have.property('message');
+					err.message.should.equal('session is not valid');
+					done();
+				});
+			});
+
+			it('should verify the sms auth code that was requested earlier', function (done){
+				helper.getAuthCode('sms', function (err, res) {
 					should.not.exist(err);
 					should.exist(res);
 					AppC.Auth.verifyLoginCode(currentSession, res, function (err, res) {
@@ -359,7 +386,8 @@ describe('appc-platform-AppC', function () {
 						should.exist(res);
 						api = res[0];
 						done();
-				});
+					}
+				);
 			});
 
 			it('should fail to create an app with invalid session', function (done) {
@@ -471,7 +499,7 @@ describe('appc-platform-AppC', function () {
 					should.not.exist(err);
 					should.exist(res);
 					res.length.should.equal(global.$config.apps.numberOfApps);
-					done()
+					done();
 				});
 			});
 
@@ -501,7 +529,7 @@ describe('appc-platform-AppC', function () {
 					should.not.exist(err);
 					should.exist(res);
 					res.app_name.should.equal(global.$config.apps.enterprise.app_name);
-					done()
+					done();
 				});
 			});
 
@@ -509,7 +537,7 @@ describe('appc-platform-AppC', function () {
 				AppC.App.find(currentSession,1, function (err, res) {
 					should.not.exist(res);
 					should.exist(err);
-					done()
+					done();
 				});
 			});
 
@@ -526,8 +554,8 @@ describe('appc-platform-AppC', function () {
 
 			it('should update an app and revert it to the original state', function (done) {
 				AppC.App.find(currentSession,global.$config.apps.enterprise.app_id, function (err, app) {
-					var originalName = $config.apps.enterprise.app_name,
-						newName = $config.apps.enterprise.app_name + '_modified';
+					var originalName = global.$config.apps.enterprise.app_name,
+						newName = global.$config.apps.enterprise.app_name + '_modified';
 					should.not.exist(err);
 					should.exist(app);
 					app.app_name.should.equal(originalName);
@@ -830,7 +858,7 @@ describe('appc-platform-AppC', function () {
 					res.name.should.equal(orgName);
 					res.org_id.toString().should.equal(global.$config.user.free_org_id);
 					done();
-				})
+				});
 			});
 
 			it('should fail to get org with invalid name', function (done) {
@@ -840,7 +868,7 @@ describe('appc-platform-AppC', function () {
 					should.exist(err.message);
 					err.message.should.equal('Org not found');
 					done();
-				})
+				});
 			});
 
 			it('should find an org by id', function (done) {
@@ -948,8 +976,7 @@ describe('appc-platform-AppC', function () {
 				});
 			});
 
-			// TODO: why does this sometimes fail‽
-			it.skip('cached time should be lower (or equal to) than original time for finding orgs', function () {
+			it('cached time should be lower (or equal to) than original time for finding orgs', function () {
 				(regularTime - cachedTime).should.not.be.lessThan(0);
 			});
 
