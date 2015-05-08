@@ -1,5 +1,5 @@
 var ConfigLoader = require('./conf/loader').load(),
-	_= require('underscore'),
+	_ = require('underscore'),
 	registry = require('appc-registry-sdk'),
 	should = require('should'),
 	gm = require('gmail'),
@@ -7,27 +7,40 @@ var ConfigLoader = require('./conf/loader').load(),
 	gmStart = new Date(),
 	gmail = new gm.GMailInterface(),
 	twilio = require('twilio'),
-	twclient = twilio(global.$config.twilio.account_sid,global.$config.twilio.auth_token);
+	twclient = twilio(global.$config.twilio.account_sid, global.$config.twilio.auth_token),
+	AppC = require('../');
 
-exports.setEnvironment = setEnvironment ;
-exports.findEnvs = findEnvs;
 exports.fakeUser = getFakeUser();
 exports.cloneSession = cloneSession;
 exports.getCloudEnvironment = getCloudEnvironment;
 exports.registryLogin = registryLogin;
 exports.getAuthCode = getAuthCode;
 
-function getCloudEnvironment(sdk, session, type, name, callback) {
+/**
+ * Performs a try/catch on the Cloud.getEnvironment function so that it cleans up the unit tests
+ * @param session
+ * @param type
+ * @param name
+ * @param callback
+ * @returns {*}
+ */
+function getCloudEnvironment(session, type, name, callback) {
 	try {
-		return callback(null, sdk.Cloud.getEnvironment(session, type, name));
+		return callback(null, AppC.Cloud.getEnvironment(session, type, name));
 	} catch (err) {
 		return callback(err);
 	}
 }
 
-function registryLogin(username, password, registryURL, callback) {
+/**
+ * Helper function to log into the registry
+ * @param username    platform username
+ * @param password    platform password
+ * @param callback    called after login finishes
+ */
+function registryLogin(username, password, callback) {
 	var api = new registry('login');
-	api.baseurl = registryURL || 'https://software.appcelerator.com';
+	api.baseurl = AppC.registryurl;
 	api.body({
 		username: username,
 		password: password,
@@ -45,100 +58,21 @@ function registryLogin(username, password, registryURL, callback) {
 	});
 }
 
-function findEnvs(ignoreConf) {
-	var envs = ['production', 'development', 'local'];
-	if (global.$config.environments && !ignoreConf) {
-		for (var key in global.$config.environments) {
-			var index = envs.indexOf(key),
-				exists = index > -1;
-			if (_.isEmpty(global.$config.environments[key]) || !global.$config.environments[key].baseurl) {
-				if (exists) {
-					envs.splice(index, 1);
-				}
-			} else {
-				if (!exists) {
-					envs.push(key);
-				}
-			}
-		}
-	}
-	return envs;
-}
-
-/*
- * Returns the environment specified.
- * Returns false if the env is to be skipped or does not exist
- * Returns default if nothing is set in the config
+/**
+ * returns credentials for a unique fake user
+ * @returns {{username: string, password: string}}
  */
-function getEnvironment(env, envs, ignoreConf) {
-
-	if (typeof envs === "boolean" ) {
-		ignoreConf = envs;
-		envs = null;
-	}
-	if (!envs) {
-		envs = findEnvs(ignoreConf);
-	}
-	if (envs.indexOf(env) === -1) {
-		// Environment either doesn't exist or should be skipped
-		return false;
-	}
-
-	if (global.$config.environments[env] && !ignoreConf) {
-		// env is in the config
-		return {
-			"baseurl": global.$config.environments[env].baseurl,
-			"isProduction": typeof global.$config.environments[env].isProduction !== 'undefined' ? global.$config.environments[env].isProduction : false,
-			"supportUntrusted": typeof global.$config.environments[env].supportUntrusted !== 'undefined' ? global.$config.environments[env].supportUntrusted : true
-		};
-	} else {
-		// get the default
-		return 'default';
-	}
-}
-
-/*
- * Sets the environment to the one which the string specified represents.
- * Returns true if successful, and false on a failure to find the environment specified
- */
-function setEnvironment(sdk, env, envs, ignoreConf) {
-
-	if (typeof envs === "boolean" ) {
-		ignoreConf = envs;
-		envs = null;
-	}
-
-	var gotEnv = getEnvironment(env, envs, ignoreConf);
-	if (!gotEnv) {
-		return false;
-	} else if (gotEnv === 'default') {
-		switch(env) {
-			case "production":
-				sdk.setProduction();
-				break;
-			case "development":
-				sdk.setDevelopment();
-				break;
-			case "local":
-				sdk.setLocal();
-				break;
-			default :
-				sdk.setEnvironment();
-				break;
-		}
-	} else {
-		sdk.setEnvironment(gotEnv);
-	}
-	return true;
-}
-
 function getFakeUser() {
 	return {
-		"username" : "fake_" + Date.now(),
-		"password" : "test"
+		'username' : 'fake_' + Date.now(),
+		'password' : 'test'
 	};
 }
 
+/**
+ * Returns a duplicate of the session object passed in
+ * @param session
+ */
 function cloneSession(session) {
 	var clone = _.map(clone, _.clone(session));
 	clone._invalidate = session._invalidate;
@@ -159,9 +93,9 @@ function getAuthCode(method, callback) {
 			getLastSMS(callback);
 			break;
 		case 'email':
-			loginGmail(global.$config.gmail.email, global.$config.gmail.password, function(err) {
+			loginGmail(global.$config.gmail.email, global.$config.gmail.password, function (err) {
 				if (err) { return callback (err); }
-				retryGetLastEmail(5000, 10, function(err, email) {
+				retryGetLastEmail(5000, 10, function (err, email) {
 					if (email && email.html && email.html.match(/Authorization Code: <b>([0-9]{4})/)) {
 						return callback(null, email.html.match(/Authorization Code: <b>([0-9]{4})/)[1]);
 					} else {
@@ -184,7 +118,7 @@ function getAuthCode(method, callback) {
  *
  * @returns         Any errors that occurred during login
  */
-function loginGmail(email, password, callback){
+function loginGmail(email, password, callback) {
 	gmail.connect(email, password, function (err) {
 		callback(err);
 	});
@@ -241,7 +175,7 @@ function getLastEmail(callback) {
  * @param cb
  */
 function retryGetLastEmail(timeout, times, cb) {
-	setTimeout(function() {
+	setTimeout(function () {
 		getLastEmail(function (err, res) {
 			if (err) {
 				if (!--times) {
@@ -255,9 +189,13 @@ function retryGetLastEmail(timeout, times, cb) {
 	}, timeout);
 }
 
+/**
+ * A function to fetch the last SMS with an auth code recieved from twilio
+ * @param callback
+ */
 function getLastSMS(callback) {
-	twclient.sms.messages.list(function(err,results){
-		for (var c=0;c<results.sms_messages.length;c++) {
+	twclient.sms.messages.list(function (err, results) {
+		for (var c = 0; c < results.sms_messages.length; c++) {
 			var message = results.sms_messages[c];
 			if (message.direction === 'inbound') {
 				var match = /Appcelerator (device|phone) (authorization|verification) code: (\d{4})/.exec(message.body);
