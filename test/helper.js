@@ -15,6 +15,7 @@ exports.cloneSession = cloneSession;
 exports.getCloudEnvironment = getCloudEnvironment;
 exports.registryLogin = registryLogin;
 exports.getAuthCode = getAuthCode;
+exports.getRequest = getRequest;
 
 /**
  * Performs a try/catch on the Cloud.getEnvironment function so that it cleans up the unit tests
@@ -206,4 +207,13 @@ function getLastSMS(callback) {
 			}
 		}
 	});
+}
+
+/**
+ * A function to get a request object
+ * @param session
+ * @returns {Object}
+ */
+function getRequest(session) {
+	return AppC.createRequest(session, '/api/v1/auth/checkSession');
 }
