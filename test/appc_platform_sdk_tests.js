@@ -216,6 +216,8 @@ describe('appc-platform-AppC', function () {
 						should.exist(session.user.guid);
 						should.exist(session.user.org_id);
 						should.exist(session.user.org);
+						should.exist(session.org);
+						should.exist(session.org.packageId);
 						should.exist(session.orgs);
 						done();
 					});
