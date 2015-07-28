@@ -63,7 +63,9 @@ describe('appc-platform-AppC', function () {
 				isProduction: false,
 				supportUntrusted: true,
 				security: 'http://security.com',
-				registry: 'http://registry.com'
+				registry: 'http://registry.com',
+				webevent: 'http://webevent.com',
+				pubsub: 'http://pubsub.com'
 			};
 
 			AppC.setEnvironment(customEnv);
@@ -73,6 +75,8 @@ describe('appc-platform-AppC', function () {
 			should(AppC.baseurl).be.equal('http://test.appcelerator.com:8080/AppC');
 			should(AppC.securityurl).be.equal('http://security.com');
 			should(AppC.registryurl).be.equal('http://registry.com');
+			should(AppC.webeventurl).be.equal('http://webevent.com');
+			should(AppC.pubsuburl).be.equal('http://pubsub.com');
 		});
 	});
 
@@ -269,6 +273,8 @@ describe('appc-platform-AppC', function () {
 						should.exist(session.user.guid);
 						should.exist(session.user.org_id);
 						should.exist(session.user.org);
+						should.exist(session.org);
+						should.exist(session.org.packageId);
 						should.exist(session.orgs);
 						createdSession = session;
 						done();
