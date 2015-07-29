@@ -96,7 +96,7 @@ function getAuthCode(method, callback) {
 		case 'email':
 			loginGmail(global.$config.gmail.email, global.$config.gmail.password, function (err) {
 				if (err) { return callback (err); }
-				retryGetLastEmail(5000, 10, function (err, email) {
+				retryGetLastEmail(5000, 20, function (err, email) {
 					if (email && email.html && email.html.match(/Authorization Code: <b>([0-9]{4})/)) {
 						return callback(null, email.html.match(/Authorization Code: <b>([0-9]{4})/)[1]);
 					} else {
