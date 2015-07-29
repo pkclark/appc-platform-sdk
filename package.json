@@ -41,6 +41,7 @@
     "mailparser": "0.5.1",
     "twilio": "2.2.0",
     "grunt-kahvesi": "^0.2.0",
-    "grunt-appc-coverage": "^0.2.0"
+    "grunt-appc-coverage": "^0.2.0",
+    "mocha-jenkins-reporter": "0.1.9"
   }
 }
