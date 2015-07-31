@@ -303,7 +303,7 @@ describe('appc-platform-AppC', function () {
 			});
 		});
 
-		describe('cloud', function () {
+		describe.skip('cloud', function () {
 
 			var api;
 			var tiApp;
@@ -596,7 +596,7 @@ describe('appc-platform-AppC', function () {
 
 
 
-			it('should create an app from provided tiapp.xml', function (done) {
+			it.skip('should create an app from provided tiapp.xml', function (done) {
 				AppC.App.create(currentSession, path.join(__dirname, 'tiapptest1', 'tiapp.xml'), global.$config.user.org_id, function (err, res) {
 					should.not.exist(err);
 					should.exist(res);
@@ -609,7 +609,7 @@ describe('appc-platform-AppC', function () {
 			});
 
 
-			it('should update an app from provided tiapp.xml', function (done) {
+			it.skip('should update an app from provided tiapp.xml', function (done) {
 				AppC.App.create(currentSession, path.join(__dirname, 'tiapptest2', 'tiapp.xml'), global.$config.user.org_id, function (err, res) {
 					should.not.exist(err);
 					should.exist(res);
@@ -804,7 +804,7 @@ describe('appc-platform-AppC', function () {
 
 			var orgName;
 
-			it('should return the current user org', function (done) {
+			it.skip('should return the current user org', function (done) {
 				AppC.Org.getCurrent(currentSession, function (err, org) {
 					should.not.exist(err);
 					should.exist(org);
@@ -827,7 +827,7 @@ describe('appc-platform-AppC', function () {
 			});
 
 
-			it('should get org by name', function (done) {
+			it.skip('should get org by name', function (done) {
 				should.exist(orgName);
 				AppC.Org.getByName(currentSession, orgName, function (err, res) {
 					should.not.exist(err);
@@ -849,7 +849,7 @@ describe('appc-platform-AppC', function () {
 				})
 			});
 
-			it('should find an org by id', function (done) {
+			it.skip('should find an org by id', function (done) {
 
 				AppC.Org.findById(currentSession, global.$config.user.free_org_id, function (err, res) {
 					should.exist(res);
@@ -861,7 +861,7 @@ describe('appc-platform-AppC', function () {
 
 			});
 
-			it('should fail to find an org by id with invalid session', function (done) {
+			it.skip('should fail to find an org by id with invalid session', function (done) {
 
 				AppC.Org.findById({}, global.$config.user.free_org_id, function (err, res) {
 					should.not.exist(res);
@@ -885,7 +885,7 @@ describe('appc-platform-AppC', function () {
 
 			});
 
-			it('should get an org by id', function (done) {
+			it.skip('should get an org by id', function (done) {
 
 				AppC.Org.getById(currentSession, global.$config.user.free_org_id, function (err, res) {
 					should.exist(res);
@@ -1011,7 +1011,7 @@ describe('appc-platform-AppC', function () {
 
 			});
 
-			it('should switch back to the original org', function (done){
+			it.skip('should switch back to the original org', function (done){
 
 				AppC.User.switchLoggedInOrg(currentSession, global.$config.user.org_id, function (err, res, newSession) {
 					currentSession = newSession;
