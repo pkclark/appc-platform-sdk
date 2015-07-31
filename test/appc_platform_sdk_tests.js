@@ -395,7 +395,7 @@ describe('appc-platform-AppC', function () {
 			});
 		});
 
-		describe('cloud', function () {
+		describe.skip('cloud', function () {
 
 			var api;
 			var tiApp;
@@ -1026,7 +1026,7 @@ describe('appc-platform-AppC', function () {
 				});
 			});
 
-			it('should return the current user org', function (done) {
+			it.skip('should return the current user org', function (done) {
 				AppC.Org.getCurrent(currentSession, function (err, org) {
 					should.not.exist(err);
 					should.exist(org);
