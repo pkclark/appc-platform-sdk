@@ -88,7 +88,7 @@ describe('middleware', function () {
 		request.get(opts, function (err, resp, body) {
 			should(err).be.not.ok;
 			should(resp.statusCode).be.equal(302);
-			should(body).be.equal('Moved Temporarily. Redirecting to ' + AppC.baseurl);
+			should(body).match(new RegExp('Redirecting to ' + AppC.baseurl));
 			done();
 		});
 	});
