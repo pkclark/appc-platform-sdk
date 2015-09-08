@@ -24,12 +24,12 @@ module.exports = function(grunt) {
 				reporter: 'spec',
 				bail: true,
 				ignoreLeaks: false,
-				globals: ['_key', 'requestSSLInitializing', 'requestSSLInsideHook', 'requestSSLInitialized']
+				globals: []
 			},
-			src: ['test/appc_platform_sdk_tests.js']
+			src: ['test/*_tests.js']
 		},
 		kahvesi: {
-			src: ['test/appc_platform_sdk_tests.js']
+			src: ['test/*_tests.js']
 		},
 		appcCoverage: {
 			default_options: {

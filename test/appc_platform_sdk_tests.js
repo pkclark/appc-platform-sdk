@@ -65,6 +65,7 @@ describe('appc-platform-AppC', function () {
 				security: 'http://security.com',
 				registry: 'http://registry.com',
 				webevent: 'http://webevent.com',
+				cache: 'http://cache.com',
 				pubsub: 'http://pubsub.com'
 			};
 
@@ -76,6 +77,7 @@ describe('appc-platform-AppC', function () {
 			should(AppC.securityurl).be.equal('http://security.com');
 			should(AppC.registryurl).be.equal('http://registry.com');
 			should(AppC.webeventurl).be.equal('http://webevent.com');
+			should(AppC.cacheurl).be.equal('http://cache.com');
 			should(AppC.pubsuburl).be.equal('http://pubsub.com');
 		});
 	});

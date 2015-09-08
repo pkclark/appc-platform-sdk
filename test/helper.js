@@ -7,8 +7,16 @@ var ConfigLoader = require('./conf/loader').load(),
 	gmStart = new Date(),
 	gmail = new gm.GMailInterface(),
 	twilio = require('twilio'),
-	twclient = twilio(global.$config.twilio.account_sid, global.$config.twilio.auth_token),
-	AppC = require('../');
+	AppC = require('../'),
+	twclient;
+
+try {
+	twclient = twilio(global.$config.twilio.account_sid, global.$config.twilio.auth_token);
+}
+catch (E) {
+	console.error(E);
+	throw E;
+}
 
 exports.fakeUser = getFakeUser();
 exports.cloneSession = cloneSession;
