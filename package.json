@@ -38,7 +38,6 @@
     "grunt": "^0.4.5",
     "grunt-appc-coverage": "^0.2.0",
     "grunt-appc-js": "*",
-    "grunt-cli": "^0.1.13",
     "grunt-kahvesi": "^0.2.0",
     "grunt-mocha-test": "^0.11.0",
     "mailparser": "0.5.1",
