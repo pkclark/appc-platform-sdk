@@ -16,7 +16,7 @@
     "appc-jira-cli"
   ],
   "author": "Jeff Haynie",
-  "license": "Appcelerator Commercial",
+  "license": "LicenseRef-LICENSE",
   "bugs": {
     "url": "https://github.com/appcelerator/appc-platform-sdk/issues"
   },
