@@ -32,6 +32,7 @@ describe('analytics', function () {
 			AppC.Analytics.url = 'http://127.0.0.1:' + server.port + '/track';
 			done();
 		});
+		fs.existsSync(AppC.Analytics.analyticsDir) && wrench.rmdirSyncRecursive(AppC.Analytics.analyticsDir);
 	});
 
 	after(function (done) {
@@ -63,10 +64,10 @@ describe('analytics', function () {
 			should(result[0]).have.property('sid');
 			should(result[0]).have.property('mid');
 			should(result[0]).have.property('aguid', 'guid');
-			should(result[0]).have.property('os', AppC.userAgent);
+			should(result[0]).have.property('platform', AppC.userAgent);
 			should(result[0]).have.property('deploytype', 'production');
 			should(result[0]).have.property('ts');
-			should(result[0]).have.property('event', 'appc.feature');
+			should(result[0]).have.property('event', 'app.feature');
 			should(result[0]).have.property('data');
 			should(result[0]).have.property('ver', '3');
 			should(Date.parse(result[0].ts)).be.a.Date;
@@ -87,10 +88,10 @@ describe('analytics', function () {
 			should(result[0]).have.property('sid');
 			should(result[0]).have.property('mid', 'mid');
 			should(result[0]).have.property('aguid', 'guid');
-			should(result[0]).have.property('os', AppC.userAgent);
+			should(result[0]).have.property('platform', AppC.userAgent);
 			should(result[0]).have.property('deploytype', 'production');
 			should(result[0]).have.property('ts');
-			should(result[0]).have.property('event', 'appc.feature');
+			should(result[0]).have.property('event', 'app.feature');
 			should(result[0]).have.property('data');
 			should(result[0]).have.property('ver', '3');
 			should(Date.parse(result[0].ts)).be.a.Date;
@@ -111,10 +112,10 @@ describe('analytics', function () {
 			should(result[0]).have.property('sid');
 			should(result[0]).have.property('mid', 'mid');
 			should(result[0]).have.property('aguid', 'guid');
-			should(result[0]).have.property('os', AppC.userAgent);
+			should(result[0]).have.property('platform', AppC.userAgent);
 			should(result[0]).have.property('deploytype', 'production');
 			should(result[0]).have.property('ts');
-			should(result[0]).have.property('event', 'appc.feature');
+			should(result[0]).have.property('event', 'app.feature');
 			should(result[0]).have.property('data');
 			should(result[0]).have.property('ver', '3');
 			should(Date.parse(result[0].ts)).be.a.Date;
@@ -135,7 +136,7 @@ describe('analytics', function () {
 			should(result[0]).have.property('sid');
 			should(result[0]).have.property('mid', 'mid');
 			should(result[0]).have.property('aguid', 'guid');
-			should(result[0]).have.property('os', AppC.userAgent);
+			should(result[0]).have.property('platform', AppC.userAgent);
 			should(result[0]).have.property('deploytype', 'production');
 			should(result[0]).have.property('ts');
 			should(result[0]).have.property('event', 'event');
@@ -159,7 +160,7 @@ describe('analytics', function () {
 			should(result[0]).have.property('sid');
 			should(result[0]).have.property('mid', 'mid');
 			should(result[0]).have.property('aguid', 'guid');
-			should(result[0]).have.property('os', AppC.userAgent);
+			should(result[0]).have.property('platform', AppC.userAgent);
 			should(result[0]).have.property('deploytype', 'production');
 			should(result[0]).have.property('ts');
 			should(result[0]).have.property('event', 'event');
@@ -183,7 +184,7 @@ describe('analytics', function () {
 			should(result[0]).have.property('sid');
 			should(result[0]).have.property('mid', 'mid');
 			should(result[0]).have.property('aguid', 'guid');
-			should(result[0]).have.property('os', AppC.userAgent);
+			should(result[0]).have.property('platform', AppC.userAgent);
 			should(result[0]).have.property('deploytype', 'deploytype');
 			should(result[0]).have.property('ts');
 			should(result[0]).have.property('event', 'event');
@@ -207,7 +208,7 @@ describe('analytics', function () {
 			should(result[0]).have.property('sid', 'sid-sid-sid-sid-sid-sid');
 			should(result[0]).have.property('mid', 'mid');
 			should(result[0]).have.property('aguid', 'guid');
-			should(result[0]).have.property('os', AppC.userAgent);
+			should(result[0]).have.property('platform', AppC.userAgent);
 			should(result[0]).have.property('deploytype', 'deploytype');
 			should(result[0]).have.property('ts');
 			should(result[0]).have.property('event', 'event');
@@ -232,7 +233,7 @@ describe('analytics', function () {
 			should(result[0]).have.property('sid', 'sid-sid-sid-sid-sid-sid');
 			should(result[0]).have.property('mid', 'mid');
 			should(result[0]).have.property('aguid', 'guid');
-			should(result[0]).have.property('os', AppC.userAgent);
+			should(result[0]).have.property('platform', AppC.userAgent);
 			should(result[0]).have.property('deploytype', 'deploytype');
 			should(result[0]).have.property('ts');
 			should(result[0]).have.property('event', 'event');
@@ -247,7 +248,7 @@ describe('analytics', function () {
 		AppC.Analytics.sendEvent('guid', 'mid', {a:1}, 'event', 'deploytype', 'sid-sid-sid-sid-sid-sid');
 	});
 
-	it('should send analytics data with guid, mid, eventdata, event, deploytype, sid, os and no callback', function (done) {
+	it('should send analytics data with guid, mid, eventdata, event, deploytype, sid, platform and no callback', function (done) {
 		should(AppC.Analytics).be.an.object;
 		AppC.Analytics.flushInterval = 1000;
 		notification = function (err, result) {
@@ -258,7 +259,7 @@ describe('analytics', function () {
 			should(result[0]).have.property('sid', 'sid-sid-sid-sid-sid-sid');
 			should(result[0]).have.property('mid', 'mid');
 			should(result[0]).have.property('aguid', 'guid');
-			should(result[0]).have.property('os', 'os');
+			should(result[0]).have.property('platform', 'platform');
 			should(result[0]).have.property('deploytype', 'deploytype');
 			should(result[0]).have.property('ts');
 			should(result[0]).have.property('event', 'event');
@@ -270,7 +271,7 @@ describe('analytics', function () {
 			should(result[0].data).be.eql({a:1});
 			done();
 		};
-		AppC.Analytics.sendEvent('guid', 'mid', {a:1}, 'event', 'deploytype', 'sid-sid-sid-sid-sid-sid', 'os');
+		AppC.Analytics.sendEvent('guid', 'mid', {a:1}, 'event', 'deploytype', 'sid-sid-sid-sid-sid-sid', 'platform');
 	});
 
 	it('should send analytics data with guid, mid, eventdata, event, deploytype, sid, os and immediate', function (done) {
@@ -283,7 +284,7 @@ describe('analytics', function () {
 			should(result[0]).have.property('sid', 'sid-sid-sid-sid-sid-sid');
 			should(result[0]).have.property('mid', 'mid');
 			should(result[0]).have.property('aguid', 'guid');
-			should(result[0]).have.property('os', 'os');
+			should(result[0]).have.property('platform', 'platform');
 			should(result[0]).have.property('deploytype', 'deploytype');
 			should(result[0]).have.property('ts');
 			should(result[0]).have.property('event', 'event');
@@ -295,7 +296,7 @@ describe('analytics', function () {
 			should(result[0].data).be.eql({a:1});
 			done();
 		};
-		AppC.Analytics.sendEvent('guid', 'mid', {a:1}, 'event', 'deploytype', 'sid-sid-sid-sid-sid-sid', 'os', true);
+		AppC.Analytics.sendEvent('guid', 'mid', {a:1}, 'event', 'deploytype', 'sid-sid-sid-sid-sid-sid', 'platform', true);
 	});
 
 	it('should send analytics to real url and get back result', function (done) {
@@ -309,10 +310,10 @@ describe('analytics', function () {
 			should(result[0]).have.property('sid');
 			should(result[0]).have.property('mid');
 			should(result[0]).have.property('aguid', global.$config.apps.enterprise.app_guid);
-			should(result[0]).have.property('os', AppC.userAgent);
+			should(result[0]).have.property('platform', AppC.userAgent);
 			should(result[0]).have.property('deploytype', 'production');
 			should(result[0]).have.property('ts');
-			should(result[0]).have.property('event', 'appc.feature');
+			should(result[0]).have.property('event', 'app.feature');
 			should(result[0]).have.property('data', {});
 			should(result[0]).have.property('ver', '3');
 			should(Date.parse(result[0].ts)).be.a.Date;
@@ -351,7 +352,7 @@ describe('analytics', function () {
 			should(result).be.an.array;
 			should(result).have.length(3);
 			should(result[0]).have.property('event', 'ti.start');
-			should(result[1]).have.property('event', 'appc.feature');
+			should(result[1]).have.property('event', 'app.feature');
 			should(result[2]).have.property('event', 'ti.end');
 			should(result[0]).have.property('sid', session.sid);
 			should(result[1]).have.property('sid', session.sid);
