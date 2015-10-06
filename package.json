@@ -1,10 +1,13 @@
 {
   "name": "appc-platform-sdk",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Appcelerator Platform SDK for node.js",
   "main": "index.js",
   "scripts": {
     "test": "grunt"
+  },
+  "bugs": {
+    "url": "https://jira.appcelerator.org/browse/API"
   },
   "repository": {
     "type": "git",
