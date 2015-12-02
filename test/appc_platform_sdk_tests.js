@@ -112,6 +112,17 @@ describe('appc-platform-AppC', function () {
 				});
 			});
 
+			it('user should be able to log in using new method signature', function (done) {
+				var user = global.$config.user;
+				var params = {username: user.username, password: user.password};
+				AppC.Auth.login(params, function (err, result) {
+					should.not.exist(err);
+					should.exist(result);
+					currentSession = result;
+					done();
+				});
+			});
+
 			it('session should be valid', function () {
 				should.exist(currentSession);
 				currentSession.isValid().should.equal(true);
