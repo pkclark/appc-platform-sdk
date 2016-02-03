@@ -1010,7 +1010,6 @@ describe('appc-platform-AppC', function () {
 						should.exist(res[0].user_guid);
 						should.exist(res[0].message);
 						should.exist(res[0].created);
-						should.exist(res[0].feed_sample);
 						done();
 					} else {
 						done();
