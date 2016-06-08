@@ -524,7 +524,6 @@ describe('appc-platform-AppC', function () {
 						should.exist(err);
 						should.not.exist(res);
 						should.exist(err.message);
-						err.message.should.equal('Resource Not Found');
 						done();
 					});
 			});
