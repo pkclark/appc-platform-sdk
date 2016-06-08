@@ -1,9 +1,9 @@
 var ConfigLoader = require('./conf/loader').load(),
 	_ = require('underscore'),
-	registry = require('appc-registry-sdk'),
+	Registry = require('appc-registry-sdk'),
 	should = require('should'),
 	gm = require('gmail'),
-	mailParser = require('mailparser').MailParser,
+	MailParser = require('mailparser').MailParser,
 	gmStart = new Date(),
 	gmail = new gm.GMailInterface(),
 	twilio = require('twilio'),
@@ -48,7 +48,7 @@ function getCloudEnvironment(session, type, name, callback) {
  * @param callback    called after login finishes
  */
 function registryLogin(username, password, callback) {
-	var api = new registry('login');
+	var api = new Registry('login');
 	api.baseurl = AppC.registryurl;
 	api.body({
 		username: username,
@@ -167,7 +167,7 @@ function getLastEmail(callback) {
 
 	fetcher.on('end', function () {
 		// Parse the email after it has been received
-		var parser = new mailParser();
+		var parser = new MailParser();
 		parser.on('end', function (mail) {
 			callback(null, mail);
 		});
