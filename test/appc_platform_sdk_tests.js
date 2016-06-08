@@ -151,7 +151,7 @@ describe('appc-platform-AppC', function () {
 				});
 			});
 
-			it('should verify the email auth code that was requested earlier', function (done) {
+			it.skip('should verify the email auth code that was requested earlier', function (done) {
 				helper.getAuthCode('email', function (err, res) {
 					should.not.exist(err);
 					should.exist(res);
