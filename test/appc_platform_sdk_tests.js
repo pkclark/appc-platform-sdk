@@ -290,6 +290,8 @@ describe('appc-platform-AppC', function () {
 						should.exist(session.org.packageId);
 						should.exist(session.orgs);
 						should.exist(session.entitlements);
+						should.exist(session.entitlements.id);
+						should.exist(session.entitlements.name);
 						createdSession = session;
 						done();
 					});
