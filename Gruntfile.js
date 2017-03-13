@@ -1,35 +1,27 @@
-var exec = require('child_process').exec,
-	fs = require('fs'),
-	path = require('path');
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-const BIN = './node_modules/.bin/';
-
-if (!process.env.NODE_ENV) {
-	process.env.NODE_ENV = 'development';
-}
-
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
 	// Project configuration.
 	grunt.initConfig({
-		appcJs: {
+		eslint: {
+			target: [ 'index.js', 'lib/**/*.js', 'test/*.js' ],
 			options: {
-				force: false
-			},
-			src: ['index.js', 'lib/**/*.js', 'test/*.js']
+				quiet: true
+			}
 		},
 		mochaTest: {
+			src: [ 'test/*_tests.js' ],
 			options: {
 				timeout: 40000,
 				reporter: 'spec',
 				bail: true,
 				ignoreLeaks: false,
 				globals: []
-			},
-			src: ['test/*_tests.js']
+			}
 		},
 		kahvesi: {
-			src: ['test/*_tests.js']
+			src: [ 'test/*_tests.js' ]
 		},
 		appcCoverage: {
 			default_options: {
@@ -39,12 +31,11 @@ module.exports = function(grunt) {
 		}
 	});
 
-	// Load grunt plugins for modules
-	grunt.loadNpmTasks('grunt-appc-js');
+	grunt.loadNpmTasks('grunt-eslint');
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadNpmTasks('grunt-kahvesi');
 	grunt.loadNpmTasks('grunt-appc-coverage');
 
-	grunt.registerTask('cover', ['kahvesi', 'appcCoverage']);
-	grunt.registerTask('default', ['appcJs', 'mochaTest']);
+	grunt.registerTask('cover', [ 'kahvesi', 'appcCoverage' ]);
+	grunt.registerTask('default', [ 'eslint', 'mochaTest' ]);
 };
