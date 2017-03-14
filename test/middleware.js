@@ -1,4 +1,7 @@
-// globals $config
+'use strict';
+
+/* eslint-disable no-unused-expression ignore */
+
 var should = require('should'),
 	helper = require('./helper'),
 	cookieSession = require('cookie-session'),
@@ -300,10 +303,9 @@ describe('middleware', function () {
 		});
 		app.render = function (template, params, callback) {
 			if (template === 'unauth' && params.reason === 'unauthorized') {
-				callback(null, 'OK');
-			} else {
-				callback(new Error('invalid request'));
+				return callback(null, 'OK');
 			}
+			return callback(new Error('invalid request'));
 		};
 		var opts = {
 			url: 'http://127.0.0.1:' + server.port + '/',
@@ -488,7 +490,7 @@ describe('middleware', function () {
 					org_id:100001933,
 					plan: 'enterprise'
 				});
-				resp.json({success:true, revalidated: revalidated});
+				resp.json({ success:true, revalidated: revalidated });
 				done();
 			}
 		});

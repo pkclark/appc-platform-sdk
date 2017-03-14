@@ -1,4 +1,7 @@
-// globals $config
+'use strict';
+
+/* eslint-disable no-unused-expression ignore */
+
 var should = require('should'),
 	helper = require('./helper'),
 	path = require('path'),
@@ -22,10 +25,10 @@ describe('appc-platform-AppC', function () {
 		});
 
 		it('check for default', function () {
-			if (process.env.NODE_ENV === 'production' ||
-				process.env.APPC_ENV === 'production' ||
-				!process.env.NODE_ENV  &&
-				!process.env.APPC_ENV) {
+			if (process.env.NODE_ENV === 'production'
+				|| process.env.APPC_ENV === 'production'
+				|| !process.env.NODE_ENV
+				&&  !process.env.APPC_ENV) {
 				should(AppC.isProduction).be.equal(true);
 			} else {
 				should(AppC.isProduction).be.equal(false);
@@ -114,7 +117,7 @@ describe('appc-platform-AppC', function () {
 
 			it('user should be able to log in using new method signature', function (done) {
 				var user = global.$config.user;
-				var params = {username: user.username, password: user.password};
+				var params = { username: user.username, password: user.password };
 				AppC.Auth.login(params, function (err, result) {
 					should.not.exist(err);
 					should.exist(result);
@@ -401,7 +404,7 @@ describe('appc-platform-AppC', function () {
 			});
 
 			it('should fail to get a clould environment with a missing org in the session', function (done) {
-				helper.getCloudEnvironment({user:{}}, AppC.Cloud.AUTH_BASE, env, function (err, res) {
+				helper.getCloudEnvironment({ user:{} }, AppC.Cloud.AUTH_BASE, env, function (err, res) {
 					should.not.exist(res);
 					should.exist(err);
 					err.should.have.property('message');
@@ -435,7 +438,7 @@ describe('appc-platform-AppC', function () {
 					should.not.exist(err);
 					done();
 				});
-				//TODO: Delete all apis created
+				// TODO: Delete all apis created
 			});
 
 			it('should create a named app', function (done) {
@@ -506,10 +509,10 @@ describe('appc-platform-AppC', function () {
 
 			it('should be able to create an app with no guid', function (done) {
 				AppC.Cloud.createApp(currentSession, 'TiAppTest1', global.$config.user.developer_org_id, null, function (err, res) {
-						should.not.exist(err);
-						should.exist(res);
-						done();
-					});
+					should.not.exist(err);
+					should.exist(res);
+					done();
+				});
 			});
 
 			it('should fail to create an app with invalid org ID', function (done) {
@@ -966,7 +969,7 @@ describe('appc-platform-AppC', function () {
 			});
 
 			it('should find all the feeds for the logged in user', function (done) {
-				AppC.Feed.findAll(currentSession, {limit: 2}, function (err, res) {
+				AppC.Feed.findAll(currentSession, { limit: 2 }, function (err, res) {
 					should.exist(res);
 					should.not.exist(err);
 					should.exist(res.meta);

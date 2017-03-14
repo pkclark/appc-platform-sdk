@@ -1,19 +1,23 @@
-var ConfigLoader = require('./conf/loader').load(),
-	_ = require('underscore'),
-	Registry = require('appc-registry-sdk'),
-	should = require('should'),
-	gm = require('gmail'),
-	MailParser = require('mailparser').MailParser,
-	gmStart = new Date(),
-	gmail = new gm.GMailInterface(),
-	twilio = require('twilio'),
-	AppC = require('../'),
+'use strict';
+
+const _ = require('underscore');
+const gm = require('gmail');
+const MailParser = require('mailparser').MailParser;
+const should = require('should');
+const twilio = require('twilio');
+
+const ConfigLoader = require('../conf/loader').load();
+
+const AppC = require('../..');
+const gmail = new gm.GMailInterface();
+
+let gmStart = new Date(),
 	twclient;
 
 try {
 	twclient = twilio(global.$config.twilio.account_sid, global.$config.twilio.auth_token);
 }
-catch (E) {
+catch(E) {
 	console.error(E);
 	throw E;
 }
@@ -36,7 +40,7 @@ exports.getRequest = getRequest;
 function getCloudEnvironment(session, type, name, callback) {
 	try {
 		return callback(null, AppC.Cloud.getEnvironment(session, type, name));
-	} catch (err) {
+	} catch(err) {
 		return callback(err);
 	}
 }
@@ -103,12 +107,12 @@ function getAuthCode(method, callback) {
 			break;
 		case 'email':
 			loginGmail(global.$config.gmail.email, global.$config.gmail.password, function (err) {
-				if (err) { return callback (err); }
+				if (err) { return callback(err); }
 				retryGetLastEmail(15000, 20, function (err, email) {
 					if (email && email.html && email.html.match(/Authorization Code: <b>([0-9]{4})/)) {
 						return callback(null, email.html.match(/Authorization Code: <b>([0-9]{4})/)[1]);
 					} else {
-						return callback (err || 'No email found');
+						return callback(err || 'No email found');
 					}
 				});
 			});
@@ -207,7 +211,7 @@ function getLastSMS(callback) {
 		for (var c = 0; c < results.sms_messages.length; c++) {
 			var message = results.sms_messages[c];
 			if (message.direction === 'inbound') {
-				var match = /Appcelerator (device|phone) (authorization|verification) code: (\d{4})/.exec(message.body);
+				var match = (/Appcelerator (device|phone) (authorization|verification) code: (\d{4})/).exec(message.body);
 				if (match && match.length) {
 					callback(null, match[3]);
 					break;
