@@ -1,12 +1,13 @@
 'use strict';
 
-/* eslint-disable no-unused-expression ignore */
+const path = require('path');
 
-var should = require('should'),
-	helper = require('./helper'),
-	path = require('path'),
-	_ = require('underscore'),
-	AppC,
+const _ = require('underscore');
+const should = require('should');
+
+const helper = require('./lib/helper');
+
+let AppC,
 	currentSession;
 
 describe('appc-platform-AppC', function () {
@@ -65,7 +66,6 @@ describe('appc-platform-AppC', function () {
 				baseurl: 'http://test.appcelerator.com:8080/AppC',
 				isProduction: false,
 				supportUntrusted: true,
-				security: 'http://security.com',
 				registry: 'http://registry.com',
 				webevent: 'http://webevent.com',
 				cache: 'http://cache.com',
@@ -77,7 +77,6 @@ describe('appc-platform-AppC', function () {
 			should(AppC.isProduction).be.equal(false);
 			should(AppC.supportUntrusted).be.equal(true);
 			should(AppC.baseurl).be.equal('http://test.appcelerator.com:8080/AppC');
-			should(AppC.securityurl).be.equal('http://security.com');
 			should(AppC.registryurl).be.equal('http://registry.com');
 			should(AppC.webeventurl).be.equal('http://webevent.com');
 			should(AppC.cacheurl).be.equal('http://cache.com');
