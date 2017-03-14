@@ -5,13 +5,13 @@ module.exports = function (grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		eslint: {
-			target: [ 'index.js', 'lib/**/*.js', 'test/*.js' ],
+			target: [ 'index.js', 'lib/**/*.js', 'test/**/*.js' ],
 			options: {
 				quiet: true
 			}
 		},
 		mochaTest: {
-			src: [ 'test/*_tests.js' ],
+			src: [ 'test/*.js' ],
 			options: {
 				timeout: 40000,
 				reporter: 'spec',

@@ -62,7 +62,9 @@ function registryLogin(username, password, callback) {
 		fingerprint_description: 'unittest'
 	});
 	api.send(function (err, res) {
-		if (err) { return callback(err); }
+		if (err) {
+			return callback(err);
+		}
 		if (res && res.body && res.body.session) {
 			return callback(null, res.body.session);
 		} else {
@@ -107,7 +109,9 @@ function getAuthCode(method, callback) {
 			break;
 		case 'email':
 			loginGmail(global.$config.gmail.email, global.$config.gmail.password, function (err) {
-				if (err) { return callback(err); }
+				if (err) {
+					return callback(err);
+				}
 				retryGetLastEmail(15000, 20, function (err, email) {
 					if (email && email.html && email.html.match(/Authorization Code: <b>([0-9]{4})/)) {
 						return callback(null, email.html.match(/Authorization Code: <b>([0-9]{4})/)[1]);
@@ -118,7 +122,7 @@ function getAuthCode(method, callback) {
 			});
 			break;
 		default:
-			callback(new Error('Invalid method specified'));
+			return callback(new Error('Invalid method specified'));
 	}
 }
 
@@ -213,8 +217,7 @@ function getLastSMS(callback) {
 			if (message.direction === 'inbound') {
 				var match = (/Appcelerator (device|phone) (authorization|verification) code: (\d{4})/).exec(message.body);
 				if (match && match.length) {
-					callback(null, match[3]);
-					break;
+					return callback(null, match[3]);
 				}
 			}
 		}
