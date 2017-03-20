@@ -8,7 +8,7 @@ const helper = require('./lib/helper');
 let currentSession;
 let user = global.$config.user;
 
-describe('Appc.Feed', function () {
+describe('Appc.User', function () {
 
 	before(function (done) {
 		Appc.setEnvironment(global.$config.environment);
