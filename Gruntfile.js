@@ -5,7 +5,14 @@ module.exports = function (grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		eslint: {
-			target: [ 'index.js', 'lib/**/*.js', 'test/**/*.js' ],
+			target: [
+				'index.js',
+				'lib/**/*.js',
+				'test/*.js',
+				'test/conf/default.js',
+				'test/conf/loader.js',
+				'test/lib/*.js'
+			],
 			options: {
 				quiet: true
 			}
