@@ -166,21 +166,20 @@ describe('Appc.App', function () {
 	});
 
 	it('should fail to create an app from non-existent tiapp.xml', function (done) {
-		Appc.App.create(currentSession, path.join(__dirname, 'tiapptest0', 'none.xml'), global.$config.user.enterprise_org_id, function (err, res) {
+		Appc.App.create(currentSession, path.join(__dirname, 'tiapptest0', 'none.xml'), global.$config.user.enterprise_org_id, function (err, app) {
 			err.should.exist;
 			err.message.should.equal('tiapp.xml file does not exist');
-			should.not.exist(res);
+			should.not.exist(app);
 			done();
 		});
 	});
 
 	it('should create an app from provided tiapp.xml', function (done) {
-		Appc.App.create(currentSession, path.join(__dirname, 'tiapptest1', 'tiapp.xml'), global.$config.user.enterprise_org_id, function (err, res) {
+		Appc.App.create(currentSession, path.join(__dirname, 'tiapptest1', 'tiapp.xml'), global.$config.user.enterprise_org_id, function (err, app) {
 			should.not.exist(err);
-			res.should.exist;
-			res.app.should.exist;
+			app.should.exist;
 
-			Appc.App.delete(currentSession, res.app._id, function (err) {
+			Appc.App.delete(currentSession, app._id, function (err) {
 				should.not.exist(err);
 				done();
 			});
@@ -188,12 +187,11 @@ describe('Appc.App', function () {
 	});
 
 	it('should create an app from provided tiapp.xml with no org id', function (done) {
-		Appc.App.create(currentSession, path.join(__dirname, 'tiapptest1', 'tiapp.xml'), function (err, res) {
+		Appc.App.create(currentSession, path.join(__dirname, 'tiapptest1', 'tiapp.xml'), function (err, app) {
 			should.not.exist(err);
-			res.should.exist;
-			res.app.should.exist;
+			app.should.exist;
 
-			Appc.App.delete(currentSession, res.app._id, function (err) {
+			Appc.App.delete(currentSession, app._id, function (err) {
 				should.not.exist(err);
 				done();
 			});
@@ -201,21 +199,20 @@ describe('Appc.App', function () {
 	});
 
 	it('should fail create an app from provided tiapp.xml with no org id and invalid session', function (done) {
-		Appc.App.create({}, path.join(__dirname, 'tiapptest1', 'tiapp.xml'), function (err, res) {
+		Appc.App.create({}, path.join(__dirname, 'tiapptest1', 'tiapp.xml'), function (err, app) {
 			err.should.exist;
 			err.message.should.equal('session is not valid');
-			should.not.exist(res);
+			should.not.exist(app);
 			done();
 		});
 	});
 
 	it('should create an app from provided tiapp.xml with a null org id', function (done) {
-		Appc.App.create(currentSession, path.join(__dirname, 'tiapptest1', 'tiapp.xml'), null, function (err, res) {
+		Appc.App.create(currentSession, path.join(__dirname, 'tiapptest1', 'tiapp.xml'), null, function (err, app) {
 			should.not.exist(err);
-			res.should.exist;
-			res.app.should.exist;
+			app.should.exist;
 
-			Appc.App.delete(currentSession, res.app._id, function (err) {
+			Appc.App.delete(currentSession, app._id, function (err) {
 				should.not.exist(err);
 				done();
 			});
@@ -223,22 +220,20 @@ describe('Appc.App', function () {
 	});
 
 	it('should update an app from provided tiapp.xml', function (done) {
-		Appc.App.create(currentSession, path.join(__dirname, 'tiapptest2', 'tiapp.xml'), global.$config.user.enterprise_org_id, function (err, res) {
+		Appc.App.create(currentSession, path.join(__dirname, 'tiapptest2', 'tiapp.xml'), global.$config.user.enterprise_org_id, function (err, app) {
 			should.not.exist(err);
-			res.should.exist;
-			res.app.should.exist;
+			app.should.exist;
 
-			Appc.App.find(currentSession, res.app._id, function (err, app) {
+			Appc.App.find(currentSession, app._id, function (err, app) {
 				should.not.exist(err);
 				app.should.exist;
 				app.app_name.should.equal('TiAppTest2_changeme');
 
-				Appc.App.create(currentSession, path.join(__dirname, 'tiapptest2', 'tiapp_changed.xml'), global.$config.user.enterprise_org_id, function (err, res2) {
+				Appc.App.create(currentSession, path.join(__dirname, 'tiapptest2', 'tiapp_changed.xml'), global.$config.user.enterprise_org_id, function (err, app2) {
 					should.not.exist(err);
-					res2.should.exist;
-					res2.app.should.exist;
+					app2.should.exist;
 
-					Appc.App.find(currentSession, res2.app._id, function (err, changedApp) {
+					Appc.App.find(currentSession, app2._id, function (err, changedApp) {
 						should.not.exist(err);
 						changedApp.should.exist;
 						changedApp.app_name.should.equal('TiAppTest2');
@@ -263,19 +258,19 @@ describe('Appc.App', function () {
 	});
 
 	it('should fail to create an app from invalid session', function (done) {
-		Appc.App.create({}, path.join(__dirname, 'tiapptest1', 'tiapp.xml'), global.$config.user.enterprise_org_id, function (err, res) {
+		Appc.App.create({}, path.join(__dirname, 'tiapptest1', 'tiapp.xml'), global.$config.user.enterprise_org_id, function (err, app) {
 			err.should.exist;
 			err.message.should.equal('session is not valid');
-			should.not.exist(res);
+			should.not.exist(app);
 			done();
 		});
 	});
 
 	it('should fail to create a tiapp.xml app with invalid org id', function (done) {
-		Appc.App.create(currentSession, path.join(__dirname, 'tiapptest1', 'tiapp.xml'), 123, function (err, res) {
+		Appc.App.create(currentSession, path.join(__dirname, 'tiapptest1', 'tiapp.xml'), 123, function (err, app) {
 			err.should.exist;
 			err.code.should.equal(404);
-			should.not.exist(res);
+			should.not.exist(app);
 			done();
 		});
 	});
