@@ -321,10 +321,9 @@ describe('middleware', function () {
 		});
 		app.render = function (template, params, callback) {
 			if (template === 'unauth' && params.reason === 'unauthorized') {
-				callback(null, 'OK');
-			} else {
-				callback(new Error('invalid request'));
+				return callback(null, 'OK');
 			}
+			return callback(new Error('invalid request'));
 		};
 		var opts = {
 			url: 'http://127.0.0.1:' + server.port + '/',
