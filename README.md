@@ -14,7 +14,7 @@
 var AppC = require('appc-platform-sdk');
 
 // login
-AppC.login(username, password, function (err,session) {
+Appc.login(username, password, function (err,session) {
 	// we got an error, oops
 	if (err) {
 		return console.error(err);
@@ -23,7 +23,7 @@ AppC.login(username, password, function (err,session) {
 	console.log(session.user.username);
 
 	// when you're done, logout
-	AppC.logout(session);
+	Appc.logout(session);
 });
 ```
 
@@ -36,7 +36,7 @@ Authentication API used for gaining access to the platform.
 Login to the Platform.  Will validate the user and create a user session which will allow you to make subsequent API calls to the platform while the session is valid.
 
 ```javascript
-AppC.login(username, password, function (err, session) {
+Appc.login(username, password, function (err, session) {
 	// logged in, check err
 });
 ```
@@ -46,7 +46,7 @@ AppC.login(username, password, function (err, session) {
 Switch the active session user's logged in / active organization.
 
 ```javascript
-AppC.Auth.switchLoggedInOrg(session, '4567', function (err) {});
+Appc.Auth.switchLoggedInOrg(session, '4567', function (err) {});
 ```
 
 ### Logout
@@ -54,7 +54,7 @@ AppC.Auth.switchLoggedInOrg(session, '4567', function (err) {});
 Logout of the Platform session.  Will invalidate the session object.
 
 ```javascript
-AppC.logout(session, function () {
+Appc.logout(session, function () {
 	// logged out
 });
 ```
@@ -81,7 +81,7 @@ User API for interacting with users of the platform.
 Find a specific user details.
 
 ```javascript
-AppC.User.find(session, '1234', function (err, user) {});
+Appc.User.find(session, '1234', function (err, user) {});
 ```
 
 ## Org
@@ -93,7 +93,7 @@ Organization API for interacting with organizations that a user is a member.
 Find all the organizations that the current user has visibility.
 
 ```javascript
-AppC.Org.find(session, function (err, orgs) {});
+Appc.Org.find(session, function (err, orgs) {});
 ```
 
 ### getCurrent
@@ -101,7 +101,7 @@ AppC.Org.find(session, function (err, orgs) {});
 Return the current organization object for user session.
 
 ```javascript
-AppC.Org.getCurrent(session);
+Appc.Org.getCurrent(session);
 ```
 
 ### getById
@@ -109,7 +109,7 @@ AppC.Org.getCurrent(session);
 Return a specific organization by the org_id.
 
 ```javascript
-AppC.Org.getById(session, org_id);
+Appc.Org.getById(session, org_id);
 ```
 
 ### getByName
@@ -117,7 +117,7 @@ AppC.Org.getById(session, org_id);
 Return a specific organization by the name.
 
 ```javascript
-AppC.Org.getByName(session, 'Org Name');
+Appc.Org.getByName(session, 'Org Name');
 ```
 
 ## App
@@ -130,10 +130,10 @@ Find all the apps that the current user has access to
 
 ```javascript
 // find all apps for current active organization
-AppC.App.findAll(session, function (err, apps) {});
+Appc.App.findAll(session, function (err, apps) {});
 
 // find all apps for the org_id
-AppC.App.findAll(session, 'org_id', function (err, apps) {});
+Appc.App.findAll(session, 'org_id', function (err, apps) {});
 ```
 
 ### find
@@ -142,7 +142,7 @@ Find a specific app by app_guid
 
 ```javascript
 // find a specific app
-AppC.App.find(session, 'app_guid', function (err, app) {});
+Appc.App.find(session, 'app_guid', function (err, app) {});
 ```
 
 ### update
@@ -152,7 +152,7 @@ Update an app details.
 ```javascript
 // update an app
 app.app_name = 'my new app name';
-AppC.App.update(session, app, function (err, result) {
+Appc.App.update(session, app, function (err, result) {
 	console.log(err, result.app_name === app.app_name); // null, true
 });
 ```
@@ -169,7 +169,7 @@ Find all notifications for the logged in user:
 
 ```javascript
 // get all notifications
-AppC.Notification.findAll(session, function (err, results) {});
+Appc.Notification.findAll(session, function (err, results) {});
 ```
 
 ## Feed
@@ -182,13 +182,13 @@ Find all feed events for the logged in user:
 
 ```javascript
 // get all feeds
-AppC.Feed.findAll(session, function (err, results) {});
+Appc.Feed.findAll(session, function (err, results) {});
 
 // get all feeds for app_guid
-AppC.Feed.findAll(session, { app_guid: '123' }, function (err, results) {});
+Appc.Feed.findAll(session, { app_guid: '123' }, function (err, results) {});
 
 // get feeds by limit
-AppC.Feed.findAll(session, { limit: 10 }, function (err, results) {});
+Appc.Feed.findAll(session, { limit: 10 }, function (err, results) {});
 ```
 
 The following are options that can be passed to the second parameter of findAll:
@@ -209,7 +209,7 @@ Create a new pre-built ACS application (mBaaS).
 
 ```javascript
 // create a new app
-AppC.Cloud.createApp(session, 'foo', function (err, app) {});
+Appc.Cloud.createApp(session, 'foo', function (err, app) {});
 ```
 
 Required parameters:
