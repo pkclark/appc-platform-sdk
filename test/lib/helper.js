@@ -1,29 +1,28 @@
-var ConfigLoader = require('./conf/loader').load(),
-	_ = require('underscore'),
-	Registry = require('appc-registry-sdk'),
-	should = require('should'),
-	gm = require('gmail'),
-	MailParser = require('mailparser').MailParser,
-	gmStart = new Date(),
-	gmail = new gm.GMailInterface(),
-	twilio = require('twilio'),
-	AppC = require('../'),
-	twclient;
+'use strict';
 
-try {
-	twclient = twilio(global.$config.twilio.account_sid, global.$config.twilio.auth_token);
-}
-catch (E) {
-	console.error(E);
-	throw E;
-}
+const clone = require('clone');
+const gm = require('gmail');
+const MailParser = require('mailparser').MailParser;
+const should = require('should');
+const twilio = require('twilio');
+
+const ConfigLoader = require('../conf/loader').load();
+
+const Appc = require('../..');
+
+const gmail = new gm.GMailInterface();
+
+let gmStart = new Date();
+
+let twclient = twilio(global.$config.twilio.account_sid, global.$config.twilio.auth_token);
 
 exports.fakeUser = getFakeUser();
 exports.cloneSession = cloneSession;
 exports.getCloudEnvironment = getCloudEnvironment;
-exports.registryLogin = registryLogin;
+exports.cliLogin = cliLogin;
 exports.getAuthCode = getAuthCode;
-exports.getRequest = getRequest;
+exports.objectEquals = objectEquals;
+exports.objectContainsObject = objectContainsObject;
 
 /**
  * Performs a try/catch on the Cloud.getEnvironment function so that it cleans up the unit tests
@@ -35,8 +34,8 @@ exports.getRequest = getRequest;
  */
 function getCloudEnvironment(session, type, name, callback) {
 	try {
-		return callback(null, AppC.Cloud.getEnvironment(session, type, name));
-	} catch (err) {
+		return callback(null, Appc.Cloud.getEnvironment(session, type, name));
+	} catch(err) {
 		return callback(err);
 	}
 }
@@ -47,23 +46,24 @@ function getCloudEnvironment(session, type, name, callback) {
  * @param password    platform password
  * @param callback    called after login finishes
  */
-function registryLogin(username, password, callback) {
-	var api = new Registry('login');
-	api.baseurl = AppC.registryurl;
-	api.body({
+function cliLogin(username, password, callback) {
+	let params = {
 		username: username,
 		password: password,
 		ipaddress: '0.0.0.0',
 		fingerprint: 'unittest',
 		fingerprint_description: 'unittest'
-	});
-	api.send(function (err, res) {
-		if (err) { return callback(err); }
-		if (res && res.body && res.body.session) {
-			return callback(null, res.body.session);
-		} else {
-			return callback(new Error('Malformed response from registry'));
+	};
+	Appc.Auth.login(params, function (err, res) {
+		if (err) {
+			return callback(err);
 		}
+
+		if (res) {
+			return callback(null, res);
+		}
+
+		return callback(new Error('Malformed login response'));
 	});
 }
 
@@ -73,8 +73,8 @@ function registryLogin(username, password, callback) {
  */
 function getFakeUser() {
 	return {
-		'username' : 'fake_' + Date.now(),
-		'password' : 'test'
+		username: 'fake_' + Date.now(),
+		password: 'test'
 	};
 }
 
@@ -83,12 +83,12 @@ function getFakeUser() {
  * @param session
  */
 function cloneSession(session) {
-	var clone = _.map(clone, _.clone(session));
-	clone._invalidate = session._invalidate;
-	clone._set = session._set;
-	clone.invalidate = session.invalidate;
-	clone.isValid = session.isValid;
-	return clone;
+	var clonedSession = clone(session);
+	clonedSession._invalidate = session._invalidate;
+	clonedSession._set = session._set;
+	clonedSession.invalidate = session.invalidate;
+	clonedSession.isValid = session.isValid;
+	return clonedSession;
 }
 
 /**
@@ -103,18 +103,20 @@ function getAuthCode(method, callback) {
 			break;
 		case 'email':
 			loginGmail(global.$config.gmail.email, global.$config.gmail.password, function (err) {
-				if (err) { return callback (err); }
+				if (err) {
+					return callback(err);
+				}
 				retryGetLastEmail(15000, 20, function (err, email) {
 					if (email && email.html && email.html.match(/Authorization Code: <b>([0-9]{4})/)) {
 						return callback(null, email.html.match(/Authorization Code: <b>([0-9]{4})/)[1]);
 					} else {
-						return callback (err || 'No email found');
+						return callback(err || 'No email found');
 					}
 				});
 			});
 			break;
 		default:
-			callback(new Error('Invalid method specified'));
+			return callback(new Error('Invalid method specified'));
 	}
 }
 
@@ -207,10 +209,9 @@ function getLastSMS(callback) {
 		for (var c = 0; c < results.sms_messages.length; c++) {
 			var message = results.sms_messages[c];
 			if (message.direction === 'inbound') {
-				var match = /Appcelerator (device|phone) (authorization|verification) code: (\d{4})/.exec(message.body);
+				var match = (/Appcelerator (device|phone) (authorization|verification) code: (\d{4})/).exec(message.body);
 				if (match && match.length) {
-					callback(null, match[3]);
-					break;
+					return callback(null, match[3]);
 				}
 			}
 		}
@@ -218,10 +219,33 @@ function getLastSMS(callback) {
 }
 
 /**
- * A function to get a request object
+ * Checks object property sameness.
  * @param session
  * @returns {Object}
  */
-function getRequest(session) {
-	return AppC.createRequest(session, '/api/v1/auth/checkSession');
+function objectEquals(a, b) {
+	let aProps = Object.getOwnPropertyNames(a);
+	let bProps = Object.getOwnPropertyNames(b);
+
+	if (aProps.length !== bProps.length) {
+		return false;
+	}
+
+	for (let i = 0; i < aProps.length; i++) {
+		let propName = aProps[i];
+		if (a[propName] !== b[propName]) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/**
+ * Checks object properties match another object.
+ * @param session
+ * @returns {Object}
+ */
+function objectContainsObject(a, b) {
+	return Object.keys(b).every(k => a[k] === b[k]);
 }

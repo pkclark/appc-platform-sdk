@@ -1,19 +1,40 @@
-// globals $config
-var should = require('should'),
-	helper = require('./helper'),
-	cookieSession = require('cookie-session'),
-	AppC,
-	express = require('express'),
-	request = require('request'),
-	server,
-	app;
+'use strict';
 
-// jscs:disable jsDoc
+const cookieSession = require('cookie-session');
+const express = require('express');
+const request = require('request');
+const should = require('should');
+
+const helper = require('./lib/helper');
+
+const Appc = require('../');
+
+let app;
+let server;
+
 describe('middleware', function () {
+
 	this.timeout(30000);
 
-	before(function () {
-		AppC = require('../');
+	before(function (done) {
+		let currentSession;
+		let user = global.$config.user;
+
+		Appc.setEnvironment(global.$config.environment);
+
+		Appc.Auth.login(user.username, user.password, function (err, session) {
+			should.not.exist(err);
+			session.should.exist;
+			currentSession = session;
+			currentSession.isValid().should.equal(true);
+
+			Appc.Auth.switchLoggedInOrg(currentSession, global.$config.user.enterprise_org_id, function (err, res, newSession) {
+				currentSession = newSession;
+				should.not.exist(err);
+				newSession.should.exist;
+				done();
+			});
+		});
 	});
 
 	beforeEach(function (done) {
@@ -38,8 +59,8 @@ describe('middleware', function () {
 	});
 
 	it('should create basic middleware and skip', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware({
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware({
 			urlpattern: /^\/secure/
 		});
 		should(middleware).be.a.function;
@@ -56,8 +77,8 @@ describe('middleware', function () {
 	});
 
 	it('should create basic middleware and skip when not required', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware({
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware({
 			required: false
 		});
 		should(middleware).be.a.function;
@@ -74,8 +95,8 @@ describe('middleware', function () {
 	});
 
 	it('should create basic middleware and fail', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware();
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware();
 		should(middleware).be.a.function;
 		app.use(middleware);
 		app.get('/', function (req, resp) {
@@ -88,14 +109,14 @@ describe('middleware', function () {
 		request.get(opts, function (err, resp, body) {
 			should(err).be.not.ok;
 			should(resp.statusCode).be.equal(302);
-			should(body).match(new RegExp('Redirecting to ' + AppC.baseurl));
+			should(body).match(new RegExp('Redirecting to ' + Appc.baseurl));
 			done();
 		});
 	});
 
 	it('should create basic middleware and fail with image', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware();
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware();
 		should(middleware).be.a.function;
 		app.use(middleware);
 		app.get('/', function (req, resp) {
@@ -116,8 +137,8 @@ describe('middleware', function () {
 	});
 
 	it('should create basic middleware and fail with javascript', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware();
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware();
 		should(middleware).be.a.function;
 		app.use(middleware);
 		app.get('/', function (req, resp) {
@@ -138,8 +159,8 @@ describe('middleware', function () {
 	});
 
 	it('should create basic middleware and fail with json and default url but exclude redirect with mixed protocol', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware();
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware();
 		should(middleware).be.a.function;
 		app.use(middleware);
 		app.get('/', function (req, resp) {
@@ -159,15 +180,15 @@ describe('middleware', function () {
 				code: 401,
 				message: 'unauthorized',
 				error: 'not logged in',
-				url: AppC.baseurl
+				url: Appc.baseurl
 			}));
 			done();
 		});
 	});
 
 	it('should create basic middleware and fail with json and default url', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware();
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware();
 		should(middleware).be.a.function;
 		app.use(middleware);
 		app.get('/', function (req, resp) {
@@ -189,15 +210,15 @@ describe('middleware', function () {
 				code: 401,
 				message: 'unauthorized',
 				error: 'not logged in',
-				url: AppC.baseurl + '?redirect=https%3A%2F%2Ffoo.com%2F'
+				url: Appc.baseurl + '?redirect=https%3A%2F%2Ffoo.com%2F'
 			}));
 			done();
 		});
 	});
 
 	it('should create basic middleware and fail with json and use redirectUrlParam', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware({
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware({
 			redirectUrlParam: '_redirect'
 		});
 		should(middleware).be.a.function;
@@ -220,15 +241,15 @@ describe('middleware', function () {
 				code: 401,
 				message: 'unauthorized',
 				error: 'not logged in',
-				url: AppC.baseurl + '?_redirect=https%3A%2F%2F127.0.0.1%3A' + server.port + '%2F'
+				url: Appc.baseurl + '?_redirect=https%3A%2F%2F127.0.0.1%3A' + server.port + '%2F'
 			}));
 			done();
 		});
 	});
 
 	it('should create basic middleware and fail with json and redirect', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware({
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware({
 			redirect: 'foo'
 		});
 		should(middleware).be.a.function;
@@ -258,8 +279,8 @@ describe('middleware', function () {
 	});
 
 	it('should create basic middleware and fail with json and default url and use errorHandler', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware({
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware({
 			errorHandler: function (req, resp) {
 				resp.json({
 					success: false
@@ -288,8 +309,8 @@ describe('middleware', function () {
 	});
 
 	it('should create basic middleware and fail with json and use renderUnauthorized', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware({
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware({
 			renderUnauthorized: 'unauth',
 			redirect: null
 		});
@@ -314,14 +335,13 @@ describe('middleware', function () {
 		request.get(opts, function (err, resp, body) {
 			should(err).be.not.ok;
 			should(resp.statusCode).be.equal(401);
-			should(body).be.equal('OK');
 			done();
 		});
 	});
 
 	it('should create basic middleware and succeed', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware();
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware();
 		should(middleware).be.a.function;
 		app.use(middleware);
 		app.get('/', function (req, resp) {
@@ -331,7 +351,7 @@ describe('middleware', function () {
 			});
 		});
 		var jar = request.jar();
-		AppC.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
+		Appc.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
 			var opts = {
 				url: 'http://127.0.0.1:' + server.port + '/',
 				headers: {
@@ -359,8 +379,8 @@ describe('middleware', function () {
 				should(err).be.not.ok;
 				should(resp.statusCode).be.equal(200);
 				should(resp.headers).have.property('set-cookie');
-				should(resp.headers[0]).match(/^session=/);
-				should(resp.headers[1]).match(/^session\.sig=/);
+				should(resp.headers['set-cookie'][0]).match(/^session=/);
+				should(resp.headers['set-cookie'][1]).match(/^session\.sig=/);
 				should(body).eql(JSON.stringify(obj));
 				// make sure cookie got set
 				should(jar._jar.store.idx).have.property('127.0.0.1');
@@ -380,8 +400,8 @@ describe('middleware', function () {
 	});
 
 	it('should create basic middleware and succeed and then re-validate', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware({
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware({
 			sessionExpiry: 0, // immediate
 			successHandler: function (req, resp, next, session, revalidated) {
 				resp.json({
@@ -397,7 +417,7 @@ describe('middleware', function () {
 			resp.send('FAILED');
 		});
 		var jar = request.jar();
-		AppC.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
+		Appc.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
 			var opts = {
 				url: 'http://127.0.0.1:' + server.port + '/',
 				headers: {
@@ -427,8 +447,8 @@ describe('middleware', function () {
 				should(err).be.not.ok;
 				should(resp.statusCode).be.equal(200);
 				should(resp.headers).have.property('set-cookie');
-				should(resp.headers[0]).match(/^session=/);
-				should(resp.headers[1]).match(/^session\.sig=/);
+				should(resp.headers['set-cookie'][0]).match(/^session=/);
+				should(resp.headers['set-cookie'][1]).match(/^session\.sig=/);
 				should(body).eql(JSON.stringify(obj));
 				// make sure cookie got set
 				should(jar._jar.store.idx).have.property('127.0.0.1');
@@ -449,8 +469,8 @@ describe('middleware', function () {
 	});
 
 	it('should create basic middleware and use successHandler', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware({
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware({
 			successHandler: function (req, resp, next, session, revalidated) {
 				should(session).be.ok;
 				should(session).be.eql({
@@ -466,7 +486,7 @@ describe('middleware', function () {
 					org_id:100001933,
 					plan: 'enterprise'
 				});
-				resp.json({success:true, revalidated: revalidated});
+				resp.json({ success:true, revalidated: revalidated });
 				done();
 			}
 		});
@@ -475,7 +495,7 @@ describe('middleware', function () {
 		app.get('/', function (req, resp) {
 			return resp.send('FAILED');
 		});
-		AppC.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
+		Appc.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
 			var opts = {
 				url: 'http://127.0.0.1:' + server.port + '/',
 				headers: {
@@ -494,8 +514,8 @@ describe('middleware', function () {
 	});
 
 	it('should create basic middleware and require a plan type', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware({
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware({
 			planRequired: 'team'
 		});
 		should(middleware).be.a.function;
@@ -503,7 +523,7 @@ describe('middleware', function () {
 		app.get('/', function (req, resp) {
 			return resp.send('FAILED');
 		});
-		AppC.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
+		Appc.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
 			var opts = {
 				url: 'http://127.0.0.1:' + server.port + '/',
 				headers: {
@@ -521,8 +541,8 @@ describe('middleware', function () {
 	});
 
 	it('should create basic middleware and require a plan type with plan redirect', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware({
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware({
 			planRequired: 'team',
 			planRequiredRedirect: 'http://planredirect'
 		});
@@ -531,7 +551,7 @@ describe('middleware', function () {
 		app.get('/', function (req, resp) {
 			return resp.send('FAILED');
 		});
-		AppC.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
+		Appc.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
 			var opts = {
 				url: 'http://127.0.0.1:' + server.port + '/',
 				headers: {
@@ -556,8 +576,8 @@ describe('middleware', function () {
 	});
 
 	it('should create basic middleware and require a plan that is found', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware({
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware({
 			planRequired: 'enterprise'
 		});
 		should(middleware).be.a.function;
@@ -565,7 +585,7 @@ describe('middleware', function () {
 		app.get('/', function (req, resp) {
 			return resp.send('OK');
 		});
-		AppC.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
+		Appc.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
 			var opts = {
 				url: 'http://127.0.0.1:' + server.port + '/',
 				headers: {
@@ -584,8 +604,8 @@ describe('middleware', function () {
 	});
 
 	it('should create basic middleware and require a plan that is found using regex', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware({
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware({
 			planRequired: /^(enterprise|team)$/
 		});
 		should(middleware).be.a.function;
@@ -593,7 +613,7 @@ describe('middleware', function () {
 		app.get('/', function (req, resp) {
 			return resp.send('OK');
 		});
-		AppC.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
+		Appc.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
 			var opts = {
 				url: 'http://127.0.0.1:' + server.port + '/',
 				headers: {
@@ -612,14 +632,14 @@ describe('middleware', function () {
 	});
 
 	it('should create basic middleware and then simulate re-login', function (done) {
-		should(AppC.Middleware).be.an.object;
-		var middleware = new AppC.Middleware();
+		should(Appc.Middleware).be.an.object;
+		var middleware = new Appc.Middleware();
 		should(middleware).be.a.function;
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			return resp.send(req.session.user.sid);
 		});
-		AppC.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
+		Appc.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
 			var opts = {
 				url: 'http://127.0.0.1:' + server.port + '/',
 				headers: {
@@ -631,7 +651,7 @@ describe('middleware', function () {
 				should(err).be.not.ok;
 				should(resp.statusCode).be.equal(200);
 				should(body).be.equal(session.id);
-				AppC.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
+				Appc.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
 					// change the sid and it should generate a new session login
 					opts.headers.cookie = 'connect.sid=' + encodeURIComponent(session.id);
 					request(opts, function (err, resp, body) {

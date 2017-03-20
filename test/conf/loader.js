@@ -16,7 +16,7 @@ exports.load = function (env) {
 		if (fs.existsSync(file)) {
 			(function mix(dest, src) {
 				Object.keys(src).forEach(function (p) {
-					if (dest.hasOwnProperty(p) && Object.prototype.toString.call(dest[p]) == '[object Object]') {
+					if (dest.hasOwnProperty(p) && Object.prototype.toString.call(dest[p]) === '[object Object]') {
 						mix(dest[p], src[p]);
 					} else {
 						dest[p] = src[p];
