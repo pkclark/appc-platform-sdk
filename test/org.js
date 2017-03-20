@@ -9,7 +9,7 @@ let currentSession;
 let orgName;
 let user = global.$config.user;
 
-describe('Appc.Feed', function () {
+describe('Appc.Org', function () {
 
 	before(function (done) {
 		Appc.setEnvironment(global.$config.environment);
