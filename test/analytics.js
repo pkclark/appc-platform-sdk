@@ -12,18 +12,18 @@ const wrench = require('wrench');
 
 const helper = require('./lib/helper');
 
-let Appc,
-	app,
-	notifier,
-	originalUrl,
-	originalInterval;
+const Appc = require('../');
 
-// jscs:disable jsDoc
-describe('analytics', function () {
+let app;
+let notifier;
+let originalUrl;
+let originalInterval;
+
+describe('Appc.Analytics', function () {
+
 	this.timeout(30000);
 
 	before(function (done) {
-		Appc = require('../');
 		app = express();
 		app.set('port', 4000 + parseInt(1000 * Math.random()));
 		app.use(bodyparser.json());

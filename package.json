@@ -22,29 +22,29 @@
   "homepage": "https://github.com/appcelerator/appc-platform-sdk",
   "dependencies": {
     "async": "^2.1.5",
-    "debug": "^2.6.1",
+    "debug": "^2.6.3",
     "getmac": "^1.2.1",
-    "request": "^2.80.0",
+    "request": "^2.81.0",
     "tough-cookie": "^2.3.2",
-    "uuid": "^3.0.0"
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "body-parser": "^1.13.3",
+    "clone": "^2.1.1",
     "cookie-session": "^1.2.0",
     "express": "^4.13.3",
     "gmail": "0.5.0",
     "grunt": "^0.4.5",
-    "grunt-appc-coverage": "^0.2.0",
+    "grunt-appc-coverage": "^0.3.3",
     "grunt-eslint": "^19.0.0",
-    "grunt-kahvesi": "^0.2.0",
-    "grunt-mocha-test": "^0.11.0",
-    "mailparser": "0.5.1",
-    "mocha": "2.1.0",
-    "mocha-jenkins-reporter": "0.1.9",
-    "prompt": "^0.2.14",
-    "should": "^4.0.4",
-    "twilio": "2.2.0",
-    "underscore": "1.7.0",
+    "grunt-kahvesi": "^1.0.2",
+    "grunt-mocha-test": "^0.13.2",
+    "mailparser": "^0.5.1",
+    "mocha": "^3.2.0",
+    "mocha-jenkins-reporter": "^0.3.7",
+    "prompt": "^1.0.0",
+    "should": "^11.2.1",
+    "twilio": "^2.11.1",
     "wrench": "^1.5.8"
   }
 }

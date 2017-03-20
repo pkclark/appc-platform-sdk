@@ -21,7 +21,7 @@ module.exports = function (grunt) {
 			}
 		},
 		kahvesi: {
-			src: [ 'test/*_tests.js' ]
+			src: [ 'index.js', 'lib/**/*.js', 'test/**/*.js' ]
 		},
 		appcCoverage: {
 			default_options: {
