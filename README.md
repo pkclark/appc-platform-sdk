@@ -11,10 +11,10 @@
 ## Usage
 
 ```javascript
-var AppC = require('appc-platform-sdk');
+var Appc = require('appc-platform-sdk');
 
 // login
-Appc.login(username, password, function (err,session) {
+Appc.Auth.login(username, password, function (err,session) {
 	// we got an error, oops
 	if (err) {
 		return console.error(err);
@@ -23,7 +23,7 @@ Appc.login(username, password, function (err,session) {
 	console.log(session.user.username);
 
 	// when you're done, logout
-	Appc.logout(session);
+	Appc.Auth.logout(session);
 });
 ```
 
@@ -36,7 +36,7 @@ Authentication API used for gaining access to the platform.
 Login to the Platform.  Will validate the user and create a user session which will allow you to make subsequent API calls to the platform while the session is valid.
 
 ```javascript
-Appc.login(username, password, function (err, session) {
+Appc.Auth.login(username, password, function (err, session) {
 	// logged in, check err
 });
 ```
@@ -54,7 +54,7 @@ Appc.Auth.switchLoggedInOrg(session, '4567', function (err) {});
 Logout of the Platform session.  Will invalidate the session object.
 
 ```javascript
-Appc.logout(session, function () {
+Appc.Auth.logout(session, function () {
 	// logged out
 });
 ```
