@@ -74,4 +74,26 @@ describe('Appc.Env', function () {
 		Appc.cacheurl.should.equal('http://cache.com');
 		Appc.pubsuburl.should.equal('http://pubsub.com');
 	});
+
+	it('should use override with ENV variables', function () {
+		process.env['APPC_DASHBOARD_URL'] = 'http://360-env.appcelerator.com';
+		process.env['APPC_REGISTRY_URL'] = 'http://software-env.appcelerator.com';
+		process.env['APPC_PUBSUB_URL'] = 'http://pubsub-env.appcelerator.com';
+		process.env['APPC_WEBEVENT_URL'] = 'http://webevent-env.appcelerator.com';
+		process.env['APPC_CACHE_URL'] = 'http://webevent-env.appcelerator.com';
+		process.env['APPC_SUPPORT_UNTRUSTED'] = 'false';
+		process.env['APPC_SECURE_COOKIES'] = 'false';
+
+		delete require.cache[require.resolve('../')];
+		delete require.cache[require.resolve('../lib/env')];
+		Appc = require('../');
+
+		Appc.secureCookies.should.equal(false);
+		Appc.supportUntrusted.should.equal(false);
+		Appc.baseurl.should.equal('http://360-env.appcelerator.com');
+		Appc.registryurl.should.equal('http://software-env.appcelerator.com');
+		Appc.pubsuburl.should.equal('http://pubsub-env.appcelerator.com');
+		Appc.webeventurl.should.equal('http://webevent-env.appcelerator.com');
+		Appc.cacheurl.should.equal('http://webevent-env.appcelerator.com');
+	});
 });
