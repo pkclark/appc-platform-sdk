@@ -176,6 +176,6 @@ describe('Appc.Org', function () {
 	});
 
 	it('cached time should be lower (or equal to) than original time for finding orgs', function () {
-		(regularTime - cachedTime).should.not.be.lessThan(0);
+		(regularTime - cachedTime).should.not.be.lessThan(-1);
 	});
 });
