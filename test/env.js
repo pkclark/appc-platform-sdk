@@ -106,7 +106,7 @@ describe('Appc.Env', function () {
 
 		it('should use override with ENV variables', function () {
 			process.env.APPC_DASHBOARD_URL = 'http://360-env.appcelerator.com';
-			process.env.APPC_REGISTRY_URL = 'http://software-env.appcelerator.com';
+			process.env.APPC_REGISTRY_SERVER = 'http://software-env.appcelerator.com';
 			process.env.APPC_PUBSUB_URL = 'http://pubsub-env.appcelerator.com';
 			process.env.APPC_WEBEVENT_URL = 'http://webevent-env.appcelerator.com';
 			process.env.APPC_CACHE_URL = 'http://webevent-env.appcelerator.com';
