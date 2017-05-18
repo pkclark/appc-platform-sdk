@@ -1,6 +1,6 @@
 {
   "name": "appc-platform-sdk",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Appcelerator Platform SDK for node.js",
   "main": "index.js",
   "scripts": {
@@ -21,18 +21,18 @@
   "license": "SEE LICENSE IN LICENSE.md",
   "homepage": "https://github.com/appcelerator/appc-platform-sdk",
   "dependencies": {
-    "async": "^2.1.5",
-    "debug": "^2.6.3",
+    "async": "^2.4.0",
+    "debug": "^2.6.7",
     "getmac": "^1.2.1",
     "request": "^2.81.0",
     "tough-cookie": "^2.3.2",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
-    "body-parser": "^1.13.3",
+    "body-parser": "^1.17.2",
     "clone": "^2.1.1",
     "cookie-session": "^1.2.0",
-    "express": "^4.13.3",
+    "express": "^4.15.3",
     "gmail": "0.5.0",
     "grunt": "^0.4.5",
     "grunt-appc-coverage": "^0.3.3",
@@ -40,8 +40,8 @@
     "grunt-kahvesi": "^1.0.2",
     "grunt-mocha-test": "^0.13.2",
     "mailparser": "^0.5.1",
-    "mocha": "^3.2.0",
-    "mocha-jenkins-reporter": "^0.3.7",
+    "mocha": "^3.4.1",
+    "mocha-jenkins-reporter": "^0.3.8",
     "prompt": "^1.0.0",
     "should": "^11.2.1",
     "twilio": "^2.11.1",
