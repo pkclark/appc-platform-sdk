@@ -23,7 +23,7 @@ describe('Appc.Auth', function () {
 		it('fake user should not be able to log in', function (done) {
 			var fakeuser = helper.fakeUser;
 			Appc.Auth.login(fakeuser.username, fakeuser.password, function (err, result) {
-				err.should.exist;
+				should.exist(err);
 				should.not.exist(result);
 				done();
 			});
@@ -33,7 +33,7 @@ describe('Appc.Auth', function () {
 			var user = global.$config.user;
 			Appc.Auth.login(user.username, user.password, function (err, result) {
 				should.not.exist(err);
-				result.should.exist;
+				should.exist(result);
 				currentSession = result;
 				done();
 			});
@@ -44,7 +44,7 @@ describe('Appc.Auth', function () {
 			var params = { username: user.username, password: user.password };
 			Appc.Auth.login(params, function (err, result) {
 				should.not.exist(err);
-				result.should.exist;
+				should.exist(result);
 				currentSession = result;
 				done();
 			});
@@ -59,7 +59,7 @@ describe('Appc.Auth', function () {
 			should.exist(currentSession);
 			Appc.Auth.requestLoginCode(currentSession, false, function (err, res) {
 				should.not.exist(err);
-				res.should.exist;
+				should.exist(res);
 				done();
 			});
 		});
@@ -71,7 +71,7 @@ describe('Appc.Auth', function () {
 			invalidSession.isValid().should.equal(false);
 
 			Appc.Auth.requestLoginCode(invalidSession, false, function (err) {
-				err.should.exist;
+				should.exist(err);
 				err.should.have.property('message');
 				err.message.should.equal('session is not valid');
 				done();
@@ -81,11 +81,11 @@ describe('Appc.Auth', function () {
 		it('should verify the email auth code that was requested earlier', function (done) {
 			helper.getAuthCode('email', function (err, res) {
 				should.not.exist(err);
-				res.should.exist;
+				should.exist(res);
 
 				Appc.Auth.verifyLoginCode(currentSession, res, function (err, res) {
 					should.not.exist(err);
-					res.should.exist;
+					should.exist(res);
 					res.should.equal(true);
 					done();
 				});
@@ -97,7 +97,7 @@ describe('Appc.Auth', function () {
 
 			Appc.Auth.requestLoginCode(currentSession, true, function (err, res) {
 				should.not.exist(err);
-				res.should.exist;
+				should.exist(res);
 				done();
 			});
 		});
@@ -108,7 +108,7 @@ describe('Appc.Auth', function () {
 			invalidSession.isValid().should.equal(false);
 
 			Appc.Auth.requestLoginCode(invalidSession, true, function (err) {
-				err.should.exist;
+				should.exist(err);
 				err.should.have.property('message');
 				err.message.should.equal('session is not valid');
 				done();
@@ -118,11 +118,11 @@ describe('Appc.Auth', function () {
 		it('should verify the sms auth code that was requested earlier', function (done) {
 			helper.getAuthCode('sms', function (err, res) {
 				should.not.exist(err);
-				res.should.exist;
+				should.exist(res);
 
 				Appc.Auth.verifyLoginCode(currentSession, res, function (err, res) {
 					should.not.exist(err);
-					res.should.exist;
+					should.exist(res);
 					res.should.equal(true);
 					done();
 				});
@@ -134,14 +134,14 @@ describe('Appc.Auth', function () {
 
 			Appc.Auth.requestLoginCode(currentSession, false, function (err, res) {
 				should.not.exist(err);
-				res.should.exist;
+				should.exist(res);
 				done();
 			});
 		});
 
 		it('should fail to verify an invalid auth code', function (done) {
 			Appc.Auth.verifyLoginCode(currentSession, 123, function (err, res) {
-				err.should.exist;
+				should.exist(err);
 				should.not.exist(res);
 				err.message.should.equal('Your authorization code was invalid.');
 				done();
@@ -150,7 +150,7 @@ describe('Appc.Auth', function () {
 
 		it('should fail to verify an auth code with an invalid session', function (done) {
 			Appc.Auth.verifyLoginCode({}, 1234, function (err, res) {
-				err.should.exist;
+				should.exist(err);
 				should.not.exist(res);
 				done();
 			});
@@ -187,7 +187,7 @@ describe('Appc.Auth', function () {
 		});
 
 		it('should fail if user tries to log out with an invalid session', function (done) {
-			currentSession.should.exist;
+			should.exist(currentSession);
 			var invalidSession = helper.cloneSession(currentSession);
 			invalidSession.invalidate();
 			// try an invalidate again to get more code coverage
@@ -195,7 +195,7 @@ describe('Appc.Auth', function () {
 			invalidSession.isValid().should.equal(false);
 
 			Appc.Auth.logout(invalidSession, function (err) {
-				err.should.exist;
+				should.exist(err);
 				err.should.have.property('message');
 				err.message.should.equal('session is not valid');
 				done();
@@ -216,7 +216,7 @@ describe('Appc.Auth', function () {
 
 		it('should fail to create a session from invalid ID', function (done) {
 			Appc.Auth.createSessionFromID('1234', function (err, session) {
-				err.should.exist;
+				should.exist(err);
 				should.not.exist(session);
 				should.exist(err.message);
 				err.message.should.equal('invalid session');
@@ -229,7 +229,7 @@ describe('Appc.Auth', function () {
 				password = global.$config.user.password;
 			helper.cliLogin(username, password, function (err, res) {
 				should.not.exist(err);
-				res.should.exist;
+				should.exist(res);
 				should.exist(res.id);
 				Appc.Auth.createSessionFromID(res.id, function (err, session) {
 					should.not.exist(err);
@@ -259,7 +259,7 @@ describe('Appc.Auth', function () {
 		it('should validate the session previously created', function (done) {
 			Appc.Auth.validateSession(createdSession, function (err, res) {
 				should.not.exist(err);
-				res.should.exist;
+				should.exist(res);
 				done();
 			});
 		});
@@ -267,7 +267,7 @@ describe('Appc.Auth', function () {
 		it('should get a cached session from createSessionFromID', function (done) {
 			Appc.Auth.createSessionFromID(createdSession.id, function (err, res) {
 				should.not.exist(err);
-				res.should.exist;
+				should.exist(res);
 				res.should.equal(createdSession);
 				done();
 			});
@@ -277,7 +277,7 @@ describe('Appc.Auth', function () {
 			createdSession.invalidate(function (err) {
 				should.not.exist(err);
 				Appc.Auth.validateSession(createdSession, function (err, res) {
-					err.should.exist;
+					should.exist(err);
 					should.not.exist(res);
 					createdSession = null;
 					done();

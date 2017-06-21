@@ -16,7 +16,7 @@ describe('Appc.Org', function () {
 
 		Appc.Auth.login(user.username, user.password, function (err, session) {
 			should.not.exist(err);
-			session.should.exist;
+			should.exist(session);
 			currentSession = session;
 			currentSession.isValid().should.equal(true);
 

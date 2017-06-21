@@ -24,14 +24,14 @@ describe('middleware', function () {
 
 		Appc.Auth.login(user.username, user.password, function (err, session) {
 			should.not.exist(err);
-			session.should.exist;
+			should.exist(session);
 			currentSession = session;
 			currentSession.isValid().should.equal(true);
 
 			Appc.Auth.switchLoggedInOrg(currentSession, global.$config.user.enterprise_org_id, function (err, res, newSession) {
 				currentSession = newSession;
 				should.not.exist(err);
-				newSession.should.exist;
+				should.exist(newSession);
 				done();
 			});
 		});
