@@ -107,8 +107,8 @@ function getAuthCode(method, callback) {
 					return callback(err);
 				}
 				retryGetLastEmail(15000, 20, function (err, email) {
-					if (email && email.html && email.html.match(/Authorization Code: <b>([0-9]{4})/)) {
-						return callback(null, email.html.match(/Authorization Code: <b>([0-9]{4})/)[1]);
+					if (email && email.html && email.html.match(/Authorization Code: <b>(\w{6})/)) {
+						return callback(null, email.html.match(/Authorization Code: <b>(\w{6})/)[1]);
 					} else {
 						return callback(err || 'No email found');
 					}
@@ -209,7 +209,7 @@ function getLastSMS(callback) {
 		for (var c = 0; c < results.sms_messages.length; c++) {
 			var message = results.sms_messages[c];
 			if (message.direction === 'inbound') {
-				var match = (/Appcelerator (device|phone) (authorization|verification) code: (\d{4})/).exec(message.body);
+				var match = (/Appcelerator (device|phone) (authorization|verification) code: (\w{6})/).exec(message.body);
 				if (match && match.length) {
 					return callback(null, match[3]);
 				}
