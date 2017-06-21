@@ -69,7 +69,7 @@ describe('middleware', function () {
 			resp.send('OK');
 		});
 		request.get('http://127.0.0.1:' + server.port + '/', function (err, resp, body) {
-			should(err).be.not.ok;
+			should(err).be.not.ok();
 			should(body).be.equal('OK');
 			should(resp.statusCode).be.equal(200);
 			done();
@@ -87,7 +87,7 @@ describe('middleware', function () {
 			resp.send(req.session && req.session.user ? 'FAILED' : 'OK');
 		});
 		request.get('http://127.0.0.1:' + server.port + '/', function (err, resp, body) {
-			should(err).be.not.ok;
+			should(err).be.not.ok();
 			should(body).be.equal('OK');
 			should(resp.statusCode).be.equal(200);
 			done();
@@ -107,7 +107,7 @@ describe('middleware', function () {
 			followRedirect: false
 		};
 		request.get(opts, function (err, resp, body) {
-			should(err).be.not.ok;
+			should(err).be.not.ok();
 			should(resp.statusCode).be.equal(302);
 			should(body).match(new RegExp('Redirecting to ' + Appc.baseurl));
 			done();
@@ -129,7 +129,7 @@ describe('middleware', function () {
 			}
 		};
 		request.get(opts, function (err, resp, body) {
-			should(err).be.not.ok;
+			should(err).be.not.ok();
 			should(resp.statusCode).be.equal(401);
 			should(body).be.empty;
 			done();
@@ -151,7 +151,7 @@ describe('middleware', function () {
 			}
 		};
 		request.get(opts, function (err, resp, body) {
-			should(err).be.not.ok;
+			should(err).be.not.ok();
 			should(resp.statusCode).be.equal(401);
 			should(body).be.empty;
 			done();
@@ -173,7 +173,7 @@ describe('middleware', function () {
 			}
 		};
 		request.get(opts, function (err, resp, body) {
-			should(err).be.not.ok;
+			should(err).be.not.ok();
 			should(resp.statusCode).be.equal(401);
 			should(body).be.eql(JSON.stringify({
 				success: false,
@@ -203,7 +203,7 @@ describe('middleware', function () {
 			}
 		};
 		request.get(opts, function (err, resp, body) {
-			should(err).be.not.ok;
+			should(err).be.not.ok();
 			should(resp.statusCode).be.equal(401);
 			should(body).be.eql(JSON.stringify({
 				success: false,
@@ -234,7 +234,7 @@ describe('middleware', function () {
 			}
 		};
 		request.get(opts, function (err, resp, body) {
-			should(err).be.not.ok;
+			should(err).be.not.ok();
 			should(resp.statusCode).be.equal(401);
 			should(body).be.eql(JSON.stringify({
 				success: false,
@@ -265,7 +265,7 @@ describe('middleware', function () {
 			}
 		};
 		request.get(opts, function (err, resp, body) {
-			should(err).be.not.ok;
+			should(err).be.not.ok();
 			should(resp.statusCode).be.equal(401);
 			should(body).be.eql(JSON.stringify({
 				success: false,
@@ -299,7 +299,7 @@ describe('middleware', function () {
 			}
 		};
 		request.get(opts, function (err, resp, body) {
-			should(err).be.not.ok;
+			should(err).be.not.ok();
 			should(resp.statusCode).be.equal(200);
 			should(body).be.eql(JSON.stringify({
 				success: false
@@ -332,7 +332,7 @@ describe('middleware', function () {
 			}
 		};
 		request.get(opts, function (err, resp, body) {
-			should(err).be.not.ok;
+			should(err).be.not.ok();
 			should(resp.statusCode).be.equal(401);
 			done();
 		});
@@ -375,7 +375,7 @@ describe('middleware', function () {
 				isNew: true
 			};
 			request(opts, function (err, resp, body) {
-				should(err).be.not.ok;
+				should(err).be.not.ok();
 				should(resp.statusCode).be.equal(200);
 				should(resp.headers).have.property('set-cookie');
 				should(resp.headers['set-cookie'][0]).match(/^session=/);
@@ -386,10 +386,10 @@ describe('middleware', function () {
 				should(jar._jar.store.idx['127.0.0.1']['/']).have.property('session');
 				should(jar._jar.store.idx['127.0.0.1']['/']).have.property('session.sig');
 				request(opts, function (err, resp, body) {
-					should(err).be.not.ok;
+					should(err).be.not.ok();
 					should(resp.statusCode).be.equal(200);
 					var data = JSON.parse(body);
-					should(data.user).be.ok;
+					should(data.user).be.ok();
 					should(data.user._id).be.equal(obj.user._id);
 					should(data.isNew).be.equal(false);
 					done();
@@ -443,7 +443,7 @@ describe('middleware', function () {
 				revalidated: false
 			};
 			request(opts, function (err, resp, body) {
-				should(err).be.not.ok;
+				should(err).be.not.ok();
 				should(resp.statusCode).be.equal(200);
 				should(resp.headers).have.property('set-cookie');
 				should(resp.headers['set-cookie'][0]).match(/^session=/);
@@ -454,10 +454,10 @@ describe('middleware', function () {
 				should(jar._jar.store.idx['127.0.0.1']['/']).have.property('session');
 				should(jar._jar.store.idx['127.0.0.1']['/']).have.property('session.sig');
 				request(opts, function (err, resp, body) {
-					should(err).be.not.ok;
+					should(err).be.not.ok();
 					should(resp.statusCode).be.equal(200);
 					var data = JSON.parse(body);
-					should(data.user).be.ok;
+					should(data.user).be.ok();
 					should(data.user._id).be.equal(obj.user._id);
 					should(data.isNew).be.equal(false);
 					should(data.revalidated).be.equal(true);
@@ -471,7 +471,7 @@ describe('middleware', function () {
 		should(Appc.Middleware).be.an.object;
 		var middleware = new Appc.Middleware({
 			successHandler: function (req, resp, next, session, revalidated) {
-				should(session).be.ok;
+				should(session).be.ok();
 				should(session).be.eql({
 					'_id':'54d53480b867bc232dc3ea1d',
 					user_id:1503110,
@@ -502,7 +502,7 @@ describe('middleware', function () {
 				}
 			};
 			request(opts, function (err, resp, body) {
-				should(err).be.not.ok;
+				should(err).be.not.ok();
 				should(resp.statusCode).be.equal(200);
 				should(body).eql(JSON.stringify({
 					success: true,
@@ -531,7 +531,7 @@ describe('middleware', function () {
 				}
 			};
 			request(opts, function (err, resp, body) {
-				should(err).be.not.ok;
+				should(err).be.not.ok();
 				should(resp.statusCode).be.equal(401);
 				should(body).be.equal('{"success":false,"code":401,"message":"unauthorized","error":"insufficient privilieges based on your subscription"}');
 				done();
@@ -560,7 +560,7 @@ describe('middleware', function () {
 				followRedirect: false
 			};
 			request(opts, function (err, resp, body) {
-				should(err).be.not.ok;
+				should(err).be.not.ok();
 				should(resp.statusCode).be.equal(401);
 				should(body).be.equal(JSON.stringify({
 					success:false,
@@ -594,7 +594,7 @@ describe('middleware', function () {
 				followRedirect: false
 			};
 			request(opts, function (err, resp, body) {
-				should(err).be.not.ok;
+				should(err).be.not.ok();
 				should(resp.statusCode).be.equal(200);
 				should(body).be.equal('OK');
 				done();
@@ -622,7 +622,7 @@ describe('middleware', function () {
 				followRedirect: false
 			};
 			request(opts, function (err, resp, body) {
-				should(err).be.not.ok;
+				should(err).be.not.ok();
 				should(resp.statusCode).be.equal(200);
 				should(body).be.equal('OK');
 				done();
@@ -647,14 +647,14 @@ describe('middleware', function () {
 				}
 			};
 			request(opts, function (err, resp, body) {
-				should(err).be.not.ok;
+				should(err).be.not.ok();
 				should(resp.statusCode).be.equal(200);
 				should(body).be.equal(session.id);
 				Appc.Auth.login(global.$config.user.username, global.$config.user.password, function (err, session) {
 					// change the sid and it should generate a new session login
 					opts.headers.cookie = 'connect.sid=' + encodeURIComponent(session.id);
 					request(opts, function (err, resp, body) {
-						should(err).be.not.ok;
+						should(err).be.not.ok();
 						should(resp.statusCode).be.equal(200);
 						should(body).be.equal(session.id);
 						done();

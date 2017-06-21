@@ -57,7 +57,7 @@ describe('Appc.Analytics', function () {
 	it('should send analytics data with guid only', function (done) {
 		should(Appc.Analytics).be.an.object;
 		Appc.Analytics.sendEvent('guid', null, function (err, result, sent) {
-			should(err).not.be.ok;
+			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(sent).be.true;
 			should(result).have.length(1);
@@ -82,7 +82,7 @@ describe('Appc.Analytics', function () {
 	it('should send analytics data with guid and mid only', function (done) {
 		should(Appc.Analytics).be.an.object;
 		Appc.Analytics.sendEvent('guid', { mid: 'mid' }, function (err, result) {
-			should(err).not.be.ok;
+			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
@@ -106,7 +106,7 @@ describe('Appc.Analytics', function () {
 	it('should send analytics data with guid, mid, eventdata', function (done) {
 		should(Appc.Analytics).be.an.object;
 		Appc.Analytics.sendEvent('guid', { mid: 'mid', data: { a: 1 } }, function (err, result) {
-			should(err).not.be.ok;
+			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
@@ -130,7 +130,7 @@ describe('Appc.Analytics', function () {
 	it('should send analytics data with guid, mid, eventdata, event', function (done) {
 		should(Appc.Analytics).be.an.object;
 		Appc.Analytics.sendEvent('guid', { event: 'event', mid: 'mid', data: { a: 1 } }, function (err, result) {
-			should(err).not.be.ok;
+			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
@@ -154,7 +154,7 @@ describe('Appc.Analytics', function () {
 	it('should send analytics data with guid, mid, eventdata, event, deploytype', function (done) {
 		should(Appc.Analytics).be.an.object;
 		Appc.Analytics.sendEvent('guid', { event: 'event', mid: 'mid', deploytype: 'deploytype', data: { a: 1 } }, function (err, result) {
-			should(err).not.be.ok;
+			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
@@ -178,7 +178,7 @@ describe('Appc.Analytics', function () {
 	it('should send analytics data with guid, mid, eventdata, event, deploytype and sid', function (done) {
 		should(Appc.Analytics).be.an.object;
 		Appc.Analytics.sendEvent('guid', { event: 'event', mid: 'mid', deploytype: 'deploytype', sid: 'sid-sid-sid-sid-sid-sid', data: { a: 1 } }, function (err, result) {
-			should(err).not.be.ok;
+			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
@@ -203,7 +203,7 @@ describe('Appc.Analytics', function () {
 		should(Appc.Analytics).be.an.object;
 		Appc.Analytics.flushInterval = 1000;
 		notifier = function (err, result) {
-			should(err).not.be.ok;
+			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
@@ -218,7 +218,7 @@ describe('Appc.Analytics', function () {
 	it.skip('should send analytics data immediate', function (done) {
 		should(Appc.Analytics).be.an.object;
 		notifier = function (err, result) {
-			should(err).not.be.ok;
+			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
@@ -232,7 +232,7 @@ describe('Appc.Analytics', function () {
 		should(Appc.Analytics).be.an.object;
 		Appc.Analytics.url = originalUrl;
 		Appc.Analytics.sendEvent(global.$config.apps.enterprise.app_guid, {}, function (err, result, sent) {
-			should(err).not.be.ok;
+			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
@@ -257,7 +257,7 @@ describe('Appc.Analytics', function () {
 		should(Appc.Analytics).be.an.object;
 		Appc.Analytics.flushInterval = 10;
 		notifier = function (err, result) {
-			should(err).not.be.ok;
+			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(result).have.length(4);
 			should(result[0].data).be.eql({ a: 1 });
@@ -277,7 +277,7 @@ describe('Appc.Analytics', function () {
 		Appc.Analytics.flushInterval = 10;
 		var session;
 		notifier = function (err, result) {
-			should(err).not.be.ok;
+			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(result).have.length(3);
 			should(result[0]).have.property('event', 'ti.start');

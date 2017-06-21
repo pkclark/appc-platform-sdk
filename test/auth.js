@@ -252,12 +252,12 @@ describe('Appc.Auth', function () {
 
 		it('should be able to log out from valid session', function (done) {
 			should.exist(currentSession);
-			should(currentSession).be.ok;
+			should(currentSession).be.ok();
 			currentSession.isValid().should.equal(true);
 			Appc.Auth.logout(currentSession, function (err) {
 				should.not.exist(err);
 				currentSession = undefined;
-				should(currentSession).not.be.ok;
+				should(currentSession).not.be.ok();
 				done();
 			});
 		});
