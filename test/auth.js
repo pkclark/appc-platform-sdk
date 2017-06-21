@@ -78,7 +78,7 @@ describe('Appc.Auth', function () {
 			});
 		});
 
-		it.skip('should verify the email auth code that was requested earlier', function (done) {
+		it('should verify the email auth code that was requested earlier', function (done) {
 			helper.getAuthCode('email', function (err, res) {
 				should.not.exist(err);
 				res.should.exist;
@@ -115,7 +115,7 @@ describe('Appc.Auth', function () {
 			});
 		});
 
-		it.skip('should verify the sms auth code that was requested earlier', function (done) {
+		it('should verify the sms auth code that was requested earlier', function (done) {
 			helper.getAuthCode('sms', function (err, res) {
 				should.not.exist(err);
 				res.should.exist;
