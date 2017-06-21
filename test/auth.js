@@ -129,6 +129,54 @@ describe('Appc.Auth', function () {
 			});
 		});
 
+		it('should get locked out of auth code generation after multiple attempts', function (done) {
+			should.exist(currentSession);
+
+			Appc.Auth.requestLoginCode(currentSession, true, function (err, res) {
+				should.not.exist(err);
+				should.exist(res);
+
+				Appc.Auth.requestLoginCode(currentSession, true, function (err, res) {
+					should.not.exist(err);
+					should.exist(res);
+
+					Appc.Auth.requestLoginCode(currentSession, true, function (err, res) {
+						should.not.exist(err);
+						should.exist(res);
+
+						Appc.Auth.requestLoginCode(currentSession, true, function (err, res) {
+							should.exist(err);
+							should.not.exist(res);
+
+							done();
+						});
+					});
+				});
+			});
+		});
+
+		it('should be able to request another auth code after valid auth code entry', function (done) {
+			should.exist(currentSession);
+
+			helper.getAuthCode('sms', function (err, res) {
+				should.not.exist(err);
+				should.exist(res);
+
+				Appc.Auth.verifyLoginCode(currentSession, res, function (err, res) {
+					should.not.exist(err);
+					should.exist(res);
+					res.should.equal(true);
+
+					Appc.Auth.requestLoginCode(currentSession, true, function (err, res) {
+						should.not.exist(err);
+						should.exist(res);
+
+						done();
+					});
+				});
+			});
+		});
+
 		it('should be able to request an email auth code with a valid session', function (done) {
 			should.exist(currentSession);
 
