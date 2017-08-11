@@ -1,8 +1,8 @@
+[![npm version](https://badge.fury.io/js/appc-platform-sdk.svg)](http://badge.fury.io/js/appc-platform-sdk)
+
 # Appcelerator Platform SDK
 
-> This is a Node module that will allow you to make API requests to the Appcelerator Platform.
-
-[![npm version](https://badge.fury.io/js/appc-platform-sdk.svg)](http://badge.fury.io/js/appc-platform-sdk)
+This is a Node module that will allow you to make API requests to the Appcelerator Platform.
 
 ## Installation
 
