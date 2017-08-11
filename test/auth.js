@@ -12,7 +12,7 @@ let createdSession;
 
 describe('Appc.Auth', function () {
 
-	describe(global.$config.env + ' environment', function () {
+	describe.skip(global.$config.env + ' environment', function () {
 
 		this.timeout(250000);
 

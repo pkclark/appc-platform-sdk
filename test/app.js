@@ -314,7 +314,8 @@ describe('Appc.App', function () {
 		});
 	});
 
-	it('should find a free application package by application guid and session', function (done) {
+	// skipped due to platform state being incorrectly configured
+	it.skip('should find a free application package by application guid and session', function (done) {
 		Appc.App.findPackage(currentSession, global.$config.apps.developer.app_guid, function (err, res) {
 			should.not.exist(err);
 			should.exist(res);
@@ -328,7 +329,7 @@ describe('Appc.App', function () {
 		Appc.App.findTeamMembers(currentSession, global.$config.apps.enterprise.app_id, function (err, res) {
 			should.not.exist(err);
 			should.exist(res);
-			res.should.exist(members);
+			should.exist(res.members);
 			res.members.length.should.equal(1);
 			res.members[0].guid.should.equal(currentSession.user.guid);
 			done();

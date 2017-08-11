@@ -12,7 +12,7 @@ const Appc = require('../');
 let app;
 let server;
 
-describe('middleware', function () {
+describe('Appc.Middleware', function () {
 
 	this.timeout(30000);
 
