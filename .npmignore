@@ -6,5 +6,4 @@ out
 test
 *.enc
 user.json
-.travis.yml
 *.tgz
