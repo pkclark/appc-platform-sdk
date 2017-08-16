@@ -36,6 +36,7 @@
     "express": "^4.15.3",
     "gmail": "0.5.0",
     "grunt": "^0.4.5",
+    "grunt-cli": "^1.2.0",
     "grunt-appc-coverage": "^0.3.3",
     "grunt-eslint": "^19.0.0",
     "grunt-kahvesi": "^1.0.2",

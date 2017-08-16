@@ -55,7 +55,7 @@ describe('Appc.Auth', function () {
 			currentSession.isValid().should.equal(true);
 		});
 
-		it('should be able to request an email auth code with a valid session', function (done) {
+		it.skip('should be able to request an email auth code with a valid session', function (done) {
 			should.exist(currentSession);
 			Appc.Auth.requestLoginCode(currentSession, false, function (err, res) {
 				should.not.exist(err);
@@ -78,7 +78,7 @@ describe('Appc.Auth', function () {
 			});
 		});
 
-		it('should verify the email auth code that was requested earlier', function (done) {
+		it.skip('should verify the email auth code that was requested earlier', function (done) {
 			helper.getAuthCode('email', function (err, res) {
 				should.not.exist(err);
 				should.exist(res);
@@ -92,7 +92,7 @@ describe('Appc.Auth', function () {
 			});
 		});
 
-		it('should be able to request an sms auth code with a valid session', function (done) {
+		it.skip('should be able to request an sms auth code with a valid session', function (done) {
 			should.exist(currentSession);
 
 			Appc.Auth.requestLoginCode(currentSession, true, function (err, res) {
@@ -115,7 +115,7 @@ describe('Appc.Auth', function () {
 			});
 		});
 
-		it('should verify the sms auth code that was requested earlier', function (done) {
+		it.skip('should verify the sms auth code that was requested earlier', function (done) {
 			helper.getAuthCode('sms', function (err, res) {
 				should.not.exist(err);
 				should.exist(res);
@@ -129,7 +129,7 @@ describe('Appc.Auth', function () {
 			});
 		});
 
-		it('should get locked out of auth code generation after multiple attempts', function (done) {
+		it.skip('should get locked out of auth code generation after multiple attempts', function (done) {
 			should.exist(currentSession);
 
 			Appc.Auth.requestLoginCode(currentSession, true, function (err, res) {
@@ -155,7 +155,7 @@ describe('Appc.Auth', function () {
 			});
 		});
 
-		it('should be able to request another auth code after valid auth code entry', function (done) {
+		it.skip('should be able to request another auth code after valid auth code entry', function (done) {
 			should.exist(currentSession);
 
 			helper.getAuthCode('sms', function (err, res) {
@@ -177,7 +177,7 @@ describe('Appc.Auth', function () {
 			});
 		});
 
-		it('should be able to request an email auth code with a valid session', function (done) {
+		it.skip('should be able to request an email auth code with a valid session', function (done) {
 			should.exist(currentSession);
 
 			Appc.Auth.requestLoginCode(currentSession, false, function (err, res) {
