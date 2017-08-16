@@ -1,6 +1,6 @@
 {
   "name": "appc-platform-sdk",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Appcelerator Platform SDK for node.js",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,7 @@
     "async": "^2.4.0",
     "debug": "^2.6.7",
     "getmac": "^1.2.1",
+    "pac-proxy-agent": "^2.0.0",
     "request": "^2.81.0",
     "tough-cookie": "^2.3.2",
     "uuid": "^3.0.1"
