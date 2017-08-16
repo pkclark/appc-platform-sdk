@@ -48,24 +48,22 @@ describe('Appc.Analytics', function () {
 	});
 
 	afterEach(function () {
-		Appc.Analytics.stopSendingEvents();
+		Appc.Analytics.stopFlush();
 		Appc.Analytics.url = 'http://127.0.0.1:' + app.get('port') + '/track';
 		notifier = null;
 		fs.existsSync(Appc.Analytics.analyticsDir) && wrench.rmdirSyncRecursive(Appc.Analytics.analyticsDir);
 	});
 
-	it('should send analytics data with guid only', function (done) {
+	it('should send analytics data with guid and event only', function (done) {
 		should(Appc.Analytics).be.an.object;
-		Appc.Analytics.sendEvent('guid', null, function (err, result, sent) {
+		Appc.Analytics.sendEvent('guid', 'app.feature', null, function (err, result, sent) {
 			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(sent).be.true;
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
-			should(result[0]).have.property('sid');
 			should(result[0]).have.property('mid');
 			should(result[0]).have.property('aguid', 'guid');
-			should(result[0]).have.property('platform', Appc.userAgent);
 			should(result[0]).have.property('deploytype', 'production');
 			should(result[0]).have.property('ts');
 			should(result[0]).have.property('event', 'app.feature');
@@ -73,23 +71,20 @@ describe('Appc.Analytics', function () {
 			should(result[0]).have.property('ver', '3');
 			should(Date.parse(result[0].ts)).be.a.Date;
 			should(result[0].id).match(/^[\w-]{16,}$/);
-			should(result[0].sid).match(/^[\w-]{16,}$/);
 			should(result[0].data).be.eql({});
 			done();
 		});
 	});
 
-	it('should send analytics data with guid and mid only', function (done) {
+	it('should send analytics data with guid, event and mid', function (done) {
 		should(Appc.Analytics).be.an.object;
-		Appc.Analytics.sendEvent('guid', { mid: 'mid' }, function (err, result) {
+		Appc.Analytics.sendEvent('guid', 'app.feature', { mid: 'mid' }, function (err, result) {
 			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
-			should(result[0]).have.property('sid');
 			should(result[0]).have.property('mid', 'mid');
 			should(result[0]).have.property('aguid', 'guid');
-			should(result[0]).have.property('platform', Appc.userAgent);
 			should(result[0]).have.property('deploytype', 'production');
 			should(result[0]).have.property('ts');
 			should(result[0]).have.property('event', 'app.feature');
@@ -97,23 +92,20 @@ describe('Appc.Analytics', function () {
 			should(result[0]).have.property('ver', '3');
 			should(Date.parse(result[0].ts)).be.a.Date;
 			should(result[0].id).match(/^[\w-]{16,}$/);
-			should(result[0].sid).match(/^[\w-]{16,}$/);
 			should(result[0].data).be.eql({});
 			done();
 		});
 	});
 
-	it('should send analytics data with guid, mid, eventdata', function (done) {
+	it('should send analytics data with guid, mid, event, data', function (done) {
 		should(Appc.Analytics).be.an.object;
-		Appc.Analytics.sendEvent('guid', { mid: 'mid', data: { a: 1 } }, function (err, result) {
+		Appc.Analytics.sendEvent('guid', 'app.feature', { mid: 'mid', data: { a: 1 } }, function (err, result) {
 			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
-			should(result[0]).have.property('sid');
 			should(result[0]).have.property('mid', 'mid');
 			should(result[0]).have.property('aguid', 'guid');
-			should(result[0]).have.property('platform', Appc.userAgent);
 			should(result[0]).have.property('deploytype', 'production');
 			should(result[0]).have.property('ts');
 			should(result[0]).have.property('event', 'app.feature');
@@ -121,47 +113,20 @@ describe('Appc.Analytics', function () {
 			should(result[0]).have.property('ver', '3');
 			should(Date.parse(result[0].ts)).be.a.Date;
 			should(result[0].id).match(/^[\w-]{16,}$/);
-			should(result[0].sid).match(/^[\w-]{16,}$/);
 			should(result[0].data).be.eql({ a:1 });
 			done();
 		});
 	});
 
-	it('should send analytics data with guid, mid, eventdata, event', function (done) {
+	it('should send analytics data with guid, mid, data, event, deploytype', function (done) {
 		should(Appc.Analytics).be.an.object;
-		Appc.Analytics.sendEvent('guid', { event: 'event', mid: 'mid', data: { a: 1 } }, function (err, result) {
+		Appc.Analytics.sendEvent('guid', 'event', { mid: 'mid', deploytype: 'deploytype', data: { a: 1 } }, function (err, result) {
 			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
-			should(result[0]).have.property('sid');
 			should(result[0]).have.property('mid', 'mid');
 			should(result[0]).have.property('aguid', 'guid');
-			should(result[0]).have.property('platform', Appc.userAgent);
-			should(result[0]).have.property('deploytype', 'production');
-			should(result[0]).have.property('ts');
-			should(result[0]).have.property('event', 'event');
-			should(result[0]).have.property('data');
-			should(result[0]).have.property('ver', '3');
-			should(Date.parse(result[0].ts)).be.a.Date;
-			should(result[0].id).match(/^[\w-]{16,}$/);
-			should(result[0].sid).match(/^[\w-]{16,}$/);
-			should(result[0].data).be.eql({ a:1 });
-			done();
-		});
-	});
-
-	it('should send analytics data with guid, mid, eventdata, event, deploytype', function (done) {
-		should(Appc.Analytics).be.an.object;
-		Appc.Analytics.sendEvent('guid', { event: 'event', mid: 'mid', deploytype: 'deploytype', data: { a: 1 } }, function (err, result) {
-			should(err).not.be.ok();
-			should(result).be.an.array;
-			should(result).have.length(1);
-			should(result[0]).have.property('id');
-			should(result[0]).have.property('sid');
-			should(result[0]).have.property('mid', 'mid');
-			should(result[0]).have.property('aguid', 'guid');
-			should(result[0]).have.property('platform', Appc.userAgent);
 			should(result[0]).have.property('deploytype', 'deploytype');
 			should(result[0]).have.property('ts');
 			should(result[0]).have.property('event', 'event');
@@ -169,15 +134,14 @@ describe('Appc.Analytics', function () {
 			should(result[0]).have.property('ver', '3');
 			should(Date.parse(result[0].ts)).be.a.Date;
 			should(result[0].id).match(/^[\w-]{16,}$/);
-			should(result[0].sid).match(/^[\w-]{16,}$/);
 			should(result[0].data).be.eql({ a:1 });
 			done();
 		});
 	});
 
-	it('should send analytics data with guid, mid, eventdata, event, deploytype and sid', function (done) {
+	it('should send analytics data with guid, mid, data, event, deploytype and sid', function (done) {
 		should(Appc.Analytics).be.an.object;
-		Appc.Analytics.sendEvent('guid', { event: 'event', mid: 'mid', deploytype: 'deploytype', sid: 'sid-sid-sid-sid-sid-sid', data: { a: 1 } }, function (err, result) {
+		Appc.Analytics.sendEvent('guid', 'event', { mid: 'mid', deploytype: 'deploytype', sid: 'sid-sid-sid-sid-sid-sid', data: { a: 1 } }, function (err, result) {
 			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(result).have.length(1);
@@ -185,7 +149,6 @@ describe('Appc.Analytics', function () {
 			should(result[0]).have.property('sid', 'sid-sid-sid-sid-sid-sid');
 			should(result[0]).have.property('mid', 'mid');
 			should(result[0]).have.property('aguid', 'guid');
-			should(result[0]).have.property('platform', Appc.userAgent);
 			should(result[0]).have.property('deploytype', 'deploytype');
 			should(result[0]).have.property('ts');
 			should(result[0]).have.property('event', 'event');
@@ -193,7 +156,6 @@ describe('Appc.Analytics', function () {
 			should(result[0]).have.property('ver', '3');
 			should(Date.parse(result[0].ts)).be.a.Date;
 			should(result[0].id).match(/^[\w-]{16,}$/);
-			should(result[0].sid).match(/^[\w-]{16,}$/);
 			should(result[0].data).be.eql({ a:1 });
 			done();
 		});
@@ -231,15 +193,13 @@ describe('Appc.Analytics', function () {
 	it('should send analytics to real url and get back result', function (done) {
 		should(Appc.Analytics).be.an.object;
 		Appc.Analytics.url = originalUrl;
-		Appc.Analytics.sendEvent(global.$config.apps.enterprise.app_guid, {}, function (err, result, sent) {
+		Appc.Analytics.sendEvent(global.$config.apps.enterprise.app_guid, 'app.feature', {}, function (err, result, sent) {
 			should(err).not.be.ok();
 			should(result).be.an.array;
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
-			should(result[0]).have.property('sid');
 			should(result[0]).have.property('mid');
 			should(result[0]).have.property('aguid', global.$config.apps.enterprise.app_guid);
-			should(result[0]).have.property('platform', Appc.userAgent);
 			should(result[0]).have.property('deploytype', 'production');
 			should(result[0]).have.property('ts');
 			should(result[0]).have.property('event', 'app.feature');
@@ -247,7 +207,6 @@ describe('Appc.Analytics', function () {
 			should(result[0]).have.property('ver', '3');
 			should(Date.parse(result[0].ts)).be.a.Date;
 			should(result[0].id).match(/^[\w-]{16,}$/);
-			should(result[0].sid).match(/^[\w-]{16,}$/);
 			should(sent).be.true;
 			done();
 		});
