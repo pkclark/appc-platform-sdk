@@ -48,7 +48,7 @@ describe('Appc.Analytics', function () {
 	});
 
 	afterEach(function () {
-		Appc.Analytics.stopFlushTask();
+		Appc.Analytics.stopFlush();
 		Appc.Analytics.url = 'http://127.0.0.1:' + app.get('port') + '/track';
 		notifier = null;
 		fs.existsSync(Appc.Analytics.analyticsDir) && wrench.rmdirSyncRecursive(Appc.Analytics.analyticsDir);
