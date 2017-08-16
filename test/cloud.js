@@ -19,7 +19,7 @@ describe('Appc.Cloud', function () {
 
 		Appc.Auth.login(user.username, user.password, function (err, session) {
 			should.not.exist(err);
-			session.should.exist;
+			should.exist(session);
 			currentSession = session;
 			currentSession.isValid().should.equal(true);
 			done();
@@ -32,7 +32,7 @@ describe('Appc.Cloud', function () {
 		before(function (done) {
 			var user = global.$config.user;
 			Appc.Auth.login(user.username, user.password, function (err, result) {
-				should(result).be.ok;
+				should(result).be.ok();
 				should.not.exist(err);
 				should.exist(result);
 				currentSession = result;
