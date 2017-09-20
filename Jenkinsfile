@@ -1,4 +1,4 @@
-library 'pipeline-library@decryptFile'
+library 'pipeline-library'
 
 def nodeVersion = '6.11.3'
 def npmVersion = '5.4.1'
