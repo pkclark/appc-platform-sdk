@@ -10,6 +10,7 @@ const should = require('should');
 const wrench = require('wrench');
 
 const Appc = require('../');
+require('./lib/helper');
 
 let app;
 let notifier;

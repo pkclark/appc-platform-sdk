@@ -5,6 +5,7 @@ const path = require('path');
 const should = require('should');
 
 const Appc = require('../');
+require('./lib/helper');
 
 let currentSession;
 let user = global.$config.user;
