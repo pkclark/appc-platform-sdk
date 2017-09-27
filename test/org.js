@@ -8,6 +8,8 @@ const helper = require('./lib/helper');
 let currentSession;
 let orgName;
 let user = global.$config.user;
+let regularTime;
+let cachedTime;
 
 describe('Appc.Org', function () {
 
@@ -149,9 +151,6 @@ describe('Appc.Org', function () {
 			done();
 		});
 	});
-
-	var regularTime,
-		cachedTime;
 
 	it('should find the orgs that the user has access to', function (done) {
 		var time = new Date().getTime();

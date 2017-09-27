@@ -6,11 +6,8 @@ const fs = require('fs');
 
 const bodyparser = require('body-parser');
 const express = require('express');
-const request = require('request');
 const should = require('should');
 const wrench = require('wrench');
-
-const helper = require('./lib/helper');
 
 const Appc = require('../');
 
@@ -27,7 +24,7 @@ describe('Appc.Analytics', function () {
 		app = express();
 		app.set('port', 4000 + parseInt(1000 * Math.random()));
 		app.use(bodyparser.json());
-		app.post('/track', function (req, resp, next) {
+		app.post('/track', function (req, resp) {
 			resp.json(req.body);
 			notifier && notifier(null, req.body);
 		});
@@ -161,7 +158,7 @@ describe('Appc.Analytics', function () {
 		});
 	});
 
-	it.skip('should send analytics data with no callback', function (done) {
+	it('should send analytics data with no callback', function (done) {
 		should(Appc.Analytics).be.an.object;
 		Appc.Analytics.flushInterval = 1000;
 		notifier = function (err, result) {
@@ -177,7 +174,7 @@ describe('Appc.Analytics', function () {
 		Appc.Analytics.sendEvent('guid', { data: { a: 1 } });
 	});
 
-	it.skip('should send analytics data immediate', function (done) {
+	it('should send analytics data immediate', function (done) {
 		should(Appc.Analytics).be.an.object;
 		notifier = function (err, result) {
 			should(err).not.be.ok();
@@ -212,7 +209,7 @@ describe('Appc.Analytics', function () {
 		});
 	});
 
-	it.skip('should send analytics after queuing', function (done) {
+	it('should send analytics after queuing', function (done) {
 		should(Appc.Analytics).be.an.object;
 		Appc.Analytics.flushInterval = 10;
 		notifier = function (err, result) {
@@ -231,10 +228,10 @@ describe('Appc.Analytics', function () {
 		Appc.Analytics.sendEvent('guid', { data: { a: 4 } });
 	});
 
-	it.skip('should send session start and end', function (done) {
+	it('should send session start and end', function (done) {
+		var session;
 		should(Appc.Analytics).be.an.object;
 		Appc.Analytics.flushInterval = 10;
-		var session;
 		notifier = function (err, result) {
 			should(err).not.be.ok();
 			should(result).be.an.array;

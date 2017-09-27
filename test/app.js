@@ -5,7 +5,6 @@ const path = require('path');
 const should = require('should');
 
 const Appc = require('../');
-const helper = require('./lib/helper');
 
 let currentSession;
 let user = global.$config.user;
@@ -315,7 +314,7 @@ describe('Appc.App', function () {
 	});
 
 	// skipped due to platform state being incorrectly configured
-	it.skip('should find a free application package by application guid and session', function (done) {
+	it('should find a free application package by application guid and session', function (done) {
 		Appc.App.findPackage(currentSession, global.$config.apps.developer.app_guid, function (err, res) {
 			should.not.exist(err);
 			should.exist(res);
@@ -341,15 +340,6 @@ describe('Appc.App', function () {
 			should.exist(err);
 			err.message.should.equal('Resource Not Found');
 			err.code.should.equal(404);
-			should.not.exist(res);
-			done();
-		});
-	});
-
-	it('should fail to find the team members of an app with an invalid session', function (done) {
-		Appc.App.findTeamMembers({}, global.$config.apps.enterprise.app_id, function (err, res) {
-			should.exist(err);
-			err.message.should.equal('session is not valid');
 			should.not.exist(res);
 			done();
 		});
