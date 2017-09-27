@@ -235,7 +235,7 @@ describe('Appc.Analytics', function () {
 		};
 		Appc.Analytics.configure({ interval: 100 });
 		function triggerSend(order) {
-			setTimeout(() => Appc.Analytics.sendEvent('guid', 'event', { data: { a: order } }), order);
+			setTimeout(() => Appc.Analytics.sendEvent('guid', 'event', { data: { a: order } }), order * 5);
 		};
 		triggerSend(1);
 		triggerSend(2);
@@ -262,7 +262,7 @@ describe('Appc.Analytics', function () {
 		session = Appc.Analytics.createSession('guid');
 		should(session).be.an.object;
 		should(session.end).be.a.function;
-		setTimeout(() => session.send('app.feature', { a: 1 }), 1);
-		setTimeout(() => session.end(), 2);
+		setTimeout(() => session.send('app.feature', { a: 1 }), 5);
+		setTimeout(() => session.end(), 10);
 	});
 });
