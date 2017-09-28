@@ -12,7 +12,7 @@ describe('Appc.Auth', function () {
 
 	describe(global.$config.env + ' environment', function () {
 
-		this.timeout(250000);
+		this.timeout(30000);
 
 		before(function () {
 			Appc.setEnvironment(global.$config.environment);
