@@ -23,7 +23,11 @@ describe('Appc.Analytics', function () {
 
 	function cleanup() {
 		if (fs.existsSync(Appc.Analytics.dir)) {
-			wrench.rmdirSyncRecursive(Appc.Analytics.dir);
+			try {
+				wrench.rmdirSyncRecursive(Appc.Analytics.dir);
+			} catch (e) {
+				// errors are no big deal
+			}
 		}
 	}
 
