@@ -3,7 +3,7 @@
 const should = require('should');
 
 const Appc = require('../');
-const helper = require('./lib/helper');
+require('./lib/helper');
 
 let currentSession;
 let user = global.$config.user;

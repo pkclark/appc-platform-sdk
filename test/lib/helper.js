@@ -1,12 +1,11 @@
 'use strict';
 
+require('../conf/loader').load();
+
 const clone = require('clone');
 const gm = require('gmail');
 const MailParser = require('mailparser').MailParser;
-const should = require('should');
 const twilio = require('twilio');
-
-const ConfigLoader = require('../conf/loader').load();
 
 const Appc = require('../..');
 
@@ -35,7 +34,7 @@ exports.objectContainsObject = objectContainsObject;
 function getCloudEnvironment(session, type, name, callback) {
 	try {
 		return callback(null, Appc.Cloud.getEnvironment(session, type, name));
-	} catch(err) {
+	} catch (err) {
 		return callback(err);
 	}
 }

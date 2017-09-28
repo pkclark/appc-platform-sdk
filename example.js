@@ -1,54 +1,38 @@
-var sdk = require('./'),
-	path = require('path'),
-	args = process.argv.slice(2);
+const path = require('path');
+const args = process.argv.slice(2);
 
+const Appc = require('.');
 
-if (args.length!==2) {
-	console.error('Usage: node '+path.basename(module.filename)+' <username> <password>');
+if (args.length !== 2) {
+	console.error('Usage: node ' + path.basename(module.filename) + ' <username> <password>');
 	process.exit(1);
-}
-
-function Decycler() {
-	var cache = [];
-	return function(key, value) {
-	    if (typeof value === 'object' && value !== null) {
-	        if (cache.indexOf(value) !== -1) {
-	            // Circular reference found, discard key
-	            return;
-	        }
-	        // Store value in our collection
-	        cache.push(value);
-	    }
-	    return value;
-	};
 }
 
 function die() {
-	console.error.apply(console.err,arguments);
+	console.error.apply(console, arguments);
 	process.exit(1);
 }
 
-sdk.setDevelopment();
+Appc.Env.setDevelopment();
 
-sdk.Auth.login(args[0], args[1], function(err,session){
-	if (err) { die('Error=',err); }
-	console.log(JSON.stringify(session,Decycler(),2));
+Appc.Auth.login(args[0], args[1], function (err, session) {
+	err && die('Error', err);
 
-	/*
-	sdk.App.create(session, '/Users/jhaynie/tmp/foo/app/tiapp.xml', function(err,result){
-		console.log(arguments);
-	});*/
+	console.log(JSON.stringify(session, null, 2));
 
-	/*try {
-		sdk.Auth.createSessionFromID(session.id, function(err,session_){
-			if (err) { die('Error=',err); }
-			sdk.App.findAll(session_, function(err, apps){
-				if (err) { die('Error=',err); }
+	Appc.App.create(session, path.join(process.env.PWD, 'test', 'titestapp1', 'tiapp.xml'), console.log);
+
+	try {
+		Appc.Auth.createSessionFromID(session.id, function (err, session_) {
+			err && die('Error', err);
+
+			Appc.App.findAll(session_, function (err, apps) {
+				err && die('Error', err);
+
 				console.log(apps);
 			});
 		});
+	} catch (e) {
+		console.error(e.stack);
 	}
-	catch (E) {
-		console.error(E.stack);
-	}*/
 });

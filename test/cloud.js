@@ -9,6 +9,7 @@ const helper = require('./lib/helper');
 
 let currentSession;
 let user = global.$config.user;
+let apiUser;
 
 describe('Appc.Cloud', function () {
 
@@ -230,7 +231,6 @@ describe('Appc.Cloud', function () {
 				});
 		});
 
-		var apiUser;
 		it('should create an Arrow DB user object', function (done) {
 			should.exist(api);
 			should.exist(api.guid);

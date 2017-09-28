@@ -3,7 +3,7 @@
 const should = require('should');
 
 const Appc = require('../');
-const helper = require('./lib/helper');
+require('./lib/helper');
 
 let currentSession;
 let user = global.$config.user;
@@ -46,7 +46,7 @@ describe('Appc.Feed', function () {
 		});
 	});
 
-	it('should find all the feeds for the logged in user', function (done) {
+	it('should find all the feeds with limit', function (done) {
 		Appc.Feed.findAll(currentSession, { limit: 2 }, function (err, res) {
 			should.exist(res);
 			should.not.exist(err);
