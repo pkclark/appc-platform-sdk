@@ -12,8 +12,6 @@ describe('Appc.Env', function () {
 			baseurl: Appc.baseurl,
 			registryurl: Appc.registryurl,
 			pubsuburl: Appc.pubsuburl,
-			webeventurl: Appc.webeventurl,
-			cacheurl: Appc.cacheurl,
 			secureCookies: Appc.secureCookies,
 			supportUntrusted: Appc.supportUntrusted
 		};
@@ -22,13 +20,11 @@ describe('Appc.Env', function () {
 
 	after(function (done) {
 		Appc.setEnvironment(currentEnv);
-		Appc.baseurl.should.equal(currentEnv.baseurl);
-		Appc.registryurl.should.equal(currentEnv.registryurl);
-		Appc.webeventurl.should.equal(currentEnv.webeventurl);
-		Appc.cacheurl.should.equal(currentEnv.cacheurl);
-		Appc.pubsuburl.should.equal(currentEnv.pubsuburl);
-		Appc.secureCookies.should.equal(currentEnv.secureCookies);
-		Appc.supportUntrusted.should.equal(currentEnv.supportUntrusted);
+		should(Appc.baseurl).equal(currentEnv.baseurl);
+		should(Appc.registryurl).equal(currentEnv.registryurl);
+		should(Appc.pubsuburl).equal(currentEnv.pubsuburl);
+		should(Appc.secureCookies).equal(currentEnv.secureCookies);
+		should(Appc.supportUntrusted).equal(currentEnv.supportUntrusted);
 		done();
 	});
 
@@ -44,34 +40,34 @@ describe('Appc.Env', function () {
 				|| !process.env.NODE_ENV
 				&&  !process.env.APPC_ENV
 			) {
-				Appc.isProduction.should.equal(true);
+				should(Appc.isProduction).equal(true);
 			} else {
-				Appc.isProduction.should.equal(false);
+				should(Appc.isProduction).equal(false);
 			}
 		});
 
 		it('should be production', function () {
 			Appc.setProduction();
-			Appc.isProduction.should.equal(true);
+			should(Appc.isProduction).equal(true);
 		});
 
 		it('should not be production when set to development', function () {
 			Appc.setDevelopment();
-			Appc.isProduction.should.equal(false);
+			should(Appc.isProduction).equal(false);
 		});
 
 		it('should not be production when set to local', function () {
 			Appc.setLocal();
-			Appc.isProduction.should.equal(false);
+			should(Appc.isProduction).equal(false);
 		});
 
 		it('should be able to be changed', function () {
 			Appc.setDevelopment();
-			Appc.isProduction.should.equal(false);
+			should(Appc.isProduction).equal(false);
 			Appc.setProduction();
-			Appc.isProduction.should.equal(true);
+			should(Appc.isProduction).equal(true);
 			Appc.setLocal();
-			Appc.isProduction.should.equal(false);
+			should(Appc.isProduction).equal(false);
 		});
 	});
 
@@ -83,20 +79,16 @@ describe('Appc.Env', function () {
 				isProduction: false,
 				supportUntrusted: true,
 				registry: 'http://registry.com',
-				webevent: 'http://webevent.com',
-				cache: 'http://cache.com',
 				pubsub: 'http://pubsub.com'
 			};
 
 			Appc.setEnvironment(customEnv);
 
-			Appc.isProduction.should.equal(false);
-			Appc.supportUntrusted.should.equal(true);
-			Appc.baseurl.should.equal('http://test.appcelerator.com:8080/Appc');
-			Appc.registryurl.should.equal('http://registry.com');
-			Appc.webeventurl.should.equal('http://webevent.com');
-			Appc.cacheurl.should.equal('http://cache.com');
-			Appc.pubsuburl.should.equal('http://pubsub.com');
+			should(Appc.isProduction).equal(false);
+			should(Appc.supportUntrusted).equal(true);
+			should(Appc.baseurl).equal('http://test.appcelerator.com:8080/Appc');
+			should(Appc.registryurl).equal('http://registry.com');
+			should(Appc.pubsuburl).equal('http://pubsub.com');
 		});
 	});
 
@@ -106,21 +98,17 @@ describe('Appc.Env', function () {
 			process.env.APPC_DASHBOARD_URL = 'http://360-env.appcelerator.com';
 			process.env.APPC_REGISTRY_SERVER = 'http://software-env.appcelerator.com';
 			process.env.APPC_PUBSUB_URL = 'http://pubsub-env.appcelerator.com';
-			process.env.APPC_WEBEVENT_URL = 'http://webevent-env.appcelerator.com';
-			process.env.APPC_CACHE_URL = 'http://webevent-env.appcelerator.com';
 			process.env.APPC_SUPPORT_UNTRUSTED = 'false';
 			process.env.APPC_SECURE_COOKIES = 'false';
 
 			delete require.cache[require.resolve('../lib/env')];
 			let Env = require('../lib/env');
 
-			Env.secureCookies.should.equal(false);
-			Env.supportUntrusted.should.equal(false);
-			Env.baseurl.should.equal('http://360-env.appcelerator.com');
-			Env.registryurl.should.equal('http://software-env.appcelerator.com');
-			Env.pubsuburl.should.equal('http://pubsub-env.appcelerator.com');
-			Env.webeventurl.should.equal('http://webevent-env.appcelerator.com');
-			Env.cacheurl.should.equal('http://webevent-env.appcelerator.com');
+			should(Env.secureCookies).equal(false);
+			should(Env.supportUntrusted).equal(false);
+			should(Env.baseurl).equal('http://360-env.appcelerator.com');
+			should(Env.registryurl).equal('http://software-env.appcelerator.com');
+			should(Env.pubsuburl).equal('http://pubsub-env.appcelerator.com');
 		});
 	});
 });

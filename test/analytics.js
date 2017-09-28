@@ -225,6 +225,7 @@ describe('Appc.Analytics', function () {
 			should(err).not.be.ok();
 			should(result).be.an.Array();
 			should(result).have.length(4);
+			result.sort((a, b) => a - b);
 			should(result[0].data).be.eql({ a: 1 });
 			should(result[1].data).be.eql({ a: 2 });
 			should(result[2].data).be.eql({ a: 3 });
@@ -232,13 +233,10 @@ describe('Appc.Analytics', function () {
 			done();
 		};
 		Appc.Analytics.configure({ interval: 100 });
-		function triggerSend(order) {
-			setTimeout(() => Appc.Analytics.sendEvent('guid', 'event', { data: { a: order } }), order * 5);
-		};
-		triggerSend(1);
-		triggerSend(2);
-		triggerSend(3);
-		triggerSend(4);
+		Appc.Analytics.sendEvent('guid', 'event', { data: { a: 1 } });
+		Appc.Analytics.sendEvent('guid', 'event', { data: { a: 2 } });
+		Appc.Analytics.sendEvent('guid', 'event', { data: { a: 3 } });
+		Appc.Analytics.sendEvent('guid', 'event', { data: { a: 4 } });
 	});
 
 	it('should send session start and end', function (done) {
@@ -249,9 +247,18 @@ describe('Appc.Analytics', function () {
 			should(err).not.be.ok();
 			should(result).be.an.Array();
 			should(result).have.length(3);
-			should(result[0]).have.property('event', 'ti.start');
-			should(result[1]).have.property('event', 'app.feature');
-			should(result[2]).have.property('event', 'ti.end');
+			result.sort(function (a, b) {
+				if (a.event > b.event) {
+					return 1;
+				}
+				if (a.event < b.event) {
+					return -1;
+				}
+				return 0;
+			});
+			should(result[0]).have.property('event', 'app.feature');
+			should(result[1]).have.property('event', 'ti.end');
+			should(result[2]).have.property('event', 'ti.start');
 			should(result[0]).have.property('sid', session.sid);
 			should(result[1]).have.property('sid', session.sid);
 			should(result[2]).have.property('sid', session.sid);
@@ -260,7 +267,7 @@ describe('Appc.Analytics', function () {
 		session = Appc.Analytics.createSession('guid');
 		should(session).be.an.object;
 		should(session.end).be.a.function;
-		setTimeout(() => session.send('app.feature', { a: 1 }), 5);
-		setTimeout(() => session.end(), 10);
+		session.send('app.feature', { a: 1 });
+		session.end();
 	});
 });
