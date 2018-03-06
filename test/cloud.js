@@ -22,7 +22,7 @@ describe('Appc.Cloud', function () {
 			should.not.exist(err);
 			should.exist(session);
 			currentSession = session;
-			currentSession.isValid().should.equal(true);
+			should(currentSession.isValid()).equal(true);
 			done();
 		});
 	});
@@ -45,7 +45,7 @@ describe('Appc.Cloud', function () {
 		it('should get ACS_BASE environment', function (done) {
 			helper.getCloudEnvironment(currentSession, Appc.Cloud.ACS_BASE, env, function (err, res) {
 				should.exist(res);
-				res.should.be.an.string;
+				should(res).be.a.String();
 				should.not.exist(err);
 				done();
 			});
@@ -54,7 +54,7 @@ describe('Appc.Cloud', function () {
 		it('should get NODE_ACS environment', function (done) {
 			helper.getCloudEnvironment(currentSession, Appc.Cloud.NODE_ACS, env, function (err, res) {
 				should.exist(res);
-				res.should.be.an.string;
+				should(res).be.a.String();
 				should.not.exist(err);
 				done();
 			});
@@ -63,7 +63,7 @@ describe('Appc.Cloud', function () {
 		it('should get AUTH_BASE environment', function (done) {
 			helper.getCloudEnvironment(currentSession, Appc.Cloud.AUTH_BASE, env, function (err, res) {
 				should.exist(res);
-				res.should.be.an.string;
+				should(res).be.a.String();
 				should.not.exist(err);
 				done();
 			});
@@ -73,8 +73,8 @@ describe('Appc.Cloud', function () {
 			helper.getCloudEnvironment({}, Appc.Cloud.AUTH_BASE, env, function (err, res) {
 				should.not.exist(res);
 				should.exist(err);
-				err.should.have.property('message');
-				err.message.should.containEql('session is not valid. missing user');
+				should(err).have.property('message');
+				should(err.message).containEql('session is not valid. missing user');
 				done();
 			});
 		});
@@ -83,8 +83,8 @@ describe('Appc.Cloud', function () {
 			helper.getCloudEnvironment({}, Appc.Cloud.NODE_ACS, env, function (err, res) {
 				should.not.exist(res);
 				should.exist(err);
-				err.should.have.property('message');
-				err.message.should.containEql('session is not valid. missing user');
+				should(err).have.property('message');
+				should(err.message).containEql('session is not valid. missing user');
 				done();
 			});
 		});
@@ -93,18 +93,18 @@ describe('Appc.Cloud', function () {
 			helper.getCloudEnvironment({}, Appc.Cloud.AUTH_BASE, env, function (err, res) {
 				should.not.exist(res);
 				should.exist(err);
-				err.should.have.property('message');
-				err.message.should.containEql('session is not valid. missing user');
+				should(err).have.property('message');
+				should(err.message).containEql('session is not valid. missing user');
 				done();
 			});
 		});
 
-		it('should fail to get a clould environment with a missing org in the session', function (done) {
+		it('should fail to get a cloud environment with a missing org in the session', function (done) {
 			helper.getCloudEnvironment({ user:{} }, Appc.Cloud.AUTH_BASE, env, function (err, res) {
 				should.not.exist(res);
 				should.exist(err);
-				err.should.have.property('message');
-				err.message.should.containEql('session is not valid. missing org');
+				should(err).have.property('message');
+				should(err.message).containEql('session is not valid. missing org');
 				done();
 			});
 		});
@@ -150,7 +150,7 @@ describe('Appc.Cloud', function () {
 			Appc.Cloud.createNamedApp({}, 'TiAppTest_' + new Date(), function (err, res) {
 				should.exist(err);
 				should.not.exist(res);
-				err.message.indexOf('session is not valid').should.not.equal(-1);
+				should(err.message.indexOf('session is not valid')).not.equal(-1);
 				done();
 			});
 		});
@@ -159,7 +159,7 @@ describe('Appc.Cloud', function () {
 			Appc.Cloud.createNamedApp(currentSession, '', function (err, res) {
 				should.exist(err);
 				should.not.exist(res);
-				err.should.equal('Invalid parameter: name');
+				should(err).equal('Invalid parameter: name');
 				done();
 			});
 		});
@@ -181,7 +181,7 @@ describe('Appc.Cloud', function () {
 					should.exist(err);
 					should.not.exist(res);
 					should.exist(err.message);
-					err.message.should.equal('session is not valid');
+					should(err.message).equal('session is not valid');
 					done();
 				});
 		});
@@ -233,9 +233,10 @@ describe('Appc.Cloud', function () {
 
 		it('should create an Arrow DB user object', function (done) {
 			should.exist(api);
-			should.exist(api.guid);
+			should.exist(api.group_id);
+			should.exist(api.env);
 			apiUser = 'test_' + Date.now();
-			Appc.Cloud.createUser(currentSession, api.guid, {
+			Appc.Cloud.createUser(currentSession, api.group_id, api.env, {
 				password_confirmation: 'test',
 				password: 'test',
 				username: apiUser
@@ -247,17 +248,17 @@ describe('Appc.Cloud', function () {
 			});
 		});
 
-		it('should retrieve the list of acs users for an app guid', function (done) {
-			Appc.Cloud.retrieveUsers(currentSession, api.guid, function (err, res) {
+		it('should retrieve the list of acs users for an app', function (done) {
+			Appc.Cloud.retrieveUsers(currentSession, api.group_id, api.env, function (err, res) {
 				should.not.exist(err);
 				should.exist(res);
-				res.username.should.equal(apiUser);
+				should(res.username).equal(apiUser);
 				done();
 			});
 		});
 
-		it('should fail to create an Arrow DB user object with invalid api guid', function (done) {
-			Appc.Cloud.createUser(currentSession, '123', {
+		it('should fail to create an Arrow DB user object with invalid api group_id', function (done) {
+			Appc.Cloud.createUser(currentSession, 'invalid-group-id', api.env, {
 				password_confirmation: 'test',
 				password: 'test',
 				username: 'test_' + Date.now()
@@ -265,22 +266,23 @@ describe('Appc.Cloud', function () {
 			}, function (err, res) {
 				should.exist(err);
 				should.not.exist(res);
-				err.message.should.containEql('could not locate a document in the apis collection for the guid:');
+				should(err.message).eql('You do not have access privileges to view this content.');
 				done();
 			});
 		});
 
 		it('should fail to create an Arrow DB user object with not enough credentials', function (done) {
 			should.exist(api);
-			should.exist(api.guid);
-			Appc.Cloud.createUser(currentSession, api.guid, {
+			should.exist(api.group_id);
+			should.exist(api.env);
+			Appc.Cloud.createUser(currentSession, api.group_id, api.env, {
 				password_confirmation: 'test',
 				password: 'test'
 
 			}, function (err, res) {
 				should.exist(err);
 				should.not.exist(res);
-				err.message.should.equal('Failed to create user: Validation failed - A username, email or external account is required.');
+				should(err.message).equal('Failed to create user: Validation failed - A username, email or external account is required.');
 				done();
 			});
 		});
