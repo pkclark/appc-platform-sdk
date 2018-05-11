@@ -50,7 +50,7 @@ describe('Appc.App', function () {
 		});
 	});
 
-	it('should fail to find apps in an org that the user doesnt have access to', function (done) {
+	it('should fail to find apps in an org that the user doesn\'t have access to', function (done) {
 		Appc.App.findAll(currentSession, 123, function (err, apps) {
 			should.exist(err);
 			err.code.should.equal(403);
@@ -127,7 +127,7 @@ describe('Appc.App', function () {
 		});
 	});
 
-	it('should fail to update an app which doesnt exist', function (done) {
+	it('should fail to update an app which doesn\'t exist', function (done) {
 		var newApp = {
 			app_id: 123,
 			app_name: 'this_should_fail_app',
