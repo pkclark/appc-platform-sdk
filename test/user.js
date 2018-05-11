@@ -17,7 +17,7 @@ describe('Appc.User', function () {
 			should.not.exist(err);
 			should.exist(session);
 			currentSession = session;
-			currentSession.isValid().should.equal(true);
+			should(currentSession.isValid()).equal(true);
 			done();
 		});
 	});
@@ -26,7 +26,7 @@ describe('Appc.User', function () {
 		Appc.User.find(currentSession, function (err, res) {
 			should.not.exist(err);
 			should.exist(res);
-			res.email.should.equal(global.$config.user.username);
+			should(res.email).equal(global.$config.user.username);
 			done();
 		});
 	});
@@ -35,7 +35,7 @@ describe('Appc.User', function () {
 		Appc.User.find(currentSession, global.$config.another_user.guid, function (err, res) {
 			should.not.exist(err);
 			should.exist(res);
-			res.user_id.toString().should.equal(global.$config.another_user.user_id);
+			should(res.user_id.toString()).equal(global.$config.another_user.user_id);
 			should.not.exist(res.username);
 			done();
 		});
@@ -46,7 +46,7 @@ describe('Appc.User', function () {
 			should.not.exist(res);
 			should.exist(err);
 			should.exist(err.message);
-			err.message.should.equal('Resource Not Found');
+			should(err.message).equal('Resource Not Found');
 			done();
 		});
 	});
@@ -56,7 +56,7 @@ describe('Appc.User', function () {
 			should.not.exist(res);
 			should.exist(err);
 			should.exist(err.message);
-			err.message.should.equal('session is not valid');
+			should(err.message).equal('session is not valid');
 			done();
 		});
 	});
