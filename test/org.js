@@ -20,11 +20,11 @@ describe('Appc.Org', function () {
 			should.not.exist(err);
 			should.exist(session);
 			currentSession = session;
-			currentSession.isValid().should.equal(true);
+			should(currentSession.isValid()).equal(true);
 
 			Appc.Auth.switchLoggedInOrg(currentSession, global.$config.user.developer_org_id, function (err, res, newSession) {
 				currentSession = newSession;
-				res.org_id.toString().should.equal(global.$config.user.developer_org_id);
+				should(res.org_id.toString()).equal(global.$config.user.developer_org_id);
 				done();
 			});
 		});
@@ -34,9 +34,9 @@ describe('Appc.Org', function () {
 		Appc.Org.getCurrent(currentSession, function (err, org) {
 			should.not.exist(err);
 			should.exist(org);
-			helper.objectEquals(org, currentSession.user.org).should.equal(true);
+			should(helper.objectEquals(org, currentSession.user.org)).equal(true);
 			should.exist(org.org_id);
-			org.org_id.toString().should.equal(global.$config.user.developer_org_id);
+			should(org.org_id.toString()).equal(global.$config.user.developer_org_id);
 			should.exist(org.name);
 			orgName = org.name;
 			done();
@@ -47,7 +47,7 @@ describe('Appc.Org', function () {
 		Appc.Org.getCurrent({}, function (err, org) {
 			should.exist(err);
 			should.not.exist(org);
-			err.message.should.equal('session is not valid');
+			should(err.message).equal('session is not valid');
 			done();
 		});
 	});
@@ -58,8 +58,8 @@ describe('Appc.Org', function () {
 			should.not.exist(err);
 			should.exist(res);
 			should.exist(res.name);
-			res.name.should.equal(orgName);
-			res.org_id.toString().should.equal(global.$config.user.developer_org_id);
+			should(res.name).equal(orgName);
+			should(res.org_id.toString()).equal(global.$config.user.developer_org_id);
 			done();
 		});
 	});
@@ -69,7 +69,7 @@ describe('Appc.Org', function () {
 			should.exist(err);
 			should.not.exist(res);
 			should.exist(err.message);
-			err.message.should.equal('Org not found');
+			should(err.message).equal('Org not found');
 			done();
 		});
 	});
@@ -79,7 +79,7 @@ describe('Appc.Org', function () {
 			should.exist(err);
 			should.not.exist(res);
 			should.exist(err.message);
-			err.message.should.equal('session is not valid');
+			should(err.message).equal('session is not valid');
 			done();
 		});
 	});
@@ -89,7 +89,7 @@ describe('Appc.Org', function () {
 			should.exist(res);
 			should.not.exist(err);
 			should.exist(res.org_id);
-			res.org_id.toString().should.equal(global.$config.user.developer_org_id);
+			should(res.org_id.toString()).equal(global.$config.user.developer_org_id);
 			done();
 		});
 	});
@@ -99,7 +99,7 @@ describe('Appc.Org', function () {
 			should.not.exist(res);
 			should.exist(err);
 			should.exist(err.message);
-			err.message.should.equal('session is not valid');
+			should(err.message).equal('session is not valid');
 			done();
 		});
 	});
@@ -109,7 +109,7 @@ describe('Appc.Org', function () {
 			should.not.exist(res);
 			should.exist(err);
 			should.exist(err.message);
-			err.message.should.equal('id is not valid');
+			should(err.message).equal('id is not valid');
 			done();
 		});
 	});
@@ -119,7 +119,7 @@ describe('Appc.Org', function () {
 			should.exist(res);
 			should.not.exist(err);
 			should.exist(res.org_id);
-			res.org_id.toString().should.equal(global.$config.user.developer_org_id);
+			should(res.org_id.toString()).equal(global.$config.user.developer_org_id);
 			done();
 		});
 	});
@@ -129,7 +129,7 @@ describe('Appc.Org', function () {
 			should.not.exist(res);
 			should.exist(err);
 			should.exist(err.message);
-			err.message.should.equal('session is not valid');
+			should(err.message).equal('session is not valid');
 			done();
 		});
 	});
@@ -139,7 +139,7 @@ describe('Appc.Org', function () {
 			should.not.exist(res);
 			should.exist(err);
 			should.exist(err.message);
-			err.message.should.equal('id is not valid');
+			should(err.message).equal('id is not valid');
 			done();
 		});
 	});
@@ -157,7 +157,7 @@ describe('Appc.Org', function () {
 		Appc.Org.find(currentSession, function (err, res) {
 			should.not.exist(err);
 			should.exist(res);
-			(res.length >= 2).should.equal(true);
+			should((res.length >= 2)).equal(true);
 			regularTime = new Date().getTime() - time;
 			done();
 		});
@@ -168,13 +168,13 @@ describe('Appc.Org', function () {
 		Appc.Org.find(currentSession, function (err, res) {
 			should.not.exist(err);
 			should.exist(res);
-			(res.length >= 2).should.equal(true);
+			should((res.length >= 2)).equal(true);
 			cachedTime = new Date().getTime() - time;
 			done();
 		});
 	});
 
 	it('cached time should be lower (or equal to) than original time for finding orgs', function () {
-		(regularTime - cachedTime).should.not.be.lessThan(-1);
+		should((regularTime - cachedTime)).not.be.lessThan(-1);
 	});
 });
