@@ -1,11 +1,11 @@
 'use strict';
 
+/* eslint-disable vars-on-top */
+
 const cookieSession = require('cookie-session');
 const express = require('express');
 const request = require('request');
 const should = require('should');
-
-const helper = require('./lib/helper');
 
 const Appc = require('../');
 
@@ -59,11 +59,11 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and skip', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware({
 			urlpattern: /^\/secure/
 		});
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			resp.send('OK');
@@ -77,11 +77,11 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and skip when not required', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware({
 			required: false
 		});
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			resp.send(req.session && req.session.user ? 'FAILED' : 'OK');
@@ -95,9 +95,9 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and fail', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware();
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			resp.send('FAILED');
@@ -115,9 +115,9 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and fail with image', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware();
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			resp.send('FAIL');
@@ -131,15 +131,15 @@ describe('Appc.Middleware', function () {
 		request.get(opts, function (err, resp, body) {
 			should(err).be.not.ok();
 			should(resp.statusCode).be.equal(401);
-			should(body).be.empty;
+			should(body).be.empty();
 			done();
 		});
 	});
 
 	it('should create basic middleware and fail with javascript', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware();
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			resp.send('FAIL');
@@ -153,15 +153,15 @@ describe('Appc.Middleware', function () {
 		request.get(opts, function (err, resp, body) {
 			should(err).be.not.ok();
 			should(resp.statusCode).be.equal(401);
-			should(body).be.empty;
+			should(body).be.empty();
 			done();
 		});
 	});
 
 	it('should create basic middleware and fail with json and default url but exclude redirect with mixed protocol', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware();
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			resp.send('OK');
@@ -187,9 +187,9 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and fail with json and default url', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware();
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			resp.send('OK');
@@ -217,11 +217,11 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and fail with json and use redirectUrlParam', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware({
 			redirectUrlParam: '_redirect'
 		});
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			resp.send('OK');
@@ -248,11 +248,11 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and fail with json and redirect', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware({
 			redirect: 'foo'
 		});
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			resp.send('OK');
@@ -279,7 +279,7 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and fail with json and default url and use errorHandler', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware({
 			errorHandler: function (req, resp) {
 				resp.json({
@@ -287,7 +287,7 @@ describe('Appc.Middleware', function () {
 				});
 			}
 		});
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			resp.send('OK');
@@ -309,12 +309,12 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and fail with json and use renderUnauthorized', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware({
 			renderUnauthorized: 'unauth',
 			redirect: null
 		});
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			resp.send('OK');
@@ -339,9 +339,9 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and succeed', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware();
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			resp.json({
@@ -399,7 +399,7 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and succeed and then re-validate', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware({
 			sessionExpiry: 0, // immediate
 			successHandler: function (req, resp, next, session, revalidated) {
@@ -410,7 +410,7 @@ describe('Appc.Middleware', function () {
 				});
 			}
 		});
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			resp.send('FAILED');
@@ -468,7 +468,7 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and use successHandler', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware({
 			successHandler: function (req, resp, next, session, revalidated) {
 				should(session).be.ok();
@@ -489,7 +489,7 @@ describe('Appc.Middleware', function () {
 				done();
 			}
 		});
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			return resp.send('FAILED');
@@ -513,11 +513,11 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and require a plan type', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware({
 			planRequired: 'team'
 		});
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			return resp.send('FAILED');
@@ -540,12 +540,12 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and require a plan type with plan redirect', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware({
 			planRequired: 'team',
 			planRequiredRedirect: 'http://planredirect'
 		});
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			return resp.send('FAILED');
@@ -575,11 +575,11 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and require a plan that is found', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware({
 			planRequired: 'enterprise'
 		});
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			return resp.send('OK');
@@ -603,11 +603,11 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and require a plan that is found using regex', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware({
 			planRequired: /^(enterprise|team)$/
 		});
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			return resp.send('OK');
@@ -631,9 +631,9 @@ describe('Appc.Middleware', function () {
 	});
 
 	it('should create basic middleware and then simulate re-login', function (done) {
-		should(Appc.Middleware).be.an.object;
+		should(Appc.Middleware).be.a.Function();
 		var middleware = new Appc.Middleware();
-		should(middleware).be.a.function;
+		should(middleware).be.a.Function();
 		app.use(middleware);
 		app.get('/', function (req, resp) {
 			return resp.send(req.session.user.sid);
