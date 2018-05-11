@@ -28,7 +28,7 @@ describe('Appc.Feed', function () {
 			should.not.exist(err);
 			should.exist(res.meta);
 			should.exist(res.meta.total);
-			res.meta.total.should.be.an.Number;
+			should(res.meta.total).be.a.Number();
 			should.exist(res.data);
 			Array.isArray(res.data).should.equal(true);
 			if (res.data.length) {
@@ -52,7 +52,7 @@ describe('Appc.Feed', function () {
 			should.not.exist(err);
 			should.exist(res.meta);
 			should.exist(res.meta.total);
-			res.meta.total.should.be.an.Number;
+			should(res.meta.total).be.a.Number();
 			should.exist(res.data);
 			Array.isArray(res.data).should.equal(true);
 			if (res.data.length) {
