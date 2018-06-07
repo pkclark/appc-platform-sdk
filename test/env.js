@@ -145,7 +145,7 @@ describe('Appc.Env', function () {
 			should(Env.registryurl).equal('http://software-env.appcelerator.com');
 			should(Env.pubsuburl).equal('http://pubsub-env.appcelerator.com');
 			should(Env.secureCookies).equal(false);
-			should(Env.supportUntrusted).equal(false);
+			should(Env.supportUntrusted).equal(true);
 
 			// should allow custom overrides
 			Env.setEnvironment({ baseurl: 'http://custom.baseurl.com' });
@@ -154,7 +154,7 @@ describe('Appc.Env', function () {
 			should(Env.registryurl).equal('http://software-env.appcelerator.com');
 			should(Env.pubsuburl).equal('http://pubsub-env.appcelerator.com');
 			should(Env.secureCookies).equal(false);
-			should(Env.supportUntrusted).equal(false);
+			should(Env.supportUntrusted).equal(true);
 		});
 	});
 });
