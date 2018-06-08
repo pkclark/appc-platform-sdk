@@ -123,7 +123,7 @@ describe('Appc.Analytics', function () {
 			should(result[0]).have.property('ver', '3');
 			should(Date.parse(result[0].ts)).be.a.Date;
 			should(result[0].id).match(/^[\w-]{16,}$/);
-			should(result[0].data).be.eql({ a:1 });
+			should(result[0].data).be.eql({ a: 1 });
 			done();
 		});
 	});
@@ -144,7 +144,7 @@ describe('Appc.Analytics', function () {
 			should(result[0]).have.property('ver', '3');
 			should(Date.parse(result[0].ts)).be.a.Date;
 			should(result[0].id).match(/^[\w-]{16,}$/);
-			should(result[0].data).be.eql({ a:1 });
+			should(result[0].data).be.eql({ a: 1 });
 			done();
 		});
 	});
@@ -166,7 +166,7 @@ describe('Appc.Analytics', function () {
 			should(result[0]).have.property('ver', '3');
 			should(Date.parse(result[0].ts)).be.a.Date;
 			should(result[0].id).match(/^[\w-]{16,}$/);
-			should(result[0].data).be.eql({ a:1 });
+			should(result[0].data).be.eql({ a: 1 });
 			done();
 		});
 	});
