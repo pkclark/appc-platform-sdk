@@ -100,7 +100,7 @@ describe('Appc.Cloud', function () {
 		});
 
 		it('should fail to get a clould environment with a missing org in the session', function (done) {
-			helper.getCloudEnvironment({ user:{} }, Appc.Cloud.AUTH_BASE, env, function (err, res) {
+			helper.getCloudEnvironment({ user: {} }, Appc.Cloud.AUTH_BASE, env, function (err, res) {
 				should.not.exist(res);
 				should.exist(err);
 				err.should.have.property('message');
