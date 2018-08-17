@@ -1,0 +1,9 @@
+{
+	"extends": [ "axway/env-node", "axway/+mocha" ],
+	"rules": {
+		"no-div-regex": "off",
+		"no-unused-expressions": "off",
+		"no-unused-vars": "off",
+		"valid-jsdoc": "off"
+	}
+}

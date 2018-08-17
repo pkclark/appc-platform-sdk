@@ -90,7 +90,8 @@ describe('Appc.Auth', function () {
 			});
 		});
 
-		it('should be able to request an sms auth code with a valid session', function (done) {
+		// eslint-disable-next-line mocha/no-skipped-tests
+		it.skip('should be able to request an sms auth code with a valid session', function (done) {
 			should.exist(currentSession);
 
 			Appc.Auth.requestLoginCode(currentSession, true, function (err, res) {
@@ -113,7 +114,8 @@ describe('Appc.Auth', function () {
 			});
 		});
 
-		it('should verify the sms auth code that was requested earlier', function (done) {
+		// eslint-disable-next-line mocha/no-skipped-tests
+		it.skip('should verify the sms auth code that was requested earlier', function (done) {
 			helper.getAuthCode('sms', function (err, res) {
 				should.not.exist(err);
 				should.exist(res);
@@ -130,19 +132,19 @@ describe('Appc.Auth', function () {
 		it('should get locked out of auth code generation after multiple attempts', function (done) {
 			should.exist(currentSession);
 
-			Appc.Auth.requestLoginCode(currentSession, true, function (err, res) {
+			Appc.Auth.requestLoginCode(currentSession, false, function (err, res) {
 				should.not.exist(err);
 				should.exist(res);
 
-				Appc.Auth.requestLoginCode(currentSession, true, function (err, res) {
+				Appc.Auth.requestLoginCode(currentSession, false, function (err, res) {
 					should.not.exist(err);
 					should.exist(res);
 
-					Appc.Auth.requestLoginCode(currentSession, true, function (err, res) {
+					Appc.Auth.requestLoginCode(currentSession, false, function (err, res) {
 						should.not.exist(err);
 						should.exist(res);
 
-						Appc.Auth.requestLoginCode(currentSession, true, function (err, res) {
+						Appc.Auth.requestLoginCode(currentSession, false, function (err, res) {
 							should.exist(err);
 							should.not.exist(res);
 
@@ -156,7 +158,7 @@ describe('Appc.Auth', function () {
 		it('should be able to request another auth code after valid auth code entry', function (done) {
 			should.exist(currentSession);
 
-			helper.getAuthCode('sms', function (err, res) {
+			helper.getAuthCode('email', function (err, res) {
 				should.not.exist(err);
 				should.exist(res);
 
@@ -165,7 +167,7 @@ describe('Appc.Auth', function () {
 					should.exist(res);
 					res.should.equal(true);
 
-					Appc.Auth.requestLoginCode(currentSession, true, function (err, res) {
+					Appc.Auth.requestLoginCode(currentSession, false, function (err, res) {
 						should.not.exist(err);
 						should.exist(res);
 

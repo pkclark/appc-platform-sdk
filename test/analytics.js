@@ -65,11 +65,10 @@ describe('Appc.Analytics', function () {
 	});
 
 	it('should send analytics data with guid and event only', function (done) {
-		should(Appc.Analytics).be.an.object;
+		should(Appc.Analytics).be.an.Object();
 		Appc.Analytics.sendEvent('guid', 'app.feature', null, function (err, result, sent) {
 			should(err).not.be.ok();
-			should(result).be.an.array;
-			should(sent).be.true;
+			should(result).be.an.Array();
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
 			should(result[0]).have.property('mid');
@@ -79,7 +78,7 @@ describe('Appc.Analytics', function () {
 			should(result[0]).have.property('event', 'app.feature');
 			should(result[0]).have.property('data');
 			should(result[0]).have.property('ver', '3');
-			should(Date.parse(result[0].ts)).be.a.Date;
+			should(Date.parse(result[0].ts)).be.a.Number().and.be.greaterThan(0);
 			should(result[0].id).match(/^[\w-]{16,}$/);
 			should(result[0].data).be.eql({});
 			done();
@@ -87,10 +86,10 @@ describe('Appc.Analytics', function () {
 	});
 
 	it('should send analytics data with guid, event and mid', function (done) {
-		should(Appc.Analytics).be.an.object;
+		should(Appc.Analytics).be.an.Object();
 		Appc.Analytics.sendEvent('guid', 'app.feature', { mid: 'mid' }, function (err, result) {
 			should(err).not.be.ok();
-			should(result).be.an.array;
+			should(result).be.an.Array();
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
 			should(result[0]).have.property('mid', 'mid');
@@ -100,7 +99,7 @@ describe('Appc.Analytics', function () {
 			should(result[0]).have.property('event', 'app.feature');
 			should(result[0]).have.property('data');
 			should(result[0]).have.property('ver', '3');
-			should(Date.parse(result[0].ts)).be.a.Date;
+			should(Date.parse(result[0].ts)).be.a.Number().and.be.greaterThan(0);
 			should(result[0].id).match(/^[\w-]{16,}$/);
 			should(result[0].data).be.eql({});
 			done();
@@ -108,10 +107,10 @@ describe('Appc.Analytics', function () {
 	});
 
 	it('should send analytics data with guid, mid, event, data', function (done) {
-		should(Appc.Analytics).be.an.object;
+		should(Appc.Analytics).be.an.Object();
 		Appc.Analytics.sendEvent('guid', 'app.feature', { mid: 'mid', data: { a: 1 } }, function (err, result) {
 			should(err).not.be.ok();
-			should(result).be.an.array;
+			should(result).be.an.Array();
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
 			should(result[0]).have.property('mid', 'mid');
@@ -121,7 +120,7 @@ describe('Appc.Analytics', function () {
 			should(result[0]).have.property('event', 'app.feature');
 			should(result[0]).have.property('data');
 			should(result[0]).have.property('ver', '3');
-			should(Date.parse(result[0].ts)).be.a.Date;
+			should(Date.parse(result[0].ts)).be.a.Number().and.be.greaterThan(0);
 			should(result[0].id).match(/^[\w-]{16,}$/);
 			should(result[0].data).be.eql({ a: 1 });
 			done();
@@ -129,10 +128,10 @@ describe('Appc.Analytics', function () {
 	});
 
 	it('should send analytics data with guid, mid, data, event, deploytype', function (done) {
-		should(Appc.Analytics).be.an.object;
+		should(Appc.Analytics).be.an.Object();
 		Appc.Analytics.sendEvent('guid', 'event', { mid: 'mid', deploytype: 'deploytype', data: { a: 1 } }, function (err, result) {
 			should(err).not.be.ok();
-			should(result).be.an.array;
+			should(result).be.an.Array();
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
 			should(result[0]).have.property('mid', 'mid');
@@ -142,7 +141,7 @@ describe('Appc.Analytics', function () {
 			should(result[0]).have.property('event', 'event');
 			should(result[0]).have.property('data');
 			should(result[0]).have.property('ver', '3');
-			should(Date.parse(result[0].ts)).be.a.Date;
+			should(Date.parse(result[0].ts)).be.a.Number().and.be.greaterThan(0);
 			should(result[0].id).match(/^[\w-]{16,}$/);
 			should(result[0].data).be.eql({ a: 1 });
 			done();
@@ -150,10 +149,10 @@ describe('Appc.Analytics', function () {
 	});
 
 	it('should send analytics data with guid, mid, data, event, deploytype and sid', function (done) {
-		should(Appc.Analytics).be.an.object;
+		should(Appc.Analytics).be.an.Object();
 		Appc.Analytics.sendEvent('guid', 'event', { mid: 'mid', deploytype: 'deploytype', sid: 'sid-sid-sid-sid-sid-sid', data: { a: 1 } }, function (err, result) {
 			should(err).not.be.ok();
-			should(result).be.an.array;
+			should(result).be.an.Array();
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
 			should(result[0]).have.property('sid', 'sid-sid-sid-sid-sid-sid');
@@ -164,7 +163,7 @@ describe('Appc.Analytics', function () {
 			should(result[0]).have.property('event', 'event');
 			should(result[0]).have.property('data');
 			should(result[0]).have.property('ver', '3');
-			should(Date.parse(result[0].ts)).be.a.Date;
+			should(Date.parse(result[0].ts)).be.a.Number().and.be.greaterThan(0);
 			should(result[0].id).match(/^[\w-]{16,}$/);
 			should(result[0].data).be.eql({ a: 1 });
 			done();
@@ -172,11 +171,11 @@ describe('Appc.Analytics', function () {
 	});
 
 	it('should send analytics data with no callback', function (done) {
-		should(Appc.Analytics).be.an.object;
+		should(Appc.Analytics).be.an.Object();
 		Appc.Analytics.configure({ interval: 1000 });
 		notifier = function (err, result) {
 			should(err).not.be.ok();
-			should(result).be.an.array;
+			should(result).be.an.Array();
 			should(result).have.length(1);
 			should(result[0]).have.property('id');
 			should(result[0]).have.property('aguid', 'guid');
@@ -188,7 +187,7 @@ describe('Appc.Analytics', function () {
 	});
 
 	it('should send analytics data immediate', function (done) {
-		should(Appc.Analytics).be.an.object;
+		should(Appc.Analytics).be.an.Object();
 		notifier = null;
 		Appc.Analytics.sendEvent('guid', 'event', {}, function (err, result, sent) {
 			should(err).not.be.ok();
@@ -202,7 +201,7 @@ describe('Appc.Analytics', function () {
 	});
 
 	it('should send analytics to real url and get back result', function (done) {
-		should(Appc.Analytics).be.an.object;
+		should(Appc.Analytics).be.an.Object();
 		Appc.Analytics.configure({ url: originalUrl });
 		Appc.Analytics.sendEvent(global.$config.apps.enterprise.app_guid, 'app.feature', {}, function (err, result, sent) {
 			should(err).not.be.ok();
@@ -216,9 +215,8 @@ describe('Appc.Analytics', function () {
 			should(result[0]).have.property('event', 'app.feature');
 			should(result[0]).have.property('data', {});
 			should(result[0]).have.property('ver', '3');
-			should(Date.parse(result[0].ts)).be.a.Date;
+			should(Date.parse(result[0].ts)).be.a.Number().and.be.greaterThan(0);
 			should(result[0].id).match(/^[\w-]{16,}$/);
-			should(sent).be.true;
 			done();
 		});
 	});
@@ -229,7 +227,7 @@ describe('Appc.Analytics', function () {
 			should(err).not.be.ok();
 			should(result).be.an.Array();
 			should(result).have.length(4);
-			result.sort((a, b) => a - b);
+			result.sort((a, b) => a.data.a - b.data.a);
 			should(result[0].data).be.eql({ a: 1 });
 			should(result[1].data).be.eql({ a: 2 });
 			should(result[2].data).be.eql({ a: 3 });
@@ -269,8 +267,8 @@ describe('Appc.Analytics', function () {
 			done();
 		};
 		session = Appc.Analytics.createSession('guid');
-		should(session).be.an.object;
-		should(session.end).be.a.function;
+		should(session).be.an.Object();
+		should(session.end).be.a.Function();
 		session.send('app.feature', { a: 1 });
 		session.end();
 	});

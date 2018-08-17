@@ -8,7 +8,7 @@ const pkg = require('../package.json');
 describe('Appc properties', function () {
 
 	it('Appc required successfully', function () {
-		Appc.should.be.an.object;
+		should(Appc).be.an.Object();
 	});
 
 	it('version refs package version', function () {
