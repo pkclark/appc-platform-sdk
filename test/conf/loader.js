@@ -22,7 +22,7 @@ exports.load = function (env) {
 						dest[p] = src[p];
 					}
 				});
-			}(global.$config, require(file)));
+			}(global.$config, require(file))); // eslint-disable-line security/detect-non-literal-require
 		}
 	});
 };

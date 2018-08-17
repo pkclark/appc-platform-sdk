@@ -109,6 +109,7 @@ describe('Appc.Middleware', function () {
 		request.get(opts, function (err, resp, body) {
 			should(err).be.not.ok();
 			should(resp.statusCode).be.equal(302);
+			// eslint-disable-next-line security/detect-non-literal-regexp
 			should(body).match(new RegExp('Redirecting to ' + Appc.baseurl));
 			done();
 		});

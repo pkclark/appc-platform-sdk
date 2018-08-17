@@ -1,3 +1,7 @@
 {
-  "extends": [ "axway/env-node", "axway/+mocha" ]
+	"extends": [ "axway/env-node" ],
+	"rules": {
+		"no-unused-vars": "off",
+		"valid-jsdoc": "off"
+	}
 }
