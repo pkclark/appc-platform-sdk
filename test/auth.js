@@ -90,6 +90,7 @@ describe('Appc.Auth', function () {
 			});
 		});
 
+		// eslint-disable-next-line mocha/no-skipped-tests
 		it.skip('should be able to request an sms auth code with a valid session', function (done) {
 			should.exist(currentSession);
 
@@ -113,6 +114,7 @@ describe('Appc.Auth', function () {
 			});
 		});
 
+		// eslint-disable-next-line mocha/no-skipped-tests
 		it.skip('should verify the sms auth code that was requested earlier', function (done) {
 			helper.getAuthCode('sms', function (err, res) {
 				should.not.exist(err);

@@ -109,6 +109,7 @@ describe('Appc.Middleware', function () {
 		request.get(opts, function (err, resp, body) {
 			should(err).be.not.ok();
 			should(resp.statusCode).be.equal(302);
+			// eslint-disable-next-line security/detect-non-literal-regexp
 			should(body).match(new RegExp('Redirecting to ' + Appc.baseurl));
 			done();
 		});
@@ -354,22 +355,22 @@ describe('Appc.Middleware', function () {
 			var opts = {
 				url: 'http://127.0.0.1:' + server.port + '/',
 				headers: {
-					'cookie': 'connect.sid=' + encodeURIComponent(session.id)
+					cookie: 'connect.sid=' + encodeURIComponent(session.id)
 				},
 				jar: jar
 			};
 			var obj = {
 				user: {
-					'_id':'54d53480b867bc232dc3ea1d',
-					user_id:1503110,
-					guid:'b74b9657-a684-4f86-93af-542bec92e50b',
-					openid:'54cc6929-1c23-4aa2-89be-ce86cb80d229',
-					firstname:'appc-platform-sdk',
-					lastname:'test user',
-					username:'test.appcelerator@gmail.com',
-					email:'test.appcelerator@gmail.com',
-					is_staff:false,
-					org_id:100001933,
+					_id: '54d53480b867bc232dc3ea1d',
+					user_id: 1503110,
+					guid: 'b74b9657-a684-4f86-93af-542bec92e50b',
+					openid: '54cc6929-1c23-4aa2-89be-ce86cb80d229',
+					firstname: 'appc-platform-sdk',
+					lastname: 'test user',
+					username: 'test.appcelerator@gmail.com',
+					email: 'test.appcelerator@gmail.com',
+					is_staff: false,
+					org_id: 100001933,
 					plan: 'enterprise'
 				},
 				isNew: true
@@ -420,23 +421,23 @@ describe('Appc.Middleware', function () {
 			var opts = {
 				url: 'http://127.0.0.1:' + server.port + '/',
 				headers: {
-					'cookie': 'connect.sid=' + encodeURIComponent(session.id)
+					cookie: 'connect.sid=' + encodeURIComponent(session.id)
 				},
 				jar: jar,
 				followRedirect: false
 			};
 			var obj = {
 				user: {
-					'_id':'54d53480b867bc232dc3ea1d',
-					user_id:1503110,
-					guid:'b74b9657-a684-4f86-93af-542bec92e50b',
-					openid:'54cc6929-1c23-4aa2-89be-ce86cb80d229',
-					firstname:'appc-platform-sdk',
-					lastname:'test user',
-					username:'test.appcelerator@gmail.com',
-					email:'test.appcelerator@gmail.com',
-					is_staff:false,
-					org_id:100001933,
+					_id: '54d53480b867bc232dc3ea1d',
+					user_id: 1503110,
+					guid: 'b74b9657-a684-4f86-93af-542bec92e50b',
+					openid: '54cc6929-1c23-4aa2-89be-ce86cb80d229',
+					firstname: 'appc-platform-sdk',
+					lastname: 'test user',
+					username: 'test.appcelerator@gmail.com',
+					email: 'test.appcelerator@gmail.com',
+					is_staff: false,
+					org_id: 100001933,
 					plan: 'enterprise'
 				},
 				isNew: true,
@@ -473,19 +474,19 @@ describe('Appc.Middleware', function () {
 			successHandler: function (req, resp, next, session, revalidated) {
 				should(session).be.ok();
 				should(session).be.eql({
-					'_id':'54d53480b867bc232dc3ea1d',
-					user_id:1503110,
-					guid:'b74b9657-a684-4f86-93af-542bec92e50b',
-					openid:'54cc6929-1c23-4aa2-89be-ce86cb80d229',
-					firstname:'appc-platform-sdk',
-					lastname:'test user',
-					username:'test.appcelerator@gmail.com',
-					email:'test.appcelerator@gmail.com',
-					is_staff:false,
-					org_id:100001933,
+					_id: '54d53480b867bc232dc3ea1d',
+					user_id: 1503110,
+					guid: 'b74b9657-a684-4f86-93af-542bec92e50b',
+					openid: '54cc6929-1c23-4aa2-89be-ce86cb80d229',
+					firstname: 'appc-platform-sdk',
+					lastname: 'test user',
+					username: 'test.appcelerator@gmail.com',
+					email: 'test.appcelerator@gmail.com',
+					is_staff: false,
+					org_id: 100001933,
 					plan: 'enterprise'
 				});
-				resp.json({ success:true, revalidated: revalidated });
+				resp.json({ success: true, revalidated: revalidated });
 				done();
 			}
 		});
@@ -498,7 +499,7 @@ describe('Appc.Middleware', function () {
 			var opts = {
 				url: 'http://127.0.0.1:' + server.port + '/',
 				headers: {
-					'cookie': 'connect.sid=' + encodeURIComponent(session.id)
+					cookie: 'connect.sid=' + encodeURIComponent(session.id)
 				}
 			};
 			request(opts, function (err, resp, body) {
@@ -526,7 +527,7 @@ describe('Appc.Middleware', function () {
 			var opts = {
 				url: 'http://127.0.0.1:' + server.port + '/',
 				headers: {
-					'cookie': 'connect.sid=' + encodeURIComponent(session.id),
+					cookie: 'connect.sid=' + encodeURIComponent(session.id),
 					accept: 'text/json'
 				}
 			};
@@ -554,7 +555,7 @@ describe('Appc.Middleware', function () {
 			var opts = {
 				url: 'http://127.0.0.1:' + server.port + '/',
 				headers: {
-					'cookie': 'connect.sid=' + encodeURIComponent(session.id),
+					cookie: 'connect.sid=' + encodeURIComponent(session.id),
 					accept: 'text/json'
 				},
 				followRedirect: false
@@ -563,11 +564,11 @@ describe('Appc.Middleware', function () {
 				should(err).be.not.ok();
 				should(resp.statusCode).be.equal(401);
 				should(body).be.equal(JSON.stringify({
-					success:false,
-					code:401,
+					success: false,
+					code: 401,
 					message: 'unauthorized',
-					error:'insufficient privilieges based on your subscription',
-					url:'http://planredirect?redirect=http%3A%2F%2F127.0.0.1%3A' + server.port + '%2F'
+					error: 'insufficient privilieges based on your subscription',
+					url: 'http://planredirect?redirect=http%3A%2F%2F127.0.0.1%3A' + server.port + '%2F'
 				}));
 				done();
 			});
@@ -588,7 +589,7 @@ describe('Appc.Middleware', function () {
 			var opts = {
 				url: 'http://127.0.0.1:' + server.port + '/',
 				headers: {
-					'cookie': 'connect.sid=' + encodeURIComponent(session.id),
+					cookie: 'connect.sid=' + encodeURIComponent(session.id),
 					accept: 'text/json'
 				},
 				followRedirect: false
@@ -616,7 +617,7 @@ describe('Appc.Middleware', function () {
 			var opts = {
 				url: 'http://127.0.0.1:' + server.port + '/',
 				headers: {
-					'cookie': 'connect.sid=' + encodeURIComponent(session.id),
+					cookie: 'connect.sid=' + encodeURIComponent(session.id),
 					accept: 'text/json'
 				},
 				followRedirect: false
@@ -642,7 +643,7 @@ describe('Appc.Middleware', function () {
 			var opts = {
 				url: 'http://127.0.0.1:' + server.port + '/',
 				headers: {
-					'cookie': 'connect.sid=' + encodeURIComponent(session.id),
+					cookie: 'connect.sid=' + encodeURIComponent(session.id),
 					accept: 'text/json'
 				}
 			};
