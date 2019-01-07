@@ -1,7 +1,7 @@
 library 'pipeline-library'
 
 def nodeVersion = '6.11.3'
-def npmVersion = '5.4.1'
+def npmVersion = '6.5.0'
 
 timestamps {
 	node('(osx || linux) && git && npm-publish') {
