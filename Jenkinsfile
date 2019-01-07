@@ -25,10 +25,7 @@ timestamps {
 				stage('Security') {
 					sh 'npm install --production'
 
-					sh 'npm install nsp'
-					sh 'node_modules/nsp/bin/nsp check --output summary --warn-only'
-					sh 'npm uninstall nsp'
-					sh 'npm prune'
+					sh 'npm audit'
 
 					sh 'npm install retire'
 					sh 'node_modules/retire/bin/retire --exitwith 0'
