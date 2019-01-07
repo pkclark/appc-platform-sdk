@@ -1,6 +1,6 @@
 library 'pipeline-library'
 
-def nodeVersion = '6.11.3'
+def nodeVersion = '10.15.0'
 def npmVersion = '6.5.0'
 
 timestamps {
