@@ -23,7 +23,7 @@
   "license": "SEE LICENSE IN LICENSE.md",
   "homepage": "https://github.com/appcelerator/appc-platform-sdk",
   "dependencies": {
-    "async": "~2.6.1",
+    "async": "~2.6.2",
     "debug": "~3.1.0",
     "getmac": "~1.4.3",
     "pac-proxy-agent": "~3.0.0",
