@@ -22,6 +22,7 @@ describe('Appc.Org', function () {
 			currentSession = session;
 			should(currentSession.isValid()).equal(true);
 
+			//TODO: need to verify if "developer_org_id" is valid
 			Appc.Auth.switchLoggedInOrg(currentSession, global.$config.user.developer_org_id, function (err, res, newSession) {
 				currentSession = newSession;
 				should(res.org_id.toString()).equal(global.$config.user.developer_org_id);

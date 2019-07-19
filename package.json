@@ -45,7 +45,7 @@
     "mocha-jenkins-reporter": "^0.4.1",
     "nyc": "^13.3.0",
     "prompt": "^1.0.0",
-    "should": "^13.2.1",
+    "should": "^13.2.3",
     "twilio": "^3.17.2",
     "wrench": "^1.5.9"
   }
