@@ -315,7 +315,7 @@ describe('Appc.App', function () {
 	});
 
 	// skipped due to platform state being incorrectly configured
-	it.skip('should find a free application package by application guid and session', function (done) {
+	it('should find a free application package by application guid and session', function (done) {
 		Appc.App.findPackage(currentSession, global.$config.apps.developer.app_guid, function (err, res) {
 			should.not.exist(err);
 			should.exist(res);
