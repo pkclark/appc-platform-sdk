@@ -60,16 +60,6 @@ describe('Appc.Cloud', function () {
 			});
 		});
 
-		//skipped, AUTH_BASE key doesn't exist in session.user.org.envs
-		it.skip('should get AUTH_BASE environment', function (done) {
-			helper.getCloudEnvironment(currentSession, Appc.Cloud.AUTH_BASE, env, function (err, res) {
-				should.exist(res);
-				should(res).be.a.String();
-				should.not.exist(err);
-				done();
-			});
-		});
-
 		it('should fail to get ACS_BASE environment with bad session', function (done) {
 			helper.getCloudEnvironment({}, Appc.Cloud.ACS_BASE, env, function (err, res) {
 				should.not.exist(res);
@@ -183,16 +173,6 @@ describe('Appc.Cloud', function () {
 					should.not.exist(res);
 					should.exist(err.message);
 					should(err.message).equal('session is not valid');
-					done();
-				});
-		});
-
-		//skipped, this is not longer the case. '"app_name" is a required parameter.'
-		it.skip('should be able to create an app with no name', function (done) {
-			Appc.Cloud.createApp(currentSession, null, global.$config.user.developer_org_id,
-				tiApp.guid, function (err, res) {
-					should.exist(res);
-					should.not.exist(err);
 					done();
 				});
 		});

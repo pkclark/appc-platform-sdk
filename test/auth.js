@@ -53,8 +53,7 @@ describe('Appc.Auth', function () {
 			currentSession.isValid().should.equal(true);
 		});
 
-		// skipped as Auth code generation temporarily disabled
-		it.skip('should be able to request an email auth code with a valid session', function (done) {
+		it('should be able to request an email auth code with a valid session', function (done) {
 			should.exist(currentSession);
 			Appc.Auth.requestLoginCode(currentSession, false, function (err, res) {
 				should.not.exist(err);
@@ -77,8 +76,7 @@ describe('Appc.Auth', function () {
 			});
 		});
 
-		// skipped, [AUTHENTICATIONFAILED] Invalid credentials (Failure)
-		it.skip('should verify the email auth code that was requested earlier', function (done) {
+		it('should verify the email auth code that was requested earlier', function (done) {
 			helper.getAuthCode('email', function (err, res) {
 				should.not.exist(err);
 				should.exist(res);
@@ -131,8 +129,7 @@ describe('Appc.Auth', function () {
 			});
 		});
 
-		// skipped, Auth code generation temporarily disabled
-		it.skip('should get locked out of auth code generation after multiple attempts', function (done) {
+		it('should get locked out of auth code generation after multiple attempts', function (done) {
 			should.exist(currentSession);
 
 			Appc.Auth.requestLoginCode(currentSession, false, function (err, res) {
@@ -158,8 +155,7 @@ describe('Appc.Auth', function () {
 			});
 		});
 
-		// skipped, [AUTHENTICATIONFAILED] Invalid credentials (Failure)
-		it.skip('should be able to request another auth code after valid auth code entry', function (done) {
+		it('should be able to request another auth code after valid auth code entry', function (done) {
 			should.exist(currentSession);
 
 			helper.getAuthCode('email', function (err, res) {
