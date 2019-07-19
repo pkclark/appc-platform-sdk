@@ -117,7 +117,6 @@ describe('Appc.Cloud', function () {
 		var tiApp;
 
 		before(function (done) {
-			//TODO: need to check if "developer_org_id" is valid
 			Appc.Auth.switchLoggedInOrg(currentSession, global.$config.user.developer_org_id, function (err, res, newSession) {
 				currentSession = newSession;
 				should.exist(res);
@@ -188,7 +187,8 @@ describe('Appc.Cloud', function () {
 				});
 		});
 
-		it('should be able to create an app with no name', function (done) {
+		//skipped, this is not longer the case. '"app_name" is a required parameter.'
+		it.skip('should be able to create an app with no name', function (done) {
 			Appc.Cloud.createApp(currentSession, null, global.$config.user.developer_org_id,
 				tiApp.guid, function (err, res) {
 					should.exist(res);
