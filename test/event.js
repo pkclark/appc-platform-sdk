@@ -116,7 +116,7 @@ describe('Appc.Event', function () {
 		Appc.Event.send(currentSession, 'unit.test.without.data', function (err, res) {
 			should.not.exist(err);
 			should.exist(res);
-			res.success.should.be.true();
+			res.should.be.true();
 			done();
 		});
 	});
@@ -136,7 +136,7 @@ describe('Appc.Event', function () {
 		Appc.Event.send(currentSession, 'unit.test.with.blank.data', {}, function (err, res) {
 			should.not.exist(err);
 			should.exist(res);
-			res.success.should.be.true();
+			res.should.be.true();
 			done();
 		});
 	});
@@ -156,7 +156,7 @@ describe('Appc.Event', function () {
 		Appc.Event.send(currentSession, 'unit.test.with.data', { test: 'unit test with data' }, function (err, res) {
 			should.not.exist(err);
 			should.exist(res);
-			res.success.should.be.true();
+			res.should.be.true();
 			done();
 		});
 	});

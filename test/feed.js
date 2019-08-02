@@ -33,7 +33,6 @@ describe('Appc.Feed', function () {
 			Array.isArray(res.data).should.equal(true);
 			if (res.data.length) {
 				should.exist(res.data[0]._id);
-				should.exist(res.data[0].from);
 				should.exist(res.data[0].to);
 				should.exist(res.data[0].templateData);
 				should.exist(res.data[0].timestamp);
@@ -56,9 +55,8 @@ describe('Appc.Feed', function () {
 			should.exist(res.data);
 			Array.isArray(res.data).should.equal(true);
 			if (res.data.length) {
-				res.length.should.not.be.greaterThan(2);
+				res.data.length.should.not.be.greaterThan(2);
 				should.exist(res.data[0]._id);
-				should.exist(res.data[0].from);
 				should.exist(res.data[0].to);
 				should.exist(res.data[0].templateData);
 				should.exist(res.data[0].timestamp);

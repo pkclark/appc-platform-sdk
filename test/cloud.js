@@ -60,17 +60,8 @@ describe('Appc.Cloud', function () {
 			});
 		});
 
-		it('should get AUTH_BASE environment', function (done) {
-			helper.getCloudEnvironment(currentSession, Appc.Cloud.AUTH_BASE, env, function (err, res) {
-				should.exist(res);
-				should(res).be.a.String();
-				should.not.exist(err);
-				done();
-			});
-		});
-
 		it('should fail to get ACS_BASE environment with bad session', function (done) {
-			helper.getCloudEnvironment({}, Appc.Cloud.AUTH_BASE, env, function (err, res) {
+			helper.getCloudEnvironment({}, Appc.Cloud.ACS_BASE, env, function (err, res) {
 				should.not.exist(res);
 				should.exist(err);
 				should(err).have.property('message');
@@ -182,15 +173,6 @@ describe('Appc.Cloud', function () {
 					should.not.exist(res);
 					should.exist(err.message);
 					should(err.message).equal('session is not valid');
-					done();
-				});
-		});
-
-		it('should be able to create an app with no name', function (done) {
-			Appc.Cloud.createApp(currentSession, null, global.$config.user.developer_org_id,
-				tiApp.guid, function (err, res) {
-					should.exist(res);
-					should.not.exist(err);
 					done();
 				});
 		});

@@ -284,10 +284,10 @@ describe('Appc.Auth', function () {
 					should.exist(session.user.org_id);
 					should.exist(session.user.org);
 					should.exist(session.org);
-					should.exist(session.org.packageId);
+					session.org.should.have.property('packageId');
 					should.exist(session.orgs);
 					should.exist(session.entitlements);
-					should.exist(session.entitlements.id);
+					session.entitlements.should.have.property('id');
 					should.exist(session.entitlements.name);
 					createdSession = session;
 					done();

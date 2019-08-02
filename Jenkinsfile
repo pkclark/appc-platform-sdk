@@ -1,7 +1,7 @@
 library 'pipeline-library'
 
-def nodeVersion = '6.11.3'
-def npmVersion = '5.4.1'
+def nodeVersion = '10.15.0'
+def npmVersion = '6.5.0'
 
 timestamps {
 	node('(osx || linux) && git && npm-publish') {
@@ -25,10 +25,7 @@ timestamps {
 				stage('Security') {
 					sh 'npm install --production'
 
-					sh 'npm install nsp'
-					sh 'node_modules/nsp/bin/nsp check --output summary --warn-only'
-					sh 'npm uninstall nsp'
-					sh 'npm prune'
+					sh 'npm audit'
 
 					sh 'npm install retire'
 					sh 'node_modules/retire/bin/retire --exitwith 0'
