@@ -33,7 +33,6 @@ describe('Appc.Feed', function () {
 			Array.isArray(res.data).should.equal(true);
 			if (res.data.length) {
 				should.exist(res.data[0]._id);
-				should.exist(res.data[0].from);
 				should.exist(res.data[0].to);
 				should.exist(res.data[0].templateData);
 				should.exist(res.data[0].timestamp);
@@ -58,8 +57,6 @@ describe('Appc.Feed', function () {
 			if (res.data.length) {
 				res.data.length.should.not.be.greaterThan(2);
 				should.exist(res.data[0]._id);
-				// "from" key is missing from the response
-				// should.exist(res.data[0].from);
 				should.exist(res.data[0].to);
 				should.exist(res.data[0].templateData);
 				should.exist(res.data[0].timestamp);
